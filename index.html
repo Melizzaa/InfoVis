@@ -16,6 +16,10 @@
   <script src="https://www.amcharts.com/lib/3/radar.js"></script>
   <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
       <!--[if lt IE 9]>
@@ -57,7 +61,7 @@
             </div>
             <div class="col-md-6 text-center">
                <div class="area">Map Area
-               <div id="radarCanvas"></div>
+               <div id="container" style="min-width: 400px; max-width: 600px; height: 400px; margin: 0 auto"></div>
              </div>
             </div>
             <div class="col-md-3 text-center">
@@ -75,29 +79,61 @@
      </div><!-- Container -->
 
       <script language="javascript">
-      var radarChartData = {
-      labels: ["ATT", "SPD", "POW", "DEF", "STA", "TEC"],
-      datasets: [ {
-        fillColor: "rgba(0,120,0,0.2)",
-        strokeColor: "rgba(0,120,0,1)",
-        pointColor: "rgba(10,10,10,1)",
-        pointStrokeColor: "#ccc",
-        pointHighlightFill: "#333",
-        pointHighlightStroke: "rgba(255,255,0,1)",
-        data: [12,15,17,16,11,13] } ] 
-      };
-          
-      window.onload = function(){
-      var ctx = document.getElementById("radarCanvas").getContext("2d");
-      window.myRadar = new Chart(ctx).Radar(radarChartData, {
-      responsive: false,
-          pointDot:false,
-          showTooltips: false,
-          scaleOverride: true,
-          scaleSteps: 4,
-          scaleStepWidth: 5,
-          scaleStartValue: 0
-      }); }
+      $(function () {
+
+          $('#container').highcharts({
+
+              chart: {
+                  polar: true,
+                  type: 'line'
+              },
+
+              title: {
+                  text: 'Budget vs spending',
+                  x: -80
+              },
+
+              pane: {
+                  size: '80%'
+              },
+
+              xAxis: {
+                  categories: ['Sales', 'Marketing', 'Development', 'Customer Support',
+                          'Information Technology', 'Administration'],
+                  tickmarkPlacement: 'on',
+                  lineWidth: 0
+              },
+
+              yAxis: {
+                  gridLineInterpolation: 'polygon',
+                  lineWidth: 0,
+                  min: 0
+              },
+
+              tooltip: {
+                  shared: true,
+                  pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+              },
+
+              legend: {
+                  align: 'right',
+                  verticalAlign: 'top',
+                  y: 70,
+                  layout: 'vertical'
+              },
+
+              series: [{
+                  name: 'Allocated Budget',
+                  data: [43000, 19000, 60000, 35000, 17000, 10000],
+                  pointPlacement: 'on'
+              }, {
+                  name: 'Actual Spending',
+                  data: [50000, 39000, 42000, 31000, 26000, 14000],
+                  pointPlacement: 'on'
+              }]
+
+          });
+      });
       </script>
 
       <script type="text/javascript">
