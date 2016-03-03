@@ -12,6 +12,9 @@
    <link rel="stylesheet" href="style.css">
 
    <script type="text/javascript" src="d3/d3.js" charset="utf-8"></script>
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/radar.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -58,6 +61,7 @@
             <div class="col-md-3 text-center">
                <div class="area">Chart area
                <div id="meteo1"></div>
+               <div id="chartdiv"></div>
              </div>
             </div>
         </div>
@@ -67,6 +71,47 @@
           </div>
         </div>
      </div><!-- Container -->
+
+      <script type="text/javascript">
+      var chart = AmCharts.makeChart( "chartdiv", {
+        "type": "radar",
+        "theme": "light",
+        "dataProvider": [ {
+          "country": "Czech Republic",
+          "litres": 156.9
+        }, {
+          "country": "Ireland",
+          "litres": 131.1
+        }, {
+          "country": "Germany",
+          "litres": 115.8
+        }, {
+          "country": "Australia",
+          "litres": 109.9
+        }, {
+          "country": "Austria",
+          "litres": 108.3
+        }, {
+          "country": "UK",
+          "litres": 99
+        } ],
+        "valueAxes": [ {
+          "axisTitleOffset": 20,
+          "minimum": 0,
+          "axisAlpha": 0.15
+        } ],
+        "startDuration": 2,
+        "graphs": [ {
+          "balloonText": "[[value]] litres of beer per year",
+          "bullet": "round",
+          "valueField": "litres"
+        } ],
+        "categoryField": "country",
+        "export": {
+          "enabled": true
+        }
+      } );
+      </script>
 
      <script type="text/javascript">
   // 5 transform the data
