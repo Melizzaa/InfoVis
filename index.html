@@ -79,12 +79,13 @@
 
     d3.select('#slider4').call(d3.slider().axis(true));
 
-    var axis = d3.svg.axis().orient("top").ticks(4);
+    var axis = d3.svg.axis().orient("top").ticks(10);
     d3.select('#slider5').call(d3.slider().axis(axis));
 
     d3.select('#slider6').call(d3.slider().axis(true).min(-10).max(10).step(5));
 
-    d3.select('#slider7').call(d3.slider().value(50).orientation("vertical"));
+    
+	
 
 /*
 	 
