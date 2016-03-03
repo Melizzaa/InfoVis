@@ -12,6 +12,7 @@
    <link rel="stylesheet" href="style.css">
 
    <script type="text/javascript" src="d3/d3.js" charset="utf-8"></script>
+   <script src="d3/d3.slider.js"></script>
 
    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,10 +49,14 @@
          <div class="row">
             <div class="col-md-8 text-center">
                <div class="area">Map Area</div>
-              Am I working in my branch?
+              
             </div>
             <div class="col-md-4 text-center">
-               <div class="area">Legend Area</div>
+               <div class="area">Legend Area
+               <h3>Slider</h3>
+    			  <div id="slider6"></div>
+               </div>
+               
             </div>
         </div>
         <div class="row">
@@ -62,6 +67,27 @@
      </div><!-- Container -->
 
      <script type="text/javascript">
+	 
+	 //Slider
+	 d3.select('#slider1').call(d3.slider());
+
+    d3.select('#slider2').call(d3.slider().value(25));
+
+    d3.select('#slider3').call(d3.slider().on("slide", function(evt, value) {
+      d3.select('#slider3text').text(value);
+    }));
+
+    d3.select('#slider4').call(d3.slider().axis(true));
+
+    var axis = d3.svg.axis().orient("top").ticks(4);
+    d3.select('#slider5').call(d3.slider().axis(axis));
+
+    d3.select('#slider6').call(d3.slider().axis(true).min(-10).max(10).step(5));
+
+    d3.select('#slider7').call(d3.slider().value(50).orientation("vertical"));
+
+/*
+	 
   // 5 transform the data
   //var avgTempsPerMonth = [];
   var avgTemps2015 = new Array(12);
@@ -204,7 +230,7 @@
   .attr("transform", "translate(" + padding + ",-"+offset+")")
   .call(yAxis);
 
-});
+});*/
 </script>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
