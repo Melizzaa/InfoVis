@@ -53,8 +53,11 @@
             </div>
             <div class="col-md-4 text-center">
                <div class="area">Legend Area
-               <h3>Slider</h3>
-    			  <div id="slider6"></div>
+               <h3>Preferences</h3>
+               Museum</br>
+    			  <div id="sliderMuseum"></div></br></br>
+                  Park</br>
+                  <div id="sliderPark"></div>
                </div>
                
             </div>
@@ -69,7 +72,7 @@
      <script type="text/javascript">
 	 
 	 //Slider
-	 d3.select('#slider1').call(d3.slider());
+	/* d3.select('#slider1').call(d3.slider());
 
     d3.select('#slider2').call(d3.slider().value(25));
 
@@ -80,9 +83,12 @@
     d3.select('#slider4').call(d3.slider().axis(true));
 
     var axis = d3.svg.axis().orient("top").ticks(10);
-    d3.select('#slider5').call(d3.slider().axis(axis));
+    d3.select('#sliderPark').call(d3.slider().axis(axis));*/
 
-    d3.select('#slider6').call(d3.slider().axis(true).min(-10).max(10).step(5));
+    d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-10).max(10).step(5));
+	
+	 d3.select('#sliderPark').call(d3.slider().axis(true).min(-10).max(10).step(5));
+
 
     
 	
