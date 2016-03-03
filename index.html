@@ -57,7 +57,7 @@
             </div>
             <div class="col-md-6 text-center">
                <div class="area">Map Area
-               <canvas id="radarChart" width="800" height="650"></canvas>
+               <canvas id="radarCanvas" height="200" width="200"></canvas>
              </div>
             </div>
             <div class="col-md-3 text-center">
@@ -74,41 +74,31 @@
         </div>
      </div><!-- Container -->
 
-
-      <script type="text/javascript">
-      var radarData = {
-        labels : ["Eating","Drinking","Sleeping","Designing","Coding","Partying","Running"],
-        datasets : [
-          {
-             fillColor: "rgba(102,45,145,.1)",
-             strokeColor: "rgba(102,45,145,1)",
-            pointColor : "rgba(220,220,220,1)",
-            pointStrokeColor : "#fff",
-            data : [65,59,90,81,56,55,40]
-          },
-          {
-                fillColor: "rgba(63,169,245,.1)",
-                  strokeColor: "rgba(63,169,245,1)",
-            pointColor : "rgba(151,187,205,1)",
-            pointStrokeColor : "#fff",
-            data : [28,48,40,19,96,27,100]
-          }
-        ]
-      }
-
-
-
-      //Create Line chart
-      var ctx = document.getElementById("lineChart").getContext("2d");
-      var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
-
-      //Create Radar chart
-      var ctx2 = document.getElementById("radarChart").getContext("2d");
-      var myNewChart = new Chart(ctx2).Radar(radarData);
-
-      new Chart(ctx2).Radar(radarData,options);
+      <script language="javascript">
+      var radarChartData = {
+      labels: ["ATT", "SPD", "POW", "DEF", "STA", "TEC"],
+      datasets: [ {
+      fillColor: "rgba(0,120,0,0.2)",
+      strokeColor: "rgba(0,120,0,1)",
+      pointColor: "rgba(10,10,10,1)",
+      pointStrokeColor: "#ccc",
+      pointHighlightFill: "#333",
+      pointHighlightStroke: "rgba(255,255,0,1)",
+      data: [
+      12,15,17,16,11,13] } ] };
+          
+      window.onload = function(){
+      var ctx = document.getElementById("radarCanvas").getContext("2d");
+      window.myRadar = new Chart(ctx).Radar(radarChartData, {
+      responsive: false,
+          pointDot:false,
+          showTooltips: false,
+          scaleOverride: true,
+          scaleSteps: 4,
+          scaleStepWidth: 5,
+          scaleStartValue: 0
+      }); }
       </script>
-      
 
       <script type="text/javascript">
       var chart = AmCharts.makeChart( "chartdiv", {
