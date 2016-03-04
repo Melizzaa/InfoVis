@@ -56,9 +56,7 @@
               </div>
             </div>
             <div class="col-md-6 text-center">
-               <div class="area">Map Area
-                <div id="chartdiv2"></div>
-              </div>
+               <div class="area">Map Area</div>
             </div>
             <div class="col-md-3 text-center">
                <div class="area">Chart area
@@ -118,53 +116,7 @@
       } );
       </script>
 
-      <script type="text/javascript">
-      var chart = AmCharts.makeChart("chartdiv2",{
-        "type": "radar",
-        "categoryField": "category",
-        "graphs": [
-          {
-            "valueField": "value"
-          }
-        ],
-        "valueAxes": [
-          {
-            "axisTitleOffset": 20,
-            "minimum": 0,
-            "axisAlpha": 0.15,
-            "dashLength": 3
-          }
-        ],
-        "dataProvider": [
-          {
-            "category": "Category 1",
-            "value": 156.9
-          },
-          {
-            "category": "Category 2",
-            "value": 131.1
-          },
-          {
-            "category": "Category 3",
-            "value": 115.8
-          },
-          {
-            "category": "Category 4",
-            "value": 109.9
-          },
-          {
-            "category": "Category 5",
-            "value": 108.3
-          },
-          {
-            "category": "Category 6",
-            "value": 99
-          }
-        ]
-      });
-      </script>
-
-
+      
 
      <script type="text/javascript">
   // 5 transform the data
