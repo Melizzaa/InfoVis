@@ -56,7 +56,9 @@
               </div>
             </div>
             <div class="col-md-6 text-center">
-               <div class="area">Map Area</div>
+               <div class="area">Map Area
+                <div id="#radar-chart"></div>
+              </div>
             </div>
             <div class="col-md-3 text-center">
                <div class="area">Chart area
@@ -329,6 +331,21 @@
                .style('font-size', '13px');
         }
       };
+      </script>
+
+    <script type="text/javascript">
+    var data = [   
+              {   
+                    axes: [   
+                      {axis: "strength", value: 6},    
+                      {axis: "intelligence", value: 7},    
+                      {axis: "charisma", value: 10},     
+                      {axis: "dexterity", value: 13},     
+                      {axis: "luck", value: 9}   
+                    ]   
+                  }   
+                ];   
+            RadarChart.draw("#radar-chart", data);  
       </script>
 
      <script type="text/javascript">
