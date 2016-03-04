@@ -12,6 +12,7 @@
    <link rel="stylesheet" href="style.css">
 
    <script type="text/javascript" src="d3/d3.js" charset="utf-8"></script>
+   
 
    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,11 +50,21 @@
             <div class="col-md-3 text-center">
               <div class="area">
                 Legenda Area
+
                 <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure>
+                <h3>Slider</h3>
+          <div id="slider6"></div></br></br>
+               <h3>Preferences</h3>
+               <div>Museum</br>
+             
+                
+                  
+            </div>
               </div>
             </div>
             <div class="col-md-6 text-center">
                <div class="area">Map Area</div>
+
             </div>
             <div class="col-md-3 text-center">
                <div class="area">Chart area
@@ -67,8 +78,29 @@
           </div>
         </div>
      </div><!-- Container -->
+<script src="d3/d3.slider.js"></script>
+<script type="text/javascript">
 
-     <script type="text/javascript">
+// SLIDER
+
+    d3.select('#slider1').call(d3.slider());
+
+    d3.select('#slider2').call(d3.slider().value(25));
+
+    d3.select('#slider3').call(d3.slider().on("slide", function(evt, value) {
+      d3.select('#slider3text').text(value);
+    }));
+
+    d3.select('#slider4').call(d3.slider().axis(true));
+
+    var axis = d3.svg.axis().orient("top").ticks(4);
+    d3.select('#slider5').call(d3.slider().axis(axis));
+
+    d3.select('#slider6').call(d3.slider().axis(true).min(-10).max(10).step(5));
+
+    d3.select('#slider7').call(d3.slider().value(50).orientation("vertical"));
+
+
   // 5 transform the data
   //var avgTempsPerMonth = [];
   var avgTemps2015 = new Array(12);
