@@ -114,58 +114,52 @@
           "enabled": true
         }
       } );
+      </script>
 
-
-    var chart2 = AmCharts.makeChart("chartdiv",{
-      "type": "radar",
-      "categoryField": "category",
-      "graphs": [
-        {
-          "valueField": "value"
-          "secondvalue": "kids"
-        }
-      ],
-      "valueAxes": [
-        {
-          "axisTitleOffset": 20,
-          "minimum": 0,
-          "axisAlpha": 0.15,
-          "dashLength": 3
-        }
-      ],
-      "dataProvider": [
-        {
-          "category": "Category 1",
-          "value": 156.9
-          "kids": 135
-        },
-        {
-          "category": "Category 2",
-          "value": 131.1
-          "kids": 135
-        },
-        {
-          "category": "Category 3",
-          "value": 115.8
-          "kids": 135
-        },
-        {
-          "category": "Category 4",
-          "value": 109.9
-          "kids": 135
-        },
-        {
-          "category": "Category 5",
-          "value": 108.3
-          "kids": 135
-        },
-        {
-          "category": "Category 6",
-          "value": 99
-          "kids": 135
-        }
-      ]
-    });
+      <script type="text/javascript">
+      var chart = AmCharts.makeChart("chartdiv",{
+        "type": "radar",
+        "categoryField": "category",
+        "graphs": [
+          {
+            "valueField": "value"
+          }
+        ],
+        "valueAxes": [
+          {
+            "axisTitleOffset": 20,
+            "minimum": 0,
+            "axisAlpha": 0.15,
+            "dashLength": 3
+          }
+        ],
+        "dataProvider": [
+          {
+            "category": "Category 1",
+            "value": 156.9
+          },
+          {
+            "category": "Category 2",
+            "value": 131.1
+          },
+          {
+            "category": "Category 3",
+            "value": 115.8
+          },
+          {
+            "category": "Category 4",
+            "value": 109.9
+          },
+          {
+            "category": "Category 5",
+            "value": 108.3
+          },
+          {
+            "category": "Category 6",
+            "value": 99
+          }
+        ]
+      });
       </script>
 
 
