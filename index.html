@@ -5,6 +5,8 @@
    <meta charset="utf-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> <!--new, radarchart big-->
+
    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
    <title>InfoVis</title>
    <!-- Latest compiled and minified CSS -->
@@ -15,6 +17,24 @@
   <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
   <script src="https://www.amcharts.com/lib/3/radar.js"></script>
   <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+<!--new-->
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="RadarChart.js"></script>
+  <style>
+    body {
+      overflow: hidden;
+      margin: 0;
+      font-size: 14px;
+      font-family: "Helvetica Neue", Helvetica;
+    }
+
+    #chart {
+      position: absolute;
+      top: 50px;
+      left: 100px;
+    } 
+  </style><!--new-->
 
    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,7 +76,9 @@
               </div>
             </div>
             <div class="col-md-6 text-center">
-               <div class="area">Map Area</div>
+               <div class="area">Map Area
+               <div id="chart"></div><!--new-->
+             </div>
             </div>
             <div class="col-md-3 text-center">
                <div class="area">Chart area
@@ -74,7 +96,10 @@
 
       <script language="javascript">
 
-       </script>
+
+
+
+      </script>
 
       <script type="text/javascript">
       //http://docs.amcharts.com/3/javascriptcharts/AmRadarChart
