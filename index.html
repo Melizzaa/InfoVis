@@ -102,13 +102,13 @@
          w: 600, 
          h: 600,
          factor: 1, //zoom in within specified box
-         factorLegend: .85,
+         factorLegend: .75, //distance variable name to line
          levels: 3,
          maxValue: 0,
-         radians: 2 * Math.PI,
-         opacityArea: 0.5,
-         ToRight: 5,
-         TranslateX: 80,
+         radians: 2 * Math.PI, //makes it a cirle shape
+         opacityArea: 0.5, //of the polygons
+         ToRight: 5, //digit index from middle line
+         TranslateX: 80, //in box
          TranslateY: 30,
          ExtraWidthX: 100,
          ExtraWidthY: 100,
@@ -151,9 +151,9 @@
            .attr("x2", function(d, i){return levelFactor*(1-cfg.factor*Math.sin((i+1)*cfg.radians/total));})
            .attr("y2", function(d, i){return levelFactor*(1-cfg.factor*Math.cos((i+1)*cfg.radians/total));})
            .attr("class", "line")
-           .style("stroke", "grey")
+           .style("stroke", "black")
            .style("stroke-opacity", "0.75")
-           .style("stroke-width", "0.3px")
+           .style("stroke-width", "0.3px") 
            .attr("transform", "translate(" + (cfg.w/2-levelFactor) + ", " + (cfg.h/2-levelFactor) + ")");
         }
 
