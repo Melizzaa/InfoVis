@@ -5,7 +5,7 @@
    <meta charset="utf-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> <!--new, radarchart big-->
+   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> 
 
    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
    <title>InfoVis</title>
@@ -14,11 +14,6 @@
    <link rel="stylesheet" href="style.css">
 
    <script type="text/javascript" src="d3/d3.js" charset="utf-8"></script>
-  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-  <script src="https://www.amcharts.com/lib/3/radar.js"></script>
-  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
-
-<!--new-->
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="RadarChart.js"></script>
   <style>
@@ -31,8 +26,8 @@
 
     #chart {
       position: absolute;
-      top: 50px;
-      left: 100px;
+      top: 150px;
+      left: 1px;
     } 
   </style><!--new-->
 
@@ -77,13 +72,13 @@
             </div>
             <div class="col-md-6 text-center">
                <div class="area">Map Area
-               <div id="chart"></div><!--new-->
+               <div id="chart1"></div><!--new-->
              </div>
             </div>
             <div class="col-md-3 text-center">
                <div class="area">Chart area
+                <div id="chart"></div>
                <div id="meteo1"></div>
-               <div id="chartdiv"></div>
              </div>
             </div>
         </div>
@@ -307,8 +302,8 @@
         }
       };
 
-      var w = 300,
-        h = 300;
+      var w = 200,
+        h = 200;
 
       var colorscale = d3.scale.category10();
 
@@ -440,45 +435,7 @@
 
       </script>
 
-      <script type="text/javascript">
-      //http://docs.amcharts.com/3/javascriptcharts/AmRadarChart
-      var chart = AmCharts.makeChart( "chartdiv", {
-        "type": "radar",
-        "theme": "dark",
-        "dataProvider": [ {
-          "variable": "Safety",
-          "number": 156.9
-        }, {
-          "variable": "Kids",
-          "number": 131.1
-        }, {
-          "variable": "Travel",
-          "number": 115.8
-        }, {
-          "variable": "Work",
-          "number": 109.9
-        }, {
-          "variable": "Bars",
-          "number": 108.3
-        }, {
-          "variable": "Musea",
-          "number": 99
-        } ],
-        "valueAxes": [ {
-          "axisTitleOffset": 10,
-          "minimum": 5,
-          "axisAlpha": 0.35
-        } ],
-        "graphs": [ {
-          "bullet": "circle",
-          "valueField": "number"
-        } ],
-        "categoryField": "variable",
-        "export": {
-          "enabled": true
-        }
-      } );
-      </script>
+      
 
 
 
