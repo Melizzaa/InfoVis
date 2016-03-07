@@ -14,22 +14,10 @@
    <link rel="stylesheet" href="style.css">
 
    <script type="text/javascript" src="d3/d3.js" charset="utf-8"></script>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="RadarChart.js"></script>
-  <style>
-    body {
-      overflow: hidden;
-      margin: 0;
-      font-size: 14px;
-      font-family: "Helvetica Neue", Helvetica;
-    }
+   <script src="http://d3js.org/d3.v3.min.js"></script>
+   <script src="RadarChart.js"></script>
+   <script src="d3/d3.slider.js"></script>
 
-    #chart {
-      position: absolute;
-      top: 150px;
-      left: 1px;
-    } 
-  </style><!--new-->
 
    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,7 +25,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
-   </head>
+</head>
    <body>
       <div class="container">
          <nav class="navbar navbar-default">
@@ -68,7 +56,23 @@
               <div class="area">
                 Legenda Area
                 <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure>
-              </div>
+                <div id="sliderDistance"></div></br>
+                Distance
+                <div id="sliderSafety"></div></br>
+                Safety
+                <div id="sliderBars"></div></br>
+                Bars and Restaurants
+                <div id="sliderPlaygrounds"></div></br>
+                Playgrounds
+                <div id="sliderMuseum"></div></br>
+                Museums and Galleries
+                <div id="sliderPark"></div></br>
+                Park
+                <div id="sliderChildren"></div></br>
+                Amount of Children
+                <div id="sliderPrice"></div></br>
+                Housing Price
+              </div> <!-- area -->
             </div>
             <div class="col-md-6 text-center">
                <div class="area">Map Area
@@ -88,8 +92,21 @@
           </div>
         </div>
      </div><!-- Container -->
+    
+     <script type="text/javascript">
 
-      <script language="javascript">
+      d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1));
+      d3.select('#sliderSafety').call(d3.slider().axis(true).min(-2).max(2).step(1));
+      d3.select('#sliderBars').call(d3.slider().axis(true).min(-2).max(2).step(1));
+      d3.select('#sliderPlaygrounds').call(d3.slider().axis(true).min(-2).max(2).step(1));
+      d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-2).max(2).step(1));
+      d3.select('#sliderPark').call(d3.slider().axis(true).min(-2).max(2).step(1));
+      d3.select('#sliderChildren').call(d3.slider().axis(true).min(-2).max(2).step(2));
+      d3.select('#sliderPrice').call(d3.slider().axis(true).min(-2).max(2).step(1));
+
+</script>
+
+<script language="javascript">
       var RadarChart = {
         draw: function(id, d, options){
         var cfg = {
@@ -433,13 +450,9 @@
           ; 
 
 
-      </script>
+</script>
+<script type="text/javascript">
 
-      
-
-
-
-     <script type="text/javascript">
   // 5 transform the data
   //var avgTempsPerMonth = [];
   var avgTemps2015 = new Array(12);
@@ -489,9 +502,9 @@
         // }
         //totalThisMonth += parseInt(data[i].temperature) / 10;
         //totalDaysThisMonth += 1;
-      }
-    };
-    calcAvg();
+    }
+};
+calcAvg();
     //console.log(avgTemps2015);
     data = avgTemps2015;
     var h = 100;
@@ -521,7 +534,7 @@
     })
     .attr("y", function(d) {
       return yScale(d)-offset; // y coordinaat vanaf boven gezien.
-    })
+  })
     .attr("width", (w-padding) / data.length - barPadding)
     .attr("height", function(d) {
       return h-(yScale(d));
@@ -529,7 +542,7 @@
     .attr("fill", function(d) {
       //return "rgb(" + (200*(d/maxValue)).toFixed(0) + ", " + (200*(d/maxValue)).toFixed(0) + ", " + (200*(d/maxValue)).toFixed(0) + ")";
       return "rgb(254,165,1)";
-    });
+  });
 
   // Values
   svg.selectAll("text.values")
@@ -542,7 +555,7 @@
   .attr("text-anchor", "middle")
   .attr("x", function(d, i) {
     return i * ((w-padding) / data.length) + (w / data.length - barPadding) / 2 + padding - 1; //midden van bar //
-  })
+})
   .attr("y", function(d) {
     return yScale(d)-offset+14;
   })
@@ -561,10 +574,10 @@
   .attr("text-anchor", "middle")
   .attr("x", function(d, i) {
     return i * ((w-padding) / data.length) + (w / data.length - barPadding) / 2 + padding; //midden van bar
-  })
+})
   .attr("y", function(d) {
     return h-4; //anders vallen sommige letters er van af
-  })
+})
   .attr("font-family", "sans-serif")
   .attr("font-size", "12px")
   .attr("fill", "black");
@@ -584,10 +597,10 @@
 
 });
 </script>
-     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-     <!-- Include all compiled plugins (below), or include individual files as needed -->
-     <!-- Latest compiled and minified JavaScript -->
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  </body>
-  </html>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+</html>
