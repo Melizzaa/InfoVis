@@ -68,6 +68,22 @@
               <div class="area">
                 Legenda Area
                 <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure>
+                <div id="sliderDistance"></div></br>
+                 Distance
+                 <div id="sliderSafety"></div></br>
+                 Safety
+                 <div id="sliderBars"></div></br>
+                 Bars and Restaurants
+                 <div id="sliderPlaygrounds"></div></br>
+                 Playgrounds
+                 <div id="sliderMuseum"></div></br>
+                 Museums and Galleries
+                 <div id="sliderPark"></div></br>
+                 Park
+                 <div id="sliderChildren"></div></br>
+                 Amount of Children
+                 <div id="sliderPrice"></div></br>
+                 Housing Price
               </div>
             </div>
             <div class="col-md-6 text-center">
@@ -88,6 +104,19 @@
           </div>
         </div>
      </div><!-- Container -->
+
+    <script src="d3/d3.slider.js"></script>
+    <script type="text/javascript">
+
+    d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderSafety').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderBars').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderPlaygrounds').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderPark').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderChildren').call(d3.slider().axis(true).min(-2).max(2).step(2));
+    d3.select('#sliderPrice').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    </script>
 
       <script language="javascript">
       var RadarChart = {
