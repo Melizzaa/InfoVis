@@ -101,7 +101,7 @@
          levels: 3,
          maxValue: 0,
          radians: 2 * Math.PI, //makes it a cirle shape
-         opacityArea: 0.5, //of the polygons
+         opacityArea: 0.3, //of the polygons
          ToRight: 5, //digit index from middle line
          TranslateX: 80, //in box
          TranslateY: 30,
@@ -121,7 +121,7 @@
         var allAxis = (d[0].map(function(i, j){return i.axis}));
         var total = allAxis.length;
         var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
-        var Format = d3.format('%');
+        var Format = d3.format('8,.0f'); //format of legend in radar
         d3.select(id).select("svg").remove();
         
         var g = d3.select(id)
@@ -165,7 +165,7 @@
            .style("font-family", "sans-serif")
            .style("font-size", "10px")
            .attr("transform", "translate(" + (cfg.w/2-levelFactor + cfg.ToRight) + ", " + (cfg.h/2-levelFactor) + ")")
-           .attr("fill", "#737373")
+           .attr("fill", "#000000")
            .text(Format((j+1)*cfg.maxValue/cfg.levels));
         }
         
@@ -213,7 +213,7 @@
                  .enter()
                  .append("polygon")
                  .attr("class", "radar-chart-serie"+series)
-                 .style("stroke-width", "2px")
+                 .style("stroke-width", "1px")
                  .style("stroke", cfg.color(series))
                  .attr("points",function(d) {
                    var str="";
@@ -279,7 +279,7 @@
                   .style("fill-opacity", 0.1); 
                 g.selectAll(z)
                   .transition(200)
-                  .style("fill-opacity", .7);
+                  .style("fill-opacity", .5);
                 })
           .on('mouseout', function(){
                 tooltip
@@ -308,64 +308,64 @@
       var colorscale = d3.scale.category10();
 
       //Legend titles
-      var LegendOptions = ['Item1','Item2'];
-
+      var LegendOptions = ['Item1','Item2', 'Item1','Item2', 'Item1']; //these should be the neigbourhoods selected.
+ 
       //Data
       var d = [
             [
-            {axis:"Variable",value:0.59},
-            {axis:"Variable",value:0.56},
-            {axis:"Variable",value:0.42},
-            {axis:"Variable",value:0.34},
-            {axis:"Variable",value:0.48},
-            {axis:"Variable",value:0.14},
-            {axis:"Variable",value:0.11},
-            {axis:"Variable",value:0.05},
-            {axis:"Variable",value:0.07},
+            {axis:"Variable",value:6.59},
+            {axis:"Variable",value:6.56},
+            {axis:"Variable",value:4.42},
+            {axis:"Variable",value:4.34},
+            {axis:"Variable",value:3.48},
+            {axis:"Variable",value:2.14},
+            {axis:"Variable",value:8.11},
+            {axis:"Variable",value:9.05},
+            {axis:"Variable",value:1.07},
             ],            
             [
-            {axis:"Variable",value:0.07},
-            {axis:"Variable",value:0.05},
-            {axis:"Variable",value:0.11},
-            {axis:"Variable",value:0.14},
-            {axis:"Variable",value:0.34},
-            {axis:"Variable",value:0.54},
-            {axis:"Variable",value:0.38},
-            {axis:"Variable",value:0.20},
-            {axis:"Variable",value:0.19},
+            {axis:"Variable",value:4.07},
+            {axis:"Variable",value:4.05},
+            {axis:"Variable",value:6.11},
+            {axis:"Variable",value:7.14},
+            {axis:"Variable",value:7.34},
+            {axis:"Variable",value:8.54},
+            {axis:"Variable",value:4.38},
+            {axis:"Variable",value:5.20},
+            {axis:"Variable",value:5.19},
             ],
             [
-            {axis:"Variable",value:0.09},
-            {axis:"Variable",value:0.76},
-            {axis:"Variable",value:0.12},
-            {axis:"Variable",value:0.34},
-            {axis:"Variable",value:0.58},
-            {axis:"Variable",value:0.84},
-            {axis:"Variable",value:0.91},
-            {axis:"Variable",value:0.15},
-            {axis:"Variable",value:0.07},
+            {axis:"Variable",value:1.09},
+            {axis:"Variable",value:2.76},
+            {axis:"Variable",value:2.12},
+            {axis:"Variable",value:3.34},
+            {axis:"Variable",value:4.58},
+            {axis:"Variable",value:4.84},
+            {axis:"Variable",value:5.91},
+            {axis:"Variable",value:8.15},
+            {axis:"Variable",value:8.07},
             ],            
             [
-            {axis:"Variable",value:0.07},
-            {axis:"Variable",value:0.05},
-            {axis:"Variable",value:0.41},
-            {axis:"Variable",value:0.04},
-            {axis:"Variable",value:0.24},
-            {axis:"Variable",value:0.44},
-            {axis:"Variable",value:0.58},
-            {axis:"Variable",value:0.10},
-            {axis:"Variable",value:0.09},
+            {axis:"Variable",value:3.07},
+            {axis:"Variable",value:3.05},
+            {axis:"Variable",value:3.41},
+            {axis:"Variable",value:4.04},
+            {axis:"Variable",value:5.24},
+            {axis:"Variable",value:1.44},
+            {axis:"Variable",value:3.58},
+            {axis:"Variable",value:2.10},
+            {axis:"Variable",value:4.09},
             ],
             [
-            {axis:"Variable",value:0.48},
-            {axis:"Variable",value:0.41},
-            {axis:"Variable",value:0.27},
-            {axis:"Variable",value:0.28},
-            {axis:"Variable",value:0.46},
-            {axis:"Variable",value:0.29},
-            {axis:"Variable",value:0.11},
-            {axis:"Variable",value:0.14},
-            {axis:"Variable",value:0.05},
+            {axis:"Variable",value:9.48},
+            {axis:"Variable",value:8.41},
+            {axis:"Variable",value:8.27},
+            {axis:"Variable",value:3.28},
+            {axis:"Variable",value:4.46},
+            {axis:"Variable",value:6.29},
+            {axis:"Variable",value:7.11},
+            {axis:"Variable",value:4.14},
+            {axis:"Variable",value:2.05},
             ]
           ];
 
@@ -398,9 +398,9 @@
         .attr('transform', 'translate(90,0)') 
         .attr("x", w - 70)
         .attr("y", 10)
-        .attr("font-size", "12px")
+        .attr("font-size", "10px")
         .attr("fill", "#404040")
-        .text("What % of owners use a specific service in a week");
+        .text("text - legenda titel");
           
       //Initiate Legend 
       var legend = svg.append("g")
@@ -416,8 +416,8 @@
           .append("rect")
           .attr("x", w - 65)
           .attr("y", function(d, i){ return i * 20;})
-          .attr("width", 10)
-          .attr("height", 10)
+          .attr("width", 6)
+          .attr("height", 6)
           .style("fill", function(d, i){ return colorscale(i);})
           ;
         //Create text next to squares
@@ -426,8 +426,8 @@
           .enter()
           .append("text")
           .attr("x", w - 52)
-          .attr("y", function(d, i){ return i * 20 + 9;})
-          .attr("font-size", "11px")
+          .attr("y", function(d, i){ return i * 20 + 6;})
+          .attr("font-size", "9px")
           .attr("fill", "#737373")
           .text(function(d) { return d; })
           ; 
