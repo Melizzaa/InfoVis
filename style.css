@@ -9,7 +9,12 @@
 	font-size	: 11px;
 }
 
+#chart {
+    position: absolute;
+    top: 150px;
+    left: 1px;
 
+//SLIDER
 
 .d3-slider {
     position: relative;
