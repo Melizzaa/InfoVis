@@ -2,88 +2,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-   <title>InfoVis</title>
-   <!-- Latest compiled and minified CSS -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-   <link rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>InfoVis</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
 
-   <script type="text/javascript" src="d3/d3.js" charset="utf-8"></script>
-   
+	<script type="text/javascript" src="d3/d3.js" charset="utf-8"></script>
 
-   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
-   </head>
-   <body>
-      <div class="container">
-         <nav class="navbar navbar-default">
-            <div class="container-fluid">
-               <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                     <span class="sr-only">Toggle navigation</span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="/">InfoVis</a>
-               </div>
-               <ul class="nav navbar-nav">
-                  <li><a href="/">About Us</a></li>
-                  <li><a href="/">Help</a></li>
-               </ul>
-               <!--/.nav-collapse -->
-            </div>
-            <!--/.container-fluid -->
-         </nav>
-         <div class="jumbotron">
-            <h1>An interactive housing guide </h1>
-            <h2>For those unknown to Amsterdam</h2>  
-         </div>
-         <div class="row">
-            <div class="col-md-3 text-center">
-              <div class="area">
-                Legenda Area
+  </head>
+  <body>
+  	<div class="container">
+  		<nav class="navbar navbar-default">
+  			<div class="container-fluid">
+  				<div class="navbar-header">
+  					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+  						<span class="sr-only">Toggle navigation</span>
+  						<span class="icon-bar"></span>
+  						<span class="icon-bar"></span>
+  						<span class="icon-bar"></span>
+  					</button>
+  					<a class="navbar-brand" href="/">InfoVis</a>
+  				</div>
+  				<ul class="nav navbar-nav">
+  					<li><a href="/">About Us</a></li>
+  					<li><a href="/">Help</a></li>
+  				</ul>
+  				<!--/.nav-collapse -->
+  			</div>
+  			<!--/.container-fluid -->
+  		</nav>
+  		<div class="jumbotron">
+  			<h1>An interactive housing guide </h1>
+  			<h2>For those unknown to Amsterdam</h2>  
+  		</div>
+  		<div class="row">
+  			<div class="col-md-3 text-center">
+  				<div class="area">
+  					Legenda Area
 
-                <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure>
-                <h3>Slider</h3>
-          <div id="slider6"></div></br></br>
-               <h3>Preferences</h3>
-               <div>Museum</br>
-             
-                
-                  
-            </div>
-              </div>
-            </div>
-            <div class="col-md-6 text-center">
-               <div class="area">Map Area</div>
+  					<figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure>
 
-            </div>
-            <div class="col-md-3 text-center">
-               <div class="area">Chart area
-               <div id="meteo1"></div>
-             </div>
-            </div>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            <div id="meteo1"></div>
-          </div>
-        </div>
-     </div><!-- Container -->
-<script src="d3/d3.slider.js"></script>
-<script type="text/javascript">
+  					<div id="sliderDistance"></div></br>
+  					Distance
+  					<div id="sliderSafety"></div></br>
+  					Safety
+  					<div id="sliderBars"></div></br>
+  					Bars and Restaurants
+  					<div id="sliderPlaygrounds"></div></br>
+  					Playgrounds
+  					<div id="sliderMuseum"></div></br>
+  					Museums and Galleries
+  					<div id="sliderPark"></div></br>
+  					Park
+  					<div id="sliderChildren"></div></br>
+  					Amount of Children
+  					<div id="sliderPrice"></div></br>
+  					Housing Price
+  				</div> <!-- area -->
+  			</div>
+  			<div class="col-md-6 text-center">
+  				<div class="area">Map Area</div>
+
+  			</div>
+  			<div class="col-md-3 text-center">
+  				<div class="area">Chart area
+  					<div id="meteo1"></div>
+  				</div>
+  			</div>
+  		</div>
+  	</div><!-- Container -->
+  	<script src="d3/d3.slider.js"></script>
+  	<script type="text/javascript">
 
 // SLIDER
 
-    d3.select('#slider1').call(d3.slider());
+    /*d3.select('#slider1').call(d3.slider());
 
     d3.select('#slider2').call(d3.slider().value(25));
 
@@ -98,7 +102,20 @@
 
     d3.select('#slider6').call(d3.slider().axis(true).min(-10).max(10).step(5));
 
-    d3.select('#slider7').call(d3.slider().value(50).orientation("vertical"));
+
+    d3.select('#slider7').call(d3.slider().value(50).orientation("vertical"));*/
+
+    d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderSafety').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderBars').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderPlaygrounds').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderPark').call(d3.slider().axis(true).min(-2).max(2).step(1));
+    d3.select('#sliderChildren').call(d3.slider().axis(true).min(-2).max(2).step(2));
+    d3.select('#sliderPrice').call(d3.slider().axis(true).min(-2).max(2).step(1));
+
+
+
 
 
   // 5 transform the data
@@ -107,38 +124,38 @@
   var totalTempsPerMonth2015 = new Array(12);
   var daysPerMonth2015 = new Array(12);
   for (var i = 0; i < avgTemps2015.length; i++) {
-    avgTemps2015[i] = 0;
-    totalTempsPerMonth2015[i] = 0;
-    daysPerMonth2015[i] = 0;
+  	avgTemps2015[i] = 0;
+  	totalTempsPerMonth2015[i] = 0;
+  	daysPerMonth2015[i] = 0;
   };
   var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
   function calcAvg() {
-    for (var i = 0; i < 12; i++) {
-      avgTemps2015[i] = (totalTempsPerMonth2015[i] / daysPerMonth2015[i]).toFixed(1);
-    }
+  	for (var i = 0; i < 12; i++) {
+  		avgTemps2015[i] = (totalTempsPerMonth2015[i] / daysPerMonth2015[i]).toFixed(1);
+  	}
   }
 
   function maxRange(max) {
-    if (max % 5 === 0) {
-      return max+5;
-    } else {
-      return max+5-(max % 5);
-    };
+  	if (max % 5 === 0) {
+  		return max+5;
+  	} else {
+  		return max+5-(max % 5);
+  	};
   }
 
   var year = 2015;
 
 
   d3.csv("meteo.csv", function(data) {
-    var thisMonth = 1;
-    var totalThisMonth = 0;
-    var totalDaysThisMonth = 1;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].year == year) {
-        var index = parseInt(data[i].month)-1;
-        totalTempsPerMonth2015[index] += parseInt(data[i].temperature) / 10;
-        daysPerMonth2015[index]++;
+  	var thisMonth = 1;
+  	var totalThisMonth = 0;
+  	var totalDaysThisMonth = 1;
+  	for (var i = 0; i < data.length; i++) {
+  		if (data[i].year == year) {
+  			var index = parseInt(data[i].month)-1;
+  			totalTempsPerMonth2015[index] += parseInt(data[i].temperature) / 10;
+  			daysPerMonth2015[index]++;
 
 
         // if (parseInt(data[i].month) != thisMonth) { //maand voorbij
@@ -150,9 +167,9 @@
         // }
         //totalThisMonth += parseInt(data[i].temperature) / 10;
         //totalDaysThisMonth += 1;
-      }
-    };
-    calcAvg();
+    }
+};
+calcAvg();
     //console.log(avgTemps2015);
     data = avgTemps2015;
     var h = 100;
@@ -178,19 +195,19 @@
     .enter()
     .append("rect")
     .attr("x", function(d, i) {
-      return i * ((w-padding) / data.length)+ padding;
+    	return i * ((w-padding) / data.length)+ padding;
     })
     .attr("y", function(d) {
       return yScale(d)-offset; // y coordinaat vanaf boven gezien.
-    })
+  })
     .attr("width", (w-padding) / data.length - barPadding)
     .attr("height", function(d) {
-      return h-(yScale(d));
+    	return h-(yScale(d));
     })
     .attr("fill", function(d) {
       //return "rgb(" + (200*(d/maxValue)).toFixed(0) + ", " + (200*(d/maxValue)).toFixed(0) + ", " + (200*(d/maxValue)).toFixed(0) + ")";
       return "rgb(254,165,1)";
-    });
+  });
 
   // Values
   svg.selectAll("text.values")
@@ -198,14 +215,14 @@
   .enter()
   .append("text")
   .text(function(d) {
-    return d;
+  	return d;
   })
   .attr("text-anchor", "middle")
   .attr("x", function(d, i) {
     return i * ((w-padding) / data.length) + (w / data.length - barPadding) / 2 + padding - 1; //midden van bar //
-  })
+})
   .attr("y", function(d) {
-    return yScale(d)-offset+14;
+  	return yScale(d)-offset+14;
   })
   .attr("font-family", "sans-serif")
   .attr("font-size", "11px")
@@ -217,15 +234,15 @@
   .enter()
   .append("text")
   .text(function(d) {
-    return d;
+  	return d;
   })
   .attr("text-anchor", "middle")
   .attr("x", function(d, i) {
     return i * ((w-padding) / data.length) + (w / data.length - barPadding) / 2 + padding; //midden van bar
-  })
+})
   .attr("y", function(d) {
     return h-4; //anders vallen sommige letters er van af
-  })
+})
   .attr("font-family", "sans-serif")
   .attr("font-size", "12px")
   .attr("fill", "black");
@@ -245,10 +262,10 @@
 
 });
 </script>
-     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-     <!-- Include all compiled plugins (below), or include individual files as needed -->
-     <!-- Latest compiled and minified JavaScript -->
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  </body>
-  </html>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+</html>
