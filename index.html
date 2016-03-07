@@ -95,17 +95,17 @@
         </div>
      </div><!-- Container -->
 
-     <script src="d3/d3.slider.js"></script>
-      <script type="text/javascript">
+<script src="d3/d3.slider.js"></script>
+<script type="text/javascript">
 
-      d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderSafety').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderBars').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderPlaygrounds').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderPark').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderChildren').call(d3.slider().axis(true).min(-2).max(2).step(2));
-      d3.select('#sliderPrice').call(d3.slider().axis(true).min(-2).max(2).step(1));
+  d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1));
+  d3.select('#sliderSafety').call(d3.slider().axis(true).min(-2).max(2).step(1));
+  d3.select('#sliderBars').call(d3.slider().axis(true).min(-2).max(2).step(1));
+  d3.select('#sliderPlaygrounds').call(d3.slider().axis(true).min(-2).max(2).step(1));
+  d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-2).max(2).step(1));
+  d3.select('#sliderPark').call(d3.slider().axis(true).min(-2).max(2).step(1));
+  d3.select('#sliderChildren').call(d3.slider().axis(true).min(-2).max(2).step(2));
+  d3.select('#sliderPrice').call(d3.slider().axis(true).min(-2).max(2).step(1));
 
       </script>
 
@@ -454,8 +454,8 @@
 
 
 </script>
-
 <script type="text/javascript">
+
   // 5 transform the data
   //var avgTempsPerMonth = [];
   var avgTemps2015 = new Array(12);
@@ -505,9 +505,9 @@
         // }
         //totalThisMonth += parseInt(data[i].temperature) / 10;
         //totalDaysThisMonth += 1;
-      }
-    };
-    calcAvg();
+    }
+};
+calcAvg();
     //console.log(avgTemps2015);
     data = avgTemps2015;
     var h = 100;
@@ -537,7 +537,7 @@
     })
     .attr("y", function(d) {
       return yScale(d)-offset; // y coordinaat vanaf boven gezien.
-    })
+  })
     .attr("width", (w-padding) / data.length - barPadding)
     .attr("height", function(d) {
       return h-(yScale(d));
@@ -545,7 +545,7 @@
     .attr("fill", function(d) {
       //return "rgb(" + (200*(d/maxValue)).toFixed(0) + ", " + (200*(d/maxValue)).toFixed(0) + ", " + (200*(d/maxValue)).toFixed(0) + ")";
       return "rgb(254,165,1)";
-    });
+  });
 
   // Values
   svg.selectAll("text.values")
@@ -558,7 +558,7 @@
   .attr("text-anchor", "middle")
   .attr("x", function(d, i) {
     return i * ((w-padding) / data.length) + (w / data.length - barPadding) / 2 + padding - 1; //midden van bar //
-  })
+})
   .attr("y", function(d) {
     return yScale(d)-offset+14;
   })
@@ -577,10 +577,10 @@
   .attr("text-anchor", "middle")
   .attr("x", function(d, i) {
     return i * ((w-padding) / data.length) + (w / data.length - barPadding) / 2 + padding; //midden van bar
-  })
+})
   .attr("y", function(d) {
     return h-4; //anders vallen sommige letters er van af
-  })
+})
   .attr("font-family", "sans-serif")
   .attr("font-size", "12px")
   .attr("fill", "black");
@@ -600,10 +600,10 @@
 
 });
 </script>
-     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-     <!-- Include all compiled plugins (below), or include individual files as needed -->
-     <!-- Latest compiled and minified JavaScript -->
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  </body>
-  </html>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+</html>
