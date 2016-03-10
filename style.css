@@ -16,6 +16,10 @@
 }
 //SLIDER
 
+#weightDistance{
+    float:right;
+}
+
 .d3-slider {
     position: relative;
     font-family: Verdana,Arial,sans-serif;
@@ -33,6 +37,8 @@
     z-index: 2;
     margin-top: 5;
     margin-bottom: 5;
+    padding-left-left: 2;
+    padding-right: 2;
 }  
 
 .d3-slider-range {
