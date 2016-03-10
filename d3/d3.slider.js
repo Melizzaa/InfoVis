@@ -53,7 +53,7 @@ return function module() {
 
       // Create scale if not defined by user
       if (!scale) {
-        scale = d3.scale.linear().domain([min, max]);
+        scale = d3.scale.linear().domain([-2, 2]);
       }
 
       // Start value

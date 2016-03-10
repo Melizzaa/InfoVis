@@ -16,6 +16,10 @@
 }
 //SLIDER
 
+#weightDistance{
+    float:right;
+}
+
 .d3-slider {
     position: relative;
     font-family: Verdana,Arial,sans-serif;

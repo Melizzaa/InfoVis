@@ -55,9 +55,9 @@
             <div class="col-md-3 text-center">
               <div class="area">
                 Legenda Area
-                <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure>
+                <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure><div id="weightDistance"></div>
                 <div id="sliderDistance"></div></br>
-                Distance <div id="weightDistance"></div>
+                <div>Distance  </div>   <!-- can be deleted later, for testing -->
                 <div id="sliderSafety"></div></br>
                 Safety
                 <div id="sliderBars"></div></br>
@@ -95,16 +95,22 @@
     
      <script type="text/javascript">
 
-      d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1)).call(d3.slider().on("slide", function(evt, value) {
-      d3.select('#weightDistance').text(value);}));
-      d3.select('#sliderSafety').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderBars').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderPlaygrounds').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderPark').call(d3.slider().axis(true).min(-2).max(2).step(1));
-      d3.select('#sliderChildren').call(d3.slider().axis(true).min(-2).max(2).step(2));
-      d3.select('#sliderPrice').call(d3.slider().axis(true).min(-2).max(2).step(1));
-
+      d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightDistance').text(value);}));
+      d3.select('#sliderSafety').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightSafety').text(value);}));
+      d3.select('#sliderBars').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightBars').text(value);}));
+      d3.select('#sliderPlaygrounds').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightPlaygrounds').text(value);}));
+      d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightMuseum').text(value);}));
+      d3.select('#sliderPark').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightPark').text(value);}));
+      d3.select('#sliderChildren').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightChildren').text(value);}));
+      d3.select('#sliderPrice').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightPrice').text(value);}));
        
 
 </script>
