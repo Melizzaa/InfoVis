@@ -82,6 +82,10 @@
             </div>
             <div class="col-md-3 text-center">
                <div class="area">Chart area
+                <!--<form name="myform" onSubmit="return handleClick()">
+                <input type="text" id="myVal" placeholder="Enter a location&hellip;">
+                <input name="Submit"  type="submit" value="Add to map" >
+                </form>-->
                 <input id="pac-input" class="controls" type="text" placeholder="Search for a location&hellip;">
                 <div id="map"></div>
                 <div id="chart"></div>
@@ -105,7 +109,6 @@
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-      // https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
 
       function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('map'), {
