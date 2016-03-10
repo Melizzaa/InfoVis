@@ -34,9 +34,9 @@
       <![endif]-->
 </head>
    <body>
-      <div class="container">
+      <div class="">
          <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container-fluid text-center">
                <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                      <span class="sr-only">Toggle navigation</span>
@@ -55,8 +55,10 @@
             <!--/.container-fluid -->
          </nav>
          <div class="jumbotron">
-            <h1>An interactive housing guide </h1>
-            <h2>For those unknown to Amsterdam</h2>  
+            <div class="text-center">
+              <h1>An interactive housing guide </h1>
+              <h2>For those unknown to Amsterdam</h2>
+            </div>
          </div>
          <div class="row">
             <div class="col-md-3 text-center">
@@ -170,11 +172,11 @@
     function style(color) {
       return {
         fillColor: getColor(color),
-        weight: 2,
+        weight: 1,
         opacity: 1,
         color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.7
+        dashArray: '2',
+        fillOpacity: 0.4
       };
     }
 
