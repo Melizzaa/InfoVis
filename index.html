@@ -19,6 +19,7 @@
    <script src="d3/d3.slider.js"></script>
 
 
+
    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
       <!--[if lt IE 9]>
@@ -76,13 +77,14 @@
             </div>
             <div class="col-md-6 text-center">
                <div class="area">Map Area
-               <div id="chart1"></div><!--new-->
+               <div id="chart1"></div>
              </div>
             </div>
             <div class="col-md-3 text-center">
                <div class="area">Chart area
+                <input id="pac-input" class="controls" type="text" placeholder="Search for a location&hellip;">
+                <div id="map"></div>
                 <div id="chart"></div>
-               <div id="meteo1"></div>
              </div>
             </div>
         </div>
@@ -92,6 +94,87 @@
           </div>
         </div>
      </div><!-- Container -->
+
+
+    <script type="text/javascript"> //This is the search bar
+ 
+      // This example adds a search box to a map, using the Google Place Autocomplete
+      // feature. People can enter geographical searches. The search box will return a
+      // pick list containing a mix of places and predicted search terms.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+      // https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
+
+      function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      }
+
+    </script>
+
+
+
+
     
      <script type="text/javascript">
 
@@ -106,7 +189,7 @@
 
 </script>
 
-<script language="javascript">
+<script language="javascript"> //this is the radar chart
       var RadarChart = {
         draw: function(id, d, options){
         var cfg = {
@@ -451,152 +534,7 @@
 
 
 </script>
-<script type="text/javascript">
 
-  // 5 transform the data
-  //var avgTempsPerMonth = [];
-  var avgTemps2015 = new Array(12);
-  var totalTempsPerMonth2015 = new Array(12);
-  var daysPerMonth2015 = new Array(12);
-  for (var i = 0; i < avgTemps2015.length; i++) {
-    avgTemps2015[i] = 0;
-    totalTempsPerMonth2015[i] = 0;
-    daysPerMonth2015[i] = 0;
-  };
-  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-
-  function calcAvg() {
-    for (var i = 0; i < 12; i++) {
-      avgTemps2015[i] = (totalTempsPerMonth2015[i] / daysPerMonth2015[i]).toFixed(1);
-    }
-  }
-
-  function maxRange(max) {
-    if (max % 5 === 0) {
-      return max+5;
-    } else {
-      return max+5-(max % 5);
-    };
-  }
-
-  var year = 2015;
-
-
-  d3.csv("meteo.csv", function(data) {
-    var thisMonth = 1;
-    var totalThisMonth = 0;
-    var totalDaysThisMonth = 1;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].year == year) {
-        var index = parseInt(data[i].month)-1;
-        totalTempsPerMonth2015[index] += parseInt(data[i].temperature) / 10;
-        daysPerMonth2015[index]++;
-
-
-        // if (parseInt(data[i].month) != thisMonth) { //maand voorbij
-        //   avgTemps2015[thisMonth-1] = (totalThisMonth / totalDaysThisMonth);
-        //   console.log(avgTemps2015[thisMonth-1]);
-        //   thisMonth = parseInt(data[i].month);
-        //   totalDaysThisMonth = 0;
-        //   totalThisMonth = 0;
-        // }
-        //totalThisMonth += parseInt(data[i].temperature) / 10;
-        //totalDaysThisMonth += 1;
-    }
-};
-calcAvg();
-    //console.log(avgTemps2015);
-    data = avgTemps2015;
-    var h = 100;
-    var w = 250;
-    var offset = 16; // verhoging voor de x-as
-    var padding = 30; //links van de y-as
-    var barPadding = 1;
-    var maxValue = Math.max.apply(Math, data);
-
-    var yScale = d3.scale.linear()
-    .domain([0, maxRange(maxValue)])
-    .range([h, offset+10]);
-
-    //console.log(yScale(5));
-
-    var svg = d3.select("#meteo1")
-    .append("svg")
-    .attr("width", w)
-    .attr("height", h);
-
-    svg.selectAll("rect")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("x", function(d, i) {
-      return i * ((w-padding) / data.length)+ padding;
-    })
-    .attr("y", function(d) {
-      return yScale(d)-offset; // y coordinaat vanaf boven gezien.
-  })
-    .attr("width", (w-padding) / data.length - barPadding)
-    .attr("height", function(d) {
-      return h-(yScale(d));
-    })
-    .attr("fill", function(d) {
-      //return "rgb(" + (200*(d/maxValue)).toFixed(0) + ", " + (200*(d/maxValue)).toFixed(0) + ", " + (200*(d/maxValue)).toFixed(0) + ")";
-      return "rgb(254,165,1)";
-  });
-
-  // Values
-  svg.selectAll("text.values")
-  .data(data)
-  .enter()
-  .append("text")
-  .text(function(d) {
-    return d;
-  })
-  .attr("text-anchor", "middle")
-  .attr("x", function(d, i) {
-    return i * ((w-padding) / data.length) + (w / data.length - barPadding) / 2 + padding - 1; //midden van bar //
-})
-  .attr("y", function(d) {
-    return yScale(d)-offset+14;
-  })
-  .attr("font-family", "sans-serif")
-  .attr("font-size", "11px")
-  .attr("fill", "black")
-
-  // Months
-  svg.selectAll("text.monts")
-  .data(months)
-  .enter()
-  .append("text")
-  .text(function(d) {
-    return d;
-  })
-  .attr("text-anchor", "middle")
-  .attr("x", function(d, i) {
-    return i * ((w-padding) / data.length) + (w / data.length - barPadding) / 2 + padding; //midden van bar
-})
-  .attr("y", function(d) {
-    return h-4; //anders vallen sommige letters er van af
-})
-  .attr("font-family", "sans-serif")
-  .attr("font-size", "12px")
-  .attr("fill", "black");
-
-  // Y AXIS
-  //Define Y axis
-  var yAxis = d3.svg.axis()
-  .scale(yScale)
-  .orient("left")
-  .ticks(5);
-
-  //Create Y axis
-  svg.append("g")
-  .attr("class", "axis")
-  .attr("transform", "translate(" + padding + ",-"+offset+")")
-  .call(yAxis);
-
-});
-</script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
