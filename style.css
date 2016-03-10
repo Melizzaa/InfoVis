@@ -4,6 +4,10 @@
     padding: 10px;
 }
 
+#map {
+  height: 500px;
+}
+
 
 #chartdiv {
 	width		: 100%;
