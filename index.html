@@ -64,7 +64,7 @@
             <div class="col-md-3 text-center">
               <div class="area">
                 Legenda Area
-                <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure>
+                <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure><!-- SLIDERS -->
                 <div id="sliderDistance"></div></br>
                   <div >Distance:   <div id="weightDistance"></div> </div> </br>
                 <div id="sliderSafety"></div></br>
@@ -294,7 +294,7 @@
 
 
     
-     <script type="text/javascript">
+     <script type="text/javascript"> //SLIDERS: each Slider gives a weight value between -2 and 2
 
       d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightDistance').text(value);}));
