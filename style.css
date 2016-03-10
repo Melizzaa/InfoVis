@@ -1,6 +1,7 @@
 .area {
 	background: lightblue;
-	height: 500px;
+	height: 600px;
+    padding: 10px;
 }
 
 #chartdiv {
