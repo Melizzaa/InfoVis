@@ -4,7 +4,7 @@
     right:0;
     top:0;
     bottom:0;
-    z-index: 10;
+    z-index: 20;
     background:rgba(0, 0, 0, 0.7); /* use this so that the image doesn't go opaque too */
 }
 .overlay > img {
