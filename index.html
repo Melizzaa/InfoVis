@@ -34,6 +34,23 @@
       <![endif]-->
 </head>
    <body>
+    <div class="overlay">
+          <div class="col-md-3 text-center">
+            <div class="column">
+            <image src ="student.png"/ width="200" height="200" id="student" >
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="column">
+            <image src ="family.png"/ width="200" height="200" id="family" >
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="column">
+            <image src ="professional.png"/ width="200" height="200" id="professional" >
+            </div>
+          </div>
+    </div>
       <div class="">
          <nav class="navbar navbar-default">
             <div class="container-fluid text-center">
@@ -107,6 +124,17 @@
           </div>
         </div>
      </div><!-- Container -->
+
+<script type="text/javascript"> //script overlay
+var overlay = $('.overlay'),
+    close = $('<div class="close">close</div>');
+
+overlay.append(close);
+
+$(overlay, close).on('click', function () {
+    overlay.fadeOut();
+}); 
+</script>
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>  
     <script type="text/javascript">
