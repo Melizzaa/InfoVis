@@ -126,14 +126,29 @@
      </div><!-- Container -->
 
 <script type="text/javascript"> //script overlay
+
+// [distance, safety, house pricing, bars, musea, playgrounds, parks, percentage households children]
+
 var overlay = $('.overlay'),
     close = $('<div class="close">close</div>');
 
 overlay.append(close);
 
-$(overlay, close).on('click', function () {
+$("#student, close").on('click', function () {
     overlay.fadeOut();
 }); 
+
+$("#family, close").on('click', function () {
+    overlay.fadeOut();
+}); 
+
+$("#professional, close").on('click', function () {
+    overlay.fadeOut();
+}); 
+
+var SetWeightsStudent = [-1, -1, 2, 2, -1, -2, 1, -2];
+var SetWeightsFamily = [1, 2, -1, -2, 1, 2, 2, 2];
+var SetWeightsProfessional = [1, 1, -2, 1, 2, -2, 1, -2];
 </script>
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>  

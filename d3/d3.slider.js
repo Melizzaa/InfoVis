@@ -58,6 +58,9 @@ return function module() {
 
       // Start value
       value = 0;
+      // for (var i in SetWeightsStudent){
+      //  value = SetWeightsStudent[i];
+      //}
       //value || scale.domain()[0]
 
       // DIV container
