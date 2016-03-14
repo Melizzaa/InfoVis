@@ -129,26 +129,32 @@
 
 // [distance, safety, house pricing, bars, musea, playgrounds, parks, percentage households children]
 
+var SetWeightsStudent = [-1, -1, 2, 2, -1, -2, 1, -2];
+var SetWeightsFamily = [1, 2, -1, -2, 1, 2, 2, 2];
+var SetWeightsProfessional = [1, 1, -2, 1, 2, -2, 1, -2];
+
 var overlay = $('.overlay'),
     close = $('<div class="close">close</div>');
 
 overlay.append(close);
 
 $("#student, close").on('click', function () {
-    overlay.fadeOut();
+  createSliders(SetWeightsStudent);
+  overlay.fadeOut();
 }); 
 
 $("#family, close").on('click', function () {
-    overlay.fadeOut();
+  createSliders(SetWeightsFamily);
+  overlay.fadeOut();
 }); 
 
 $("#professional, close").on('click', function () {
-    overlay.fadeOut();
+  createSliders(SetWeightsProfessional);
+  overlay.fadeOut();
+
 }); 
 
-var SetWeightsStudent = [-1, -1, 2, 2, -1, -2, 1, -2];
-var SetWeightsFamily = [1, 2, -1, -2, 1, 2, 2, 2];
-var SetWeightsProfessional = [1, 1, -2, 1, 2, -2, 1, -2];
+
 </script>
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>  
@@ -339,22 +345,26 @@ var SetWeightsProfessional = [1, 1, -2, 1, 2, -2, 1, -2];
     
      <script type="text/javascript"> //SLIDERS: each Slider gives a weight value between -2 and 2
 
-      d3.select('#sliderDistance').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+     function createSliders(weights) {
+
+      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightDistance').text(value);}));
-      d3.select('#sliderSafety').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderSafety').call(d3.slider().value(weights[1]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightSafety').text(value);}));
-      d3.select('#sliderBars').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderBars').call(d3.slider().value(weights[2]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightBars').text(value);}));
-      d3.select('#sliderPlaygrounds').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderPlaygrounds').call(d3.slider().value(weights[3]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightPlaygrounds').text(value);}));
-      d3.select('#sliderMuseum').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderMuseum').call(d3.slider().value(weights[4]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightMuseum').text(value);}));
-      d3.select('#sliderPark').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderPark').call(d3.slider().value(weights[5]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightPark').text(value);}));
-      d3.select('#sliderChildren').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderChildren').call(d3.slider().value(weights[6]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightChildren').text(value);}));
-      d3.select('#sliderPrice').call(d3.slider().axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderPrice').call(d3.slider().value(weights[7]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           d3.select('#weightPrice').text(value);}));
+
+    }
        
 
 </script>

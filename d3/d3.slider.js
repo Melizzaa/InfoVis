@@ -48,6 +48,8 @@ return function module() {
       divRange,
       sliderLength;
 
+ //var value = 1
+
   function slider(selection) {
     selection.each(function() {
 
@@ -57,7 +59,7 @@ return function module() {
       }
 
       // Start value
-      value = 0;
+      //value = 0;
       // for (var i in SetWeightsStudent){
       //  value = SetWeightsStudent[i];
       //}
