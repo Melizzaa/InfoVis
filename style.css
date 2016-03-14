@@ -1,20 +1,29 @@
 
-
 .overlay {
     position:fixed;
-    left:0;
+    left:10;
     right:0;
     top:0;
     bottom:0;
     z-index: 20;
-    background:rgba(0, 0, 0, 0.7); /* use this so that the image doesn't go opaque too */
+    background:#F5F5F5; /* use this so that the image doesn't go opaque too */
 }
-.column > img {
+.column > figure {
     position: absolute;
-    transform: translate(-50%, -95%); /* center the image in the overlay */
+    transform: translate(-50%, -90%); /* center the image in the overlay */
     font-family: Verdana,Arial,sans-serif;
     font-size: 4.1em;
     color: white;
+}
+
+.column figure img {
+  opacity: 1;
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+}
+.column figure:hover img {
+  opacity: .5;
+}
 
 .close {
     border-radius:5px;
@@ -36,7 +45,7 @@
 }
 
 .column{
-  background-color: #FFF5EE;
+  background:#F5F5F5;
   border: 3px solid #000000;
   margin-top: 176px;
   height: 80px;
@@ -46,8 +55,8 @@
 
 .column2{
   position: absolute;
-  background-color: #FFF5EE;
-  border: 3px solid #000000;
+  background:#F5F5F5;
+  border: 3px solid #F5F5F5;
   margin-left: 15px;
   margin-top: 80px;
   height: 100px;
