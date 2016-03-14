@@ -344,28 +344,105 @@ $("#professional, close").on('click', function () {
 
     
      <script type="text/javascript"> //SLIDERS: each Slider gives a weight value between -2 and 2
-
+     //var weightsValues = [0,0,0,0,0,0,0,0];
      function createSliders(weights) {
 
       d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[0] = value;
           d3.select('#weightDistance').text(value);}));
       d3.select('#sliderSafety').call(d3.slider().value(weights[1]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[1] = value;
           d3.select('#weightSafety').text(value);}));
       d3.select('#sliderBars').call(d3.slider().value(weights[2]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[2] = value;
           d3.select('#weightBars').text(value);}));
       d3.select('#sliderPlaygrounds').call(d3.slider().value(weights[3]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[3] = value;
           d3.select('#weightPlaygrounds').text(value);}));
       d3.select('#sliderMuseum').call(d3.slider().value(weights[4]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[4] = value;
           d3.select('#weightMuseum').text(value);}));
       d3.select('#sliderPark').call(d3.slider().value(weights[5]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[5] = value;
           d3.select('#weightPark').text(value);}));
       d3.select('#sliderChildren').call(d3.slider().value(weights[6]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[6] = value;
           d3.select('#weightChildren').text(value);}));
+          //.on("change", function(){weightValues[6] = this.value;  }));
       d3.select('#sliderPrice').call(d3.slider().value(weights[7]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[7] = value;
           d3.select('#weightPrice').text(value);}));
-
+        
     }
        
+
+</script>
+
+<script language = "javascript">
+var scores = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
+
+for (var i=0; i<data.length; i++){
+   scores[i] = weights[1]*parseFloat(data[i][4]) + weights[7]*parseFloat(data[i][6]) + weights[2]*parseFloat(data[i][8]) + weights[4]*parseFloat(data[i][11]) + weights[3]*parseFloat(data[i][14]) + weights[5]*parseFloat(data[i][16]) + weights[6]*parseFloat(data[i][19]) ;
+}
+
+var best = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
+var index = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
+
+for (var i =0; i<best.length; i++){
+	best[i] = score[i]
+	index[i] = i
+}
+
+/* best[0] to best[n-1] is the array to sort */
+int i,j;
+/* advance the position through the entire array */
+/*   (could do j < n-1 because single element is also min element) */
+for (j = 0; j < best.length-1; j++) {
+    /* find the min element in the unsorted a[j .. n-1] */
+    /* assume the min is the first element */
+    int iMin = j;
+    /* test against elements after j to find the smallest */
+    for ( i = j+1; i < best.length; i++) {
+        /* if this element is less, then it is the new minimum */
+        if (best[i] < best[iMin]) {
+            /* found new minimum; remember its index */
+            iMin = i;
+        }
+    }
+
+    if(iMin != j) {
+        swap(best[j], best[iMin]);
+        swap(index[j],index[iMin])
+    }
+}
+
+position = -1
+for (var i=0; i<score.length-5; i++){
+	i +=5;
+	value = score[i];
+	
+
+	for (var j=0; j<best.length; j++){
+  		var k = 4-j;
+      if (value>best[k]){
+          position =k;
+			    break;      
+      }
+      }
+
+	if (position>=0){
+		for (var m=0; m<position; m++){
+		    best[m] = best[m+1];
+		    index[m] = index[m+1];
+        }
+		best[position] = value;
+		index[position] = i;
+    }
+}
+	
+//RESULT IS 
+//best[] with the score
+//index[] which points to a neighbourhood
 
 </script>
 
