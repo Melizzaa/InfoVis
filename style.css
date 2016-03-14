@@ -9,12 +9,13 @@
     z-index: 20;
     background:rgba(0, 0, 0, 0.7); /* use this so that the image doesn't go opaque too */
 }
-.overlay > img {
+.column > img {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* center the image in the overlay */
-}
+    transform: translate(-50%, -95%); /* center the image in the overlay */
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 4.1em;
+    color: white;
+
 .close {
     border-radius:5px;
     color:#ffffff;
@@ -27,10 +28,33 @@
     cursor:pointer;
 }
 
+.text{
+  margin-top: 60px;
+  width: 400px;
+  transform: translate(-50%, -20%); 
+  color: #708090;
+}
 
 .column{
-  height: 100%;
+  background-color: #FFF5EE;
+  border: 3px solid #000000;
+  margin-top: 176px;
+  height: 80px;
+  width: 400px;
     padding: 240px;
+}
+
+.column2{
+  position: absolute;
+  background-color: #FFF5EE;
+  border: 3px solid #000000;
+  margin-left: 15px;
+  margin-top: 80px;
+  height: 100px;
+  width: 1498px;
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 4.1em;
+  color: #708090;
 }
 
 .area {
