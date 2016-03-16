@@ -32,8 +32,8 @@
     display:inline-block;
     padding:5px 10px;
     position:absolute;
-    bottom:10px;
-    right:10px;
+    top:170px;
+    right:30px;
     cursor:pointer;
 }
 
@@ -47,7 +47,7 @@
 .column{
   background:#F5F5F5;
   border: 3px solid #000000;
-  margin-top: 176px;
+  margin-top: 75px;
   height: 80px;
   width: 400px;
     padding: 240px;
@@ -58,12 +58,18 @@
   background:#F5F5F5;
   border: 3px solid #F5F5F5;
   margin-left: 15px;
-  margin-top: 80px;
-  height: 100px;
+  margin-top: 10px;
   width: 1498px;
   font-family: Verdana,Arial,sans-serif;
-  font-size: 4.1em;
+  font-size: 3.1em;
   color: #708090;
+}
+
+.column3{
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 4.1em;
+  border: 3px solid #F5F5F5;
+  background-color: #ffffff;
 }
 
 .area {

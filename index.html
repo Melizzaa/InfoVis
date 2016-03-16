@@ -36,6 +36,14 @@
    <body>
     <div class="overlay">
       <div class="row">
+         <div class="column3">
+            <div class="text-center">
+              An interactive housing guide
+              <h3>For those unknown to Amsterdam</h3>
+            </div>
+         </div>
+      </div>
+      <div class="row">
       <div class="col-md-9 text-center">
         <div class="column2">Who are you?</div>
       </div>
@@ -96,6 +104,9 @@
               <h1>An interactive housing guide </h1>
               <h2>For those unknown to Amsterdam</h2>
             </div>
+            <FORM> <!--back to homescreen button-->
+              <INPUT TYPE="button" onClick="history.go(0)" VALUE="Go back">
+              </FORM>
          </div>
          <div class="row">
             <div class="col-md-3 text-center">
@@ -145,6 +156,8 @@
         </div>
      </div><!-- Container -->
 
+
+
 <script type="text/javascript"> //script overlay
 
 // [distance, safety, house pricing, bars, musea, playgrounds, parks, percentage households children]
@@ -152,9 +165,14 @@
 var SetWeightsStudent = [-1, -1, 2, 2, -1, -2, 1, -2];
 var SetWeightsFamily = [1, 2, -1, -2, 1, 2, 2, 2];
 var SetWeightsProfessional = [1, 1, -2, 1, 2, -2, 1, -2];
+var SetWeightsNone=[0,0,0,0,0,0,0,0];
 
 var overlay = $('.overlay'),
-    close = $('<div class="close">close</div>');
+    close = $('<div class="close">Let me explore it myself</div>').on('click', function (){
+  createSliders(SetWeightsNone);
+  overlay.fadeOut();
+}); 
+
 
 overlay.append(close);
 
