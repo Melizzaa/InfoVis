@@ -501,7 +501,7 @@ for (var i=0; i<score.length-5; i++){
          TranslateX: 80, //in box
          TranslateY: 30,
          ExtraWidthX: 100,
-         ExtraWidthY: 100,
+         ExtraWidthY: 300,
          color: d3.scale.category10()
         };
         
@@ -794,24 +794,24 @@ for (var i=0; i<score.length-5; i++){
         .selectAll('svg')
         .append('svg')
         .attr("width", w+300)
-        .attr("height", h)
+        .attr("height", h+300)
 
       //Create the title for the legend
-      var text = svg.append("text")
-        .attr("class", "title")
-        .attr('transform', 'translate(180,0)') 
-        .attr("x", w - 70)
-        .attr("y", 10)
-        .attr("font-size", "10px")
-        .attr("fill", "#404040")
-        .text("text - legenda titel");
+     // var text = svg.append("text")
+       // .attr("class", "title")
+        //.attr('transform', 'translate(180,0)') 
+        //.attr("x", w - 70)
+        //.attr("y", 10)
+        //.attr("font-size", "10px")
+        //.attr("fill", "#404040")
+        //.text("text - legenda titel");
           
       //Initiate Legend 
       var legend = svg.append("g")
         .attr("class", "legend")
         .attr("height", 100)
         .attr("width", 200)
-        .attr('transform', 'translate(180,20)') 
+        .attr('transform', 'translate(-100,270)') 
         ;
         //Create colour squares
         legend.selectAll('rect')
