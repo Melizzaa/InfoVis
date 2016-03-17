@@ -50,7 +50,7 @@
     </div>
           <div class="col-md-4 text-center">
             <div class="column">
-            <figure><image src ="student.png"/ width="200" height="230" id="student" ></figure>
+            <figure><image src ="student.png"/ onclick="changeStudent()" width="200" height="230" id="student" ></figure>
               <div class="text"><h2>I want:</h2> </br>
                 - Low house prices</br>
                 - Live in an exiting area</br>
@@ -60,7 +60,7 @@
           </div>
           <div class="col-md-4 text-center">
             <div class="column">
-            <figure><image src ="family.png"/ width="200" height="230" id="family" ></figure>
+            <figure><image src ="family.png"/ onclick="changeFamily()" width="200" height="230" id="family" ></figure>
               <div class="text"><h2>I want:</h2> </br>
                 - A safe neighbourhood</br>
                 - Places my kids can play outside</br>
@@ -70,7 +70,7 @@
           </div>
           <div class="col-md-3 text-center">
             <div class="column">
-            <figure><image src ="professional.png"/ width="200" height="230" id="professional" ></figure>
+            <figure><image src ="professional.png"/ onclick="changeProfessional()" width="200" height="230" id="professional" ></figure>
               <div class="text"><h2>I want:</h2> </br>
                 - Life close to work</br>
                 - Have cultural activities in my neighbourhood</br>
@@ -113,7 +113,7 @@
                 <FORM> <!--back to homescreen button-->
               <INPUT TYPE="button" onClick="history.go(0)" VALUE="Go back">
               </FORM>
-                <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure><!-- SLIDERS -->
+                <figure><img src="http://www.echelonna.com/start_students.png" id="toChange" height="90" width="80"/></figure><!-- SLIDERS --></br>
                 <div id="sliderDistance"></div></br>
                   <div >Distance:   <div id="weightDistance"></div> </div> </br>
                 <div id="sliderSafety"></div></br>
@@ -840,6 +840,22 @@ for (var i=0; i<score.length-5; i++){
 
 
 </script>
+
+<script type="text/javascript"> // CHANGE LEGEND IMAGE
+    function changeStudent(){
+     document.getElementById('toChange').src='student.png';
+    }
+   </script>
+   <script type="text/javascript"> // CHANGE LEGEND IMAGE
+    function changeFamily(){
+     document.getElementById('toChange').src='family.png';
+    }
+   </script>
+   <script type="text/javascript"> // CHANGE LEGEND IMAGE
+    function changeProfessional(){
+     document.getElementById('toChange').src='professional.png';
+    }
+   </script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <!-- Latest compiled and minified JavaScript -->
