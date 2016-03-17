@@ -111,9 +111,9 @@
             <div class="col-md-3 text-center">
               <div class="area">            
                 <FORM> <!--back to homescreen button-->
-              <INPUT TYPE="button" onClick="history.go(0)" VALUE="Go back">
+              <INPUT TYPE="button" onClick="history.go(0)" VALUE="Go back" style="float:left;">
               </FORM>
-                <figure><img src="http://www.echelonna.com/start_students.png" id="toChange" height="90" width="80"/></figure><!-- SLIDERS --></br>
+                <figure><img src="house_c.png" id="toChange" height="80" width="80" hspace="100"/></figure><!-- SLIDERS --></br>
                 <div id="sliderDistance"></div></br>
                   <div >Distance:   <div id="weightDistance"></div> </div> </br>
                 <div id="sliderSafety"></div></br>
@@ -173,6 +173,7 @@ var overlay = $('.overlay'),
     close = $('<div class="close">Let me explore it myself</div>').on('click', function (){
   createSliders(SetWeightsNone);
   overlay.fadeOut();
+
 }); 
 
 
@@ -843,17 +844,17 @@ for (var i=0; i<score.length-5; i++){
 
 <script type="text/javascript"> // CHANGE LEGEND IMAGE
     function changeStudent(){
-     document.getElementById('toChange').src='student.png';
+     document.getElementById('toChange').src='student_c.png';
     }
    </script>
    <script type="text/javascript"> // CHANGE LEGEND IMAGE
     function changeFamily(){
-     document.getElementById('toChange').src='family.png';
+     document.getElementById('toChange').src='family_c.png';
     }
    </script>
    <script type="text/javascript"> // CHANGE LEGEND IMAGE
     function changeProfessional(){
-     document.getElementById('toChange').src='professional.png';
+     document.getElementById('toChange').src='professional_c.png';
     }
    </script>
 
