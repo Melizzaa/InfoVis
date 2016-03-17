@@ -5,12 +5,12 @@
     right:0;
     top:0;
     bottom:0;
-    z-index: 20;
+    z-index: 2000;
     background:#F5F5F5; /* use this so that the image doesn't go opaque too */
 }
 .column > figure {
     position: absolute;
-    transform: translate(-50%, -90%); /* center the image in the overlay */
+    transform: translate(-50%, -80%); /* center the image in the overlay */
     font-family: Verdana,Arial,sans-serif;
     font-size: 4.1em;
     color: white;
@@ -33,14 +33,14 @@
     padding:5px 10px;
     position:absolute;
     top:170px;
-    right:30px;
+    right:110px;
     cursor:pointer;
 }
 
 .text{
   margin-top: 60px;
   width: 400px;
-  transform: translate(-50%, -20%); 
+  transform: translate(-50%, -5%); 
   color: #708090;
 }
 
