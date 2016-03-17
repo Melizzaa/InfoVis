@@ -703,73 +703,82 @@ for (var i=0; i<score.length-5; i++){
       var colorscale = d3.scale.category10();
 
       //Legend titles
-      var LegendOptions = ['Item1','Item2', 'Item1','Item2', 'Item1']; //these should be the neigbourhoods selected.
- 
+      var LegendOptions = ['Item1','Item2', 'Item3','Item4', 'Item5']; //these should be the neigbourhoods selected.
+
+      //Top 5 Arrays (will be filled with the score function arrays per neighbourhood)
+ 	var scores1 =[5,4,2,1,6,6,6,10];
+ 	var scores2 =[5,5,5,5,5,5,5,5];
+ 	var scores3 =[4,4,4,4,4,4,4,4];
+ 	var scores4 =[1,2,3,1,2,3,1,2];
+ 	var scores5 =[3,3,3,3,3,3,3,3];
       //Data
+      // [distance, safety, house pricing, bars, musea, playgrounds, parks, percentage households children]
       var d = [
             [
-            {axis:"Children",value:6.59},
-            {axis:"Variable",value:6.56},
-            {axis:"Variable",value:4.42},
-            {axis:"Variable",value:4.34},
-            {axis:"Variable",value:3.48},
-            {axis:"Variable",value:2.14},
-            {axis:"Variable",value:8.11},
-            {axis:"Variable",value:9.05},
-            {axis:"Variable",value:1.07},
+            {axis:"Distance",value:scores1[0]},
+            {axis:"Safety",value:scores1[1]},
+            {axis:"Price",value:scores1[2]},
+            {axis:"Bars",value:scores1[3]},
+            {axis:"Musea",value:scores1[4]},
+            {axis:"Playgrounds",value:scores1[5]},
+            {axis:"Parks",value:scores1[6]},
+            {axis:"Children",value:scores1[7]},
+           
             ],            
             [
-            {axis:"Children",value:4.07},
-            {axis:"Variable",value:4.05},
-            {axis:"Variable",value:6.11},
-            {axis:"Variable",value:7.14},
-            {axis:"Variable",value:7.34},
-            {axis:"Variable",value:8.54},
-            {axis:"Variable",value:4.38},
-            {axis:"Variable",value:5.20},
-            {axis:"Variable",value:5.19},
+            {axis:"Distance",value:scores2[0]},
+            {axis:"Safety",value:scores2[1]},
+            {axis:"Price",value:scores2[2]},
+            {axis:"Bars",value:scores2[3]},
+            {axis:"Musea",value:scores2[4]},
+            {axis:"Playgrounds",value:scores2[5]},
+            {axis:"Parks",value:scores2[6]},
+            {axis:"Children",value:scores2[7]},
+            
+          
             ],
             [
-            {axis:"Children",value:1.09},
-            {axis:"Variable",value:2.76},
-            {axis:"Variable",value:2.12},
-            {axis:"Variable",value:3.34},
-            {axis:"Variable",value:4.58},
-            {axis:"Variable",value:4.84},
-            {axis:"Variable",value:5.91},
-            {axis:"Variable",value:8.15},
-            {axis:"Variable",value:8.07},
-            ],            
+            {axis:"Distance",value:scores3[0]},
+            {axis:"Safety",value:scores3[1]},
+            {axis:"Price",value:scores3[2]},
+            {axis:"Bars",value:scores3[3]},
+            {axis:"Musea",value:scores3[4]},
+            {axis:"Playgrounds",value:scores3[5]},
+            {axis:"Parks",value:scores3[6]},
+            {axis:"Children",value:scores3[7]},
+            
+            
+            ],           
             [
-            {axis:"Children",value:3.07},
-            {axis:"Variable",value:3.05},
-            {axis:"Variable",value:3.41},
-            {axis:"Variable",value:4.04},
-            {axis:"Variable",value:5.24},
-            {axis:"Variable",value:1.44},
-            {axis:"Variable",value:3.58},
-            {axis:"Variable",value:2.10},
-            {axis:"Variable",value:4.09},
+            {axis:"Distance",value:scores4[0]},
+            {axis:"Safety",value:scores4[1]},
+            {axis:"Price",value:scores4[2]},
+            {axis:"Bars",value:scores4[3]},
+            {axis:"Musea",value:scores4[4]},
+            {axis:"Playgrounds",value:scores4[5]},
+            {axis:"Parks",value:scores4[6]},
+            {axis:"Children",value:scores4[7]},
+            
             ],
             [
-            {axis:"Children",value:9.48},
-            {axis:"Variable",value:8.41},
-            {axis:"Variable",value:8.27},
-            {axis:"Variable",value:3.28},
-            {axis:"Variable",value:4.46},
-            {axis:"Variable",value:6.29},
-            {axis:"Variable",value:7.11},
-            {axis:"Variable",value:4.14},
-            {axis:"Variable",value:2.05},
-            ]
+            {axis:"Distance",value:scores5[0]},
+            {axis:"Safety",value:scores5[1]},
+            {axis:"Price",value:scores5[2]},
+            {axis:"Bars",value:scores5[3]},
+            {axis:"Musea",value:scores5[4]},
+            {axis:"Playgrounds",value:scores5[5]},
+            {axis:"Parks",value:scores5[6]},
+            {axis:"Children",value:scores5[7]},
+            
+            ],
           ];
 
       //Options for the Radar chart, other than default
       var mycfg = {
         w: w,
         h: h,
-        maxValue: 0.6,
-        levels: 6,
+        maxValue: 1.0,
+        levels: 10,
         ExtraWidthX: 300
       }
 
@@ -811,8 +820,8 @@ for (var i=0; i<score.length-5; i++){
           .append("rect")
           .attr("x", w - 65)
           .attr("y", function(d, i){ return i * 20;})
-          .attr("width", 6)
-          .attr("height", 6)
+          .attr("width", 10)
+          .attr("height", 10)
           .style("fill", function(d, i){ return colorscale(i);})
           ;
         //Create text next to squares
