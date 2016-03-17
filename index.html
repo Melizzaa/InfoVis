@@ -344,105 +344,146 @@ $("#professional, close").on('click', function () {
 
     
      <script type="text/javascript"> //SLIDERS: each Slider gives a weight value between -2 and 2
-     //var weightsValues = [0,0,0,0,0,0,0,0];
+    
+     
+      $(document).ready(function() {
+      $.ajax({
+        type: "GET",
+        url: "data/all.csv",
+        dataType: "text",
+        success: function(data) {
+          allHoods = processData(data);
+          console.log(allHoods);
+           console.log(allHoods.length);
+            console.log(allHoods[0]);
+             console.log(allHoods[0].length);
+        }
+      });
+    });
+   
+    function processData(allText) {
+      var allTextLines = allText.split(/\r\n|\n/);
+      var headers = allTextLines[0].split('#');
+      var lines = [];
+      for (var i=1; i<allTextLines.length; i++) {
+        var data = allTextLines[i].split('#');
+        if (data.length == headers.length) {
+
+          var tarr = [];
+          for (var j=0; j<headers.length; j++) {
+            tarr.push(data[j]);
+          }
+          lines.push(tarr);
+        }
+      }
+      return lines;
+    }
+     
      function createSliders(weights) {
 
       d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[0] = value;
-          d3.select('#weightDistance').text(value);}));
+          d3.select('#weightDistance').text(value);
+          scoringF(allHoods,weights);}));
       d3.select('#sliderSafety').call(d3.slider().value(weights[1]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[1] = value;
-          d3.select('#weightSafety').text(value);}));
+          d3.select('#weightSafety').text(value);
+          scoringF(allHoods,weights);}));
       d3.select('#sliderBars').call(d3.slider().value(weights[2]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[2] = value;
-          d3.select('#weightBars').text(value);}));
+          d3.select('#weightBars').text(value);
+          scoringF(allHoods,weights);}));
       d3.select('#sliderPlaygrounds').call(d3.slider().value(weights[3]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[3] = value;
-          d3.select('#weightPlaygrounds').text(value);}));
+          d3.select('#weightPlaygrounds').text(value);
+          scoringF(allHoods,weights);}));
       d3.select('#sliderMuseum').call(d3.slider().value(weights[4]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[4] = value;
-          d3.select('#weightMuseum').text(value);}));
+          d3.select('#weightMuseum').text(value);
+          scoringF(allHoods,weights);}));
       d3.select('#sliderPark').call(d3.slider().value(weights[5]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[5] = value;
-          d3.select('#weightPark').text(value);}));
+          d3.select('#weightPark').text(value);
+          scoringF(allHoods,weights);}));
       d3.select('#sliderChildren').call(d3.slider().value(weights[6]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[6] = value;
-          d3.select('#weightChildren').text(value);}));
+          d3.select('#weightChildren').text(value);
+          scoringF(allHoods,weights);}));
           //.on("change", function(){weightValues[6] = this.value;  }));
       d3.select('#sliderPrice').call(d3.slider().value(weights[7]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[7] = value;
-          d3.select('#weightPrice').text(value);}));
-        
+          d3.select('#weightPrice').text(value);
+          scoringF(allHoods,weights);}));        
     }
-       
+    
+function scoringF(allHoods,weights){
 
-</script>
-
-<script language = "javascript">
+var scores1 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
+var scores2 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
+var scores3 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
+var scores4 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
+var scores5 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
+var scoresNeigh = new Array();
 var scores = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
-
-for (var i=0; i<data.length; i++){
-   scores[i] = weights[1]*parseFloat(data[i][4]) + weights[7]*parseFloat(data[i][6]) + weights[2]*parseFloat(data[i][8]) + weights[4]*parseFloat(data[i][11]) + weights[3]*parseFloat(data[i][14]) + weights[5]*parseFloat(data[i][16]) + weights[6]*parseFloat(data[i][19]) ;
+console.log("scores length: " + scores.length);
+for (var i=0; i<allHoods.length; i++){
+   scores[i] = (weights[1]*parseFloat(allHoods[i][4]) + weights[7]*parseFloat(allHoods[i][6]) + weights[2]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[3]*parseFloat(allHoods[i][14]) + weights[5]*parseFloat(allHoods[i][16]) + weights[6]*parseFloat(allHoods[i][19])).toFixed(2) ;
 }
-
 var best = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
 var index = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
-
-for (var i =0; i<best.length; i++){
-	best[i] = score[i]
-	index[i] = i
+for (var q =0; q<best.length; q++){
+	best[q] = scores[q];
+	index[q] = q;
 }
-
-/* best[0] to best[n-1] is the array to sort */
-int i,j;
-/* advance the position through the entire array */
-/*   (could do j < n-1 because single element is also min element) */
-for (j = 0; j < best.length-1; j++) {
-    /* find the min element in the unsorted a[j .. n-1] */
-    /* assume the min is the first element */
-    int iMin = j;
-    /* test against elements after j to find the smallest */
-    for ( i = j+1; i < best.length; i++) {
-        /* if this element is less, then it is the new minimum */
+for (var j = 0; j < best.length-1; j++) {
+    var iMin = j;
+    for (var i = j+1; i < best.length; i++) {
         if (best[i] < best[iMin]) {
-            /* found new minimum; remember its index */
             iMin = i;
         }
     }
-
     if(iMin != j) {
-        swap(best[j], best[iMin]);
-        swap(index[j],index[iMin])
+        var temp = best[j];
+        best[j] = best[iMin];
+        best[iMin] = temp;
+        var temp2 = index[j];
+        index[j] = index[iMin];
+        index[iMin] = temp2;
     }
 }
-
-position = -1
-for (var i=0; i<score.length-5; i++){
-	i +=5;
-	value = score[i];
-	
-
-	for (var j=0; j<best.length; j++){
-  		var k = 4-j;
-      if (value>best[k]){
-          position =k;
-			    break;      
-      }
-      }
-
-	if (position>=0){
-		for (var m=0; m<position; m++){
-		    best[m] = best[m+1];
-		    index[m] = index[m+1];
+for (var i=5; i<scores.length; i++){
+		value = scores[i];
+    position = -1
+    for (var j=0; j<best.length; j++){
+  	   	 var k = 4-j;
+         if (value>best[k]){
+             position =k;
+			       break;      
+         }
+    }
+	  if (position>=0){
+		    for (var m=0; m<position; m++){
+		         best[m] = best[m+1];
+		         index[m] = index[m+1];
         }
-		best[position] = value;
-		index[position] = i;
+		    best[position] = value;
+		    index[position] = i;
     }
+}  
+var ind = [4,6,8,11,14,16,19];  //correspondence with #column for normalized values in csv file
+for (var i=0;i<ind.length;i++){
+     scores1[i] = allHoods[index[0]][ind[i]] 
+     scores2[i] = allHoods[index[1]][ind[i]]
+     scores3[i] = allHoods[index[2]][ind[i]]
+     scores4[i] = allHoods[index[3]][ind[i]]
+     scores5[i] = allHoods[index[4]][ind[i]]
+} 
+for (var j = 0; j<5; j++){
+//console.log(allHoods[index[j]][0]);
+scoresNeigh.push(allHoods[index[j]][1]);
 }
-	
-//RESULT IS 
-//best[] with the score
-//index[] which points to a neighbourhood
+return;
+}
 
 </script>
 
