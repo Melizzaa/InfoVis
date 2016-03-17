@@ -50,7 +50,7 @@
     </div>
           <div class="col-md-4 text-center">
             <div class="column">
-            <figure><image src ="student.png"/ width="200" height="200" id="student" ></figure>
+            <figure><image src ="student.png"/ width="200" height="230" id="student" ></figure>
               <div class="text"><h2>I want:</h2> </br>
                 - Low house prices</br>
                 - Live in an exiting area</br>
@@ -60,7 +60,7 @@
           </div>
           <div class="col-md-4 text-center">
             <div class="column">
-            <figure><image src ="family.png"/ width="200" height="200" id="family" ></figure>
+            <figure><image src ="family.png"/ width="200" height="230" id="family" ></figure>
               <div class="text"><h2>I want:</h2> </br>
                 - A safe neighbourhood</br>
                 - Places my kids can play outside</br>
@@ -70,7 +70,7 @@
           </div>
           <div class="col-md-3 text-center">
             <div class="column">
-            <figure><image src ="professional.png"/ width="200" height="200" id="professional" ></figure>
+            <figure><image src ="professional.png"/ width="200" height="230" id="professional" ></figure>
               <div class="text"><h2>I want:</h2> </br>
                 - Life close to work</br>
                 - Have cultural activities in my neighbourhood</br>
@@ -80,7 +80,7 @@
           </div>
     </div>
       <div class="">
-         <nav class="navbar navbar-default">
+         <!--<nav class="navbar navbar-default">
             <div class="container-fluid text-center">
                <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -96,22 +96,23 @@
                   <li><a href="/">Help</a></li>
                </ul>
                <!--/.nav-collapse -->
-            </div>
+            <!--</div>
             <!--/.container-fluid -->
-         </nav>
-         <div class="jumbotron">
+         <!--</nav>-->
+        <div class="row">
+         <div class="column3">
             <div class="text-center">
-              <h1>An interactive housing guide </h1>
-              <h2>For those unknown to Amsterdam</h2>
+              An interactive housing guide 
+              <h3>For those unknown to Amsterdam</h3>
             </div>
-            <FORM> <!--back to homescreen button-->
-              <INPUT TYPE="button" onClick="history.go(0)" VALUE="Go back">
-              </FORM>
+            </div>
          </div>
          <div class="row">
             <div class="col-md-3 text-center">
-              <div class="area">
-                Legenda Area
+              <div class="area">            
+                <FORM> <!--back to homescreen button-->
+              <INPUT TYPE="button" onClick="history.go(0)" VALUE="Go back">
+              </FORM>
                 <figure><img src="http://www.echelonna.com/start_students.png" height="80" width="80"/></figure><!-- SLIDERS -->
                 <div id="sliderDistance"></div></br>
                   <div >Distance:   <div id="weightDistance"></div> </div> </br>
@@ -132,17 +133,18 @@
               </div> <!-- area -->
             </div>
             <div class="col-md-6 text-center">
-               <div class="area">Map Area
+               <div class="area">
                 <div id="map"></div>
                <div id="chart1"></div>
              </div>
             </div>
-            <div class="col-md-3 text-center">
-               <div class="area">Chart area
+            <div class="col-md-3">
+               <div class="area">
                 <!--<form name="myform" onSubmit="return handleClick()">
                 <input type="text" id="myVal" placeholder="Enter a location&hellip;">
                 <input name="Submit"  type="submit" value="Add to map" >
                 </form>-->
+                Select an important location in Amsterdam:
                 <input id="pac-input" class="controls" type="text" placeholder="Search for a location&hellip;">
                 <div id="map"></div>
                 <div id="chart"></div>
@@ -499,7 +501,7 @@ for (var i=0; i<score.length-5; i++){
          opacityArea: 0.3, //of the polygons
          ToRight: 5, //digit index from middle line
          TranslateX: 80, //in box
-         TranslateY: 30,
+         TranslateY: 55,
          ExtraWidthX: 100,
          ExtraWidthY: 300,
          color: d3.scale.category10()
@@ -797,14 +799,14 @@ for (var i=0; i<score.length-5; i++){
         .attr("height", h+300)
 
       //Create the title for the legend
-     // var text = svg.append("text")
-       // .attr("class", "title")
-        //.attr('transform', 'translate(180,0)') 
-        //.attr("x", w - 70)
-        //.attr("y", 10)
-        //.attr("font-size", "10px")
-        //.attr("fill", "#404040")
-        //.text("text - legenda titel");
+      var text = svg.append("text")
+      .attr("class", "title")
+      .attr('transform', 'translate(180,0)') 
+        .attr("x", w - 350)
+        .attr("y",20)
+        .attr("font-size", "14px")
+        .attr("fill", "#404040")
+        .text("Compare up to five neighbourhoods:");
           
       //Initiate Legend 
       var legend = svg.append("g")
