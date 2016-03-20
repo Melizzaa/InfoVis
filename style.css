@@ -1,12 +1,10 @@
 
 .overlay {
-    position:fixed;
-    left:10;
-    right:0;
-    top:0;
-    bottom:0;
-    z-index: 2000;
-    background:#F5F5F5; /* use this so that the image doesn't go opaque too */
+  position: absolute;
+  width: 100%;
+  height: 1200px;
+  z-index: 2000;
+  background:#F5F5F5; /* use this so that the image doesn't go opaque too */
 }
 .column > figure {
     position: absolute;
@@ -25,16 +23,9 @@
   opacity: .5;
 }
 
-.close {
-    border-radius:5px;
-    color:#ffffff;
-    background-color:#000000;
-    display:inline-block;
-    padding:5px 10px;
+.closeOverlay {
     position:absolute;
-    top:170px;
-    right:110px;
-    cursor:pointer;
+    margin-top: 30px;
 }
 
 .text{
@@ -60,22 +51,22 @@
   margin-left: 15px;
   margin-top: 10px;
   width: 1498px;
-  font-family: Verdana,Arial,sans-serif;
+  /*font-family: Verdana,Arial,sans-serif;*/
   font-size: 3.1em;
   color: #708090;
 }
 
 .column3{
   background-color:#ffffff;
-  font-family: Verdana,Arial,sans-serif;
+  /*font-family: Verdana,Arial,sans-serif;*/
   font-size: 4.1em;
-  border: 2px solid #000000;
+  /*border: 2px solid #000000;*/
 }
 
 .area {
-	background: lightblue;
+	/*background: lightblue;*/
 	height: 700px;
-    padding: 10px;
+  padding: 10px;
 }
 
 #map {
@@ -95,6 +86,13 @@
     left: 1px;
 }
 //SLIDER
+#sliderArea {
+  font-size: 16px;
+}
+
+.back-button-form {
+  position: relative;
+}
 
 #weightDistance{
     float:right;
@@ -115,10 +113,10 @@
     font-size: 1.1em;
     border: 1px solid #aaaaaa;
     z-index: 2;
-    margin-top: 5;
-    margin-bottom: 5;
-    padding-left-left: 2;
-    padding-right: 2;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding-left-left: 2px;
+    padding-right: 2px;
 }  
 
 .d3-slider-range {
@@ -187,7 +185,7 @@
 }
 
 .d3-slider-axis text {
-    font-size: 9px;
+    font-size: 12px;
 }
 
 .d3-slider-vertical .d3-slider-handle {
@@ -199,46 +197,46 @@
 
 // Search bar 
 .controls {
-        margin-top: 10px;
+/*        margin-top: 10px;
         border: 1px solid transparent;
         border-radius: 2px 0 0 2px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         height: 32px;
         outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);*/
       }
 
       #pac-input {
-        background-color: #fff;
+/*        background-color: #fff;
         font-family: Roboto;
         font-size: 15px;
         font-weight: 300;
         margin-left: 12px;
         padding: 0 11px 0 13px;
         text-overflow: ellipsis;
-        width: 200px;
+        width: 200px;*/
       }
 
       #pac-input:focus {
-        border-color: #4d90fe;
+        /*border-color: #4d90fe;*/
       }
 
       .pac-container {
-        font-family: Roboto;
+        /*font-family: Roboto;*/
       }
 
       #type-selector {
-        color: #fff;
+/*        color: #fff;
         background-color: #4d90fe;
-        padding: 5px 11px 0px 11px;
+        padding: 5px 11px 0px 11px;*/
       }
 
       #type-selector label {
-        font-family: Roboto;
+/*        font-family: Roboto;
         font-size: 13px;
-        font-weight: 300;
+        font-weight: 300;*/
       }
       #target {
-        width: 345px;
+        /*width: 345px;*/
       }

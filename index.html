@@ -35,107 +35,89 @@
 </head>
    <body>
     <div class="overlay">
+       <div class="jumbotron">
+          <div class="text-center">
+            <h1>An interactive housing guide</h1>
+            <h2>For those unknown to Amsterdam</h2>
+          </div>
+       </div>
       <div class="row">
-         <div class="column3">
-            <div class="text-center">
-              An interactive housing guide
-              <h3>For those unknown to Amsterdam</h3>
-            </div>
-         </div>
+        <div class="col-md-6 col-md-offset-3 text-center">
+          <h3>Who are you?</h3>
+        </div>
       </div>
       <div class="row">
-      <div class="col-md-9 text-center">
-        <div class="column2">Who are you?</div>
-      </div>
-    </div>
-          <div class="col-md-4 text-center">
-            <div class="column">
-            <figure><image src ="student.png"/ onclick="changeStudent()" width="200" height="230" id="student" ></figure>
-              <div class="text"><h2>I want:</h2> </br>
-                - Low house prices</br>
-                - Live in an exiting area</br>
-                - ......</br>
-                - ......</br></div>
-            </div>
-          </div>
-          <div class="col-md-4 text-center">
-            <div class="column">
-            <figure><image src ="family.png"/ onclick="changeFamily()" width="200" height="230" id="family" ></figure>
-              <div class="text"><h2>I want:</h2> </br>
-                - A safe neighbourhood</br>
-                - Places my kids can play outside</br>
-                - Neighbourhood with many children</br>
-                - ......</br></div>
-            </div>
-          </div>
-          <div class="col-md-3 text-center">
-            <div class="column">
-            <figure><image src ="professional.png"/ onclick="changeProfessional()" width="200" height="230" id="professional" ></figure>
-              <div class="text"><h2>I want:</h2> </br>
-                - Life close to work</br>
-                - Have cultural activities in my neighbourhood</br>
-                - ......</br>
-                - ......</br></div>
-            </div>
-          </div>
-    </div>
+        <div class="col-md-4 text-center">
+          <figure><image src ="student.png"/ onclick="changeStudent()" width="200" height="230" id="student" ></figure>
+          <h2>I want:</h2>
+          <ul>
+            <li>Low house prices</li>
+            <li>Live in an exiting area</li>
+          </ul>
+        </div>
+        <div class="col-md-4 text-center">
+          <figure><image src ="family.png"/ onclick="changeFamily()" width="200" height="230" id="family" ></figure>
+          <h2>I want:</h2>
+          <ul>
+            <li>A safe neighbourhood</li>
+            <li>Places my kids can play outside</li>
+            <li>Neighbourhood with many children</li>
+          </ul>
+        </div>
+        <div class="col-md-3 text-center">
+          <figure><image src ="professional.png"/ onclick="changeProfessional()" width="200" height="230" id="professional" ></figure>
+          <h2>I want:</h2>
+          <ul>
+            <li>Life close to work</li>
+            <li>Have cultural activities in my neighbourhood</li>
+          </ul>
+        </div>
+      </div><!-- row -->
+    </div><!-- overlay -->
       <div class="">
-         <!--<nav class="navbar navbar-default">
-            <div class="container-fluid text-center">
-               <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                     <span class="sr-only">Toggle navigation</span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="/">InfoVis</a>
-               </div>
-               <ul class="nav navbar-nav">
-                  <li><a href="/">About Us</a></li>
-                  <li><a href="/">Help</a></li>
-               </ul>
-               <!--/.nav-collapse -->
-            <!--</div>
-            <!--/.container-fluid -->
-         <!--</nav>-->
-        <div class="row">
-         <div class="column3">
+        <div class="jumbotron">
             <div class="text-center">
-              An interactive housing guide 
-              <h3>For those unknown to Amsterdam</h3>
-            </div>
+              <h1>An interactive housing guide</h1>
+              <h2>For those unknown to Amsterdam</h2>
             </div>
          </div>
-         <div class="row">
-            <div class="col-md-3 text-center">
-              <div class="area">            
-                <FORM> <!--back to homescreen button-->
-              <INPUT TYPE="button" onClick="history.go(0)" VALUE="Go back" style="float:left;">
-              </FORM>
-                <figure><img src="house_c.png" id="toChange" height="80" width="80" hspace="100"/></figure><!-- SLIDERS --></br>
-                <div id="sliderDistance"></div></br>
-                  <div >Distance:   <div id="weightDistance"></div> </div> </br>
-                <div id="sliderSafety"></div></br>
-                Safety </br></br>
-                <div id="sliderBars"></div></br>
-                Bars and Restaurants </br></br>
-                <div id="sliderPlaygrounds"></div></br>
-                Playgrounds </br></br>
-                <div id="sliderMuseum"></div></br>
-                Museums and Galleries </br></br>
-                <div id="sliderPark"></div></br>
-                Park</br>
-                <div id="sliderChildren"></div></br>
-                Amount of Children </br></br>
-                <div id="sliderPrice"></div></br>
-                Housing Price
-              </div> <!-- area -->
-            </div>
+         <div class="">
+            <div class="col-md-3 sliderArea text-center">
+              <p class="text-justify"></p>        
+                <form id="back-button-form" style="position:relative;"> <!--back to homescreen button-->
+                  <input class="btn btn-default" type="button" onClick="history.go(0)" value="Start screen" style="position: absolute; left:0;">
+                </form>
+                <figure><img src="house_c.png" id="toChange" height="80" width="80" hspace="100"/></figure>
+                <!-- START SLIDERS -->
+
+                <div id="sliderDistance"></div>
+                <p>Distance</p>
+                <!-- <div id="weightDistance"></div> -->
+
+                <div id="sliderSafety"></div>
+                <p>Safety</p>
+
+                <div id="sliderBars"></div>
+                <p>Bars and Restaurants</p>
+
+                <div id="sliderPlaygrounds"></div>
+                <p>Playgrounds</p>
+
+                <div id="sliderMuseum"></div>
+                <p>Museums and Galleries</p>
+
+                <div id="sliderPark"></div>
+                <p>Park</p>
+
+                <div id="sliderChildren"></div>
+                <p>Amount of Children</p>
+
+                <div id="sliderPrice"></div>
+                <p>Housing Price</p>
+              </div> <!-- col area -->
             <div class="col-md-6 text-center">
                <div class="area">
                 <div id="map"></div>
-               <div id="chart1"></div>
              </div>
             </div>
             <div class="col-md-3">
@@ -144,17 +126,16 @@
                 <input type="text" id="myVal" placeholder="Enter a location&hellip;">
                 <input name="Submit"  type="submit" value="Add to map" >
                 </form>-->
-                Select an important location in Amsterdam:
-                <input id="pac-input" class="controls" type="text" placeholder="Search for a location&hellip;">
-                <div id="map"></div>
+                <form>
+                  <div class="form-group">
+                    <label>Select an important location in Amsterdam:</label>
+                    <input id="pac-input" class="form-control input-lg controls" type="text" placeholder="Search for a location&hellip;">
+                  </div>
+                </form>
+                
                 <div id="chart"></div>
              </div>
             </div>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            <div id="meteo1"></div>
-          </div>
         </div>
      </div><!-- Container -->
 
@@ -170,7 +151,7 @@ var SetWeightsProfessional = [1, 0, -1, 1, 1, -1, 0, -1];
 var SetWeightsNone=[0,0,0,0,0,0,0,0];
 
 var overlay = $('.overlay'),
-    close = $('<div class="close">Let me explore it myself</div>').on('click', function (){
+    close = $('<button type="button" class="col-md-6 col-md-offset-3 btn btn-primary btn-lg closeOverlay">Let me explore it myself</buton>').on('click', function (){
   createSliders(SetWeightsNone);
   overlay.fadeOut();
 
@@ -237,7 +218,6 @@ $("#professional, close").on('click', function () {
     }
 
     
-
     // neighbourhood
     // neighbourhood name
     // coordinates neighbourhood
@@ -610,7 +590,7 @@ for (var i=0; i<score.length-5; i++){
           .attr("class", "legend")
           .text(function(d){return d})
           .style("font-family", "sans-serif")
-          .style("font-size", "11px")
+          .style("font-size", "14px")
           .attr("text-anchor", "middle")
           .attr("dy", "1.5em")
           .attr("transform", function(d, i){return "translate(0, -10)"})
@@ -827,7 +807,7 @@ for (var i=0; i<score.length-5; i++){
       .attr('transform', 'translate(180,0)') 
         .attr("x", w - 350)
         .attr("y",20)
-        .attr("font-size", "14px")
+        .attr("font-size", "16px")
         .attr("fill", "#404040")
         .text("Compare up to five neighbourhoods:");
           
@@ -856,7 +836,7 @@ for (var i=0; i<score.length-5; i++){
           .append("text")
           .attr("x", w - 52)
           .attr("y", function(d, i){ return i * 20 + 6;})
-          .attr("font-size", "9px")
+          .attr("font-size", "16px")
           .attr("fill", "#737373")
           .text(function(d) { return d; })
           ; 
