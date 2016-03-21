@@ -96,15 +96,19 @@
 
                 <div id="sliderSafety"></div>
                 <p>Safety</p>
+                
+                <div id="sliderPrice"></div>
+                <p>Housing Price</p>
 
                 <div id="sliderBars"></div>
                 <p>Bars and Restaurants</p>
+                
+                 <div id="sliderMuseum"></div>
+                <p>Museums and Galleries</p>
 
                 <div id="sliderPlaygrounds"></div>
                 <p>Playgrounds</p>
 
-                <div id="sliderMuseum"></div>
-                <p>Museums and Galleries</p>
 
                 <div id="sliderPark"></div>
                 <p>Park</p>
@@ -112,12 +116,11 @@
                 <div id="sliderChildren"></div>
                 <p>Amount of Children</p>
 
-                <div id="sliderPrice"></div>
-                <p>Housing Price</p>
+               
               </div> <!-- col area -->
             <div class="col-md-6 text-center">
                <div class="area">
-                <div id="map"> </div><img src="mapLegend.png" style="position:left" />
+                <div id="map"></div>
              </div>
             </div>
             <div class="col-md-3">
@@ -157,21 +160,57 @@ var overlay = $('.overlay'),
 
 }); 
 
+$(document).ready(function() {
+      $.ajax({
+        type: "GET",
+        url: "data/all.csv",
+        dataType: "text",
+        success: function(data) {
+          allHoods = processData(data);
+          plotHoods(allHoods);
+          //console.log(allHoodsArray);
+        }
+      });
+    });
 
-overlay.append(close);
+    function processData(allText) {
+      var allTextLines = allText.split(/\r\n|\n/);
+      var headers = allTextLines[0].split('#');
+      var lines = [];
+
+      for (var i=1; i<allTextLines.length; i++) {
+        var data = allTextLines[i].split('#');
+        if (data.length == headers.length) {
+
+          var tarr = [];
+          for (var j=0; j<headers.length; j++) {
+            tarr.push(data[j]);
+          }
+          lines.push(tarr);
+        }
+      }
+
+      return lines;
+
+    }
+    
+overlay.append(close);        
 
 $("#student, close").on('click', function () {
   createSliders(SetWeightsStudent);
+  scoringF(allHoods,SetWeightsStudent);
   overlay.fadeOut();
 }); 
 
 $("#family, close").on('click', function () {
   createSliders(SetWeightsFamily);
+  scoringF(allHoods,SetWeightsFamily);
   overlay.fadeOut();
 }); 
 
 $("#professional, close").on('click', function () {
   createSliders(SetWeightsProfessional);
+  scoringF(allHoods,SetWeightsProfessional);
   overlay.fadeOut();
 
 }); 
@@ -256,11 +295,12 @@ $("#professional, close").on('click', function () {
 
     function getColor(d) {
       d = d*100
-      return d >=100  ? '#006d2c' :
-      d > 75   ? '#31a354' :
-      d > 50   ? '#74c476' :
-      d > 25   ? '#bae4b3' :
-      '#edf8e9';
+      return d >= 100 ? '#26BF00' :
+      d > 80  ? '#83C800' :
+      d > 60   ? '#D2BB00' :
+      d > 40   ? '#DB6000' :
+      d > 20   ? '#E50002' :
+      '#E50002';
     }
 
     function style(color) {
@@ -270,31 +310,32 @@ $("#professional, close").on('click', function () {
         opacity: 1,
         color: 'white',
         dashArray: '2',
-        fillOpacity: 0.80
+        fillOpacity: 0.45
       };
     }
 
 
-     function plotHoodsScores(allHoods, scoresArray) {
-      //console.log(allHoods);
-      console.log(scoresArray);
+
+
+     function plotHoodsScores(allHoods, scoresArray, min, max) {
+      
       for (var i = 0; i < allHoods.length; i++) {
         
-        polygonHoodScores(allHoods[i][0],allHoods[i][1],allHoods[i][2],scoresArray[i]);
+        polygonHoodScores(allHoods[i][0],allHoods[i][1],allHoods[i][2],scoresArray[i], min, max);
       }
     }
 
-    function polygonHoodScores(code,name,coords,scoringValue) {
+    function polygonHoodScores(code,name,coords,scoringValue, min, max) {
       L.polygon(
         eval(coords),
-        style2(scoringValue))
+        style2(scoringValue, min, max))
         .addTo(map);
         //.bindPopup("<b>" + name + "!</b><br />Nr of bars: " + nrBars);
     }
 
-      function style2(color) {
+      function style2(color, min, max) {
       return {
-        fillColor: getColor2(color),
+        fillColor: getColor2(color, min, max),
         weight: 1.5,
         opacity: 1,
         color: 'white',
@@ -303,15 +344,14 @@ $("#professional, close").on('click', function () {
       };
     }
     
-    function getColor2(d) {
-      d = d*100
-      console.log("colore "+ d);
-      return d >= 700 ? '#006d2c' :
-      d > 100  ? '#2ca25f' :
-      d > (-100)   ? '#66c2a4' :
-      d > (-800)   ? '#b2e2e2' :
-      d > (-1600)   ? '#edf8fb' :
-      '#edf8fb';
+    function getColor2(d, min, max) {
+      //d = d*100
+      return d > max ? '#26BF00' :
+      d >  min + 3*(max-min)/4 ? '#83C800' :
+      d >  min + 2*(max-min)/4   ? '#D2BB00' :
+      d >  min + (max-min)/4   ? '#DB6000' :
+      d >=  min  ? '#E50002' :
+      '#E50002';
     }
 
   
@@ -437,10 +477,7 @@ $("#professional, close").on('click', function () {
         dataType: "text",
         success: function(data) {
           allHoods = processData(data);
-          console.log(allHoods);
-           console.log(allHoods.length);
-            console.log(allHoods[0]);
-             console.log(allHoods[0].length);
+          
         }
       });
     });
@@ -473,31 +510,32 @@ $("#professional, close").on('click', function () {
           weights[1] = value;
           d3.select('#weightSafety').text(value);
           scoringF(allHoods,weights);}));
-      d3.select('#sliderBars').call(d3.slider().value(weights[2]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderPrice').call(d3.slider().value(weights[2]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[2] = value;
-          d3.select('#weightBars').text(value);
-          scoringF(allHoods,weights);}));
-      d3.select('#sliderPlaygrounds').call(d3.slider().value(weights[3]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          d3.select('#weightPrice').text(value);
+          scoringF(allHoods,weights);})); 
+      d3.select('#sliderBars').call(d3.slider().value(weights[3]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[3] = value;
-          d3.select('#weightPlaygrounds').text(value);
+          d3.select('#weightBars').text(value);
           scoringF(allHoods,weights);}));
       d3.select('#sliderMuseum').call(d3.slider().value(weights[4]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[4] = value;
           d3.select('#weightMuseum').text(value);
           scoringF(allHoods,weights);}));
-      d3.select('#sliderPark').call(d3.slider().value(weights[5]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderPlaygrounds').call(d3.slider().value(weights[5]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[5] = value;
+          d3.select('#weightPlaygrounds').text(value);
+          scoringF(allHoods,weights);}));
+      d3.select('#sliderPark').call(d3.slider().value(weights[6]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[6] = value;
           d3.select('#weightPark').text(value);
           scoringF(allHoods,weights);}));
-      d3.select('#sliderChildren').call(d3.slider().value(weights[6]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
-          weights[6] = value;
+      d3.select('#sliderChildren').call(d3.slider().value(weights[7]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+          weights[7] = value;
           d3.select('#weightChildren').text(value);
           scoringF(allHoods,weights);}));
           //.on("change", function(){weightValues[6] = this.value;  }));
-      d3.select('#sliderPrice').call(d3.slider().value(weights[7]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
-          weights[7] = value;
-          d3.select('#weightPrice').text(value);
-          scoringF(allHoods,weights);})); 
+     
                
     }
     
@@ -512,8 +550,10 @@ var scoresNeigh = new Array();
 var scores = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
 //console.log("scores length: " + scores.length);
 for (var i=0; i<allHoods.length; i++){
-   scores[i] = (weights[1]*parseFloat(allHoods[i][4]) + weights[7]*parseFloat(allHoods[i][6]) + weights[2]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[3]*parseFloat(allHoods[i][14]) + weights[5]*parseFloat(allHoods[i][16]) + weights[6]*parseFloat(allHoods[i][19])).toFixed(2) ;
+   scores[i] = (weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19])).toFixed(1) ;
 }
+
+
 var best = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
 var index = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
 for (var q =0; q<best.length; q++){
@@ -555,13 +595,26 @@ for (var i=5; i<scores.length; i++){
 		    index[position] = i;
     }
 }  
+
+var minScores = 16;
+for (var j=0; j<scores.length; j++){
+    if (scores[j]<minScores)
+        minScores = scores[j];
+}
+
+var maxScores = -16;
+for (var j=0; j<scores.length; j++){
+    if ((scores[j]>maxScores) && (scores[j] < best[0]) && (scores[j] < best[1]) && (scores[j] < best[2]) && (scores[j] < best[3]) && (scores[j] < best[4]))
+         maxScores = scores[j]; 
+}
+
 var ind = [4,6,8,11,14,16,19];  //correspondence with #column for normalized values in csv file
 for (var i=0;i<ind.length;i++){
-     scores1[i] = allHoods[index[0]][ind[i]] 
-     scores2[i] = allHoods[index[1]][ind[i]]
-     scores3[i] = allHoods[index[2]][ind[i]]
-     scores4[i] = allHoods[index[3]][ind[i]]
-     scores5[i] = allHoods[index[4]][ind[i]]
+     scores1[i+1] = allHoods[index[0]][ind[i]] 
+     scores2[i+1] = allHoods[index[1]][ind[i]]
+     scores3[i+1] = allHoods[index[2]][ind[i]]
+     scores4[i+1] = allHoods[index[3]][ind[i]]
+     scores5[i+1] = allHoods[index[4]][ind[i]]
 } 
 for (var j = 0; j<5; j++){
 //console.log(allHoods[index[j]][0]);
@@ -569,20 +622,23 @@ scoresNeigh.push(allHoods[index[j]][1]);
 }
 
 
-plotHoodsScores(allHoods, scores);
-
-/*if (label ==0) return;
-if (label ==1) return scores1;
-if (label ==2) return scores2;
-if (label ==3) return scores3;
-if (label ==4) return scores4;
-if (label ==5) return scores5;
-if (label ==6) return index;
-if (label ==10) return scores;
-*/
+plotHoodsScores(allHoods, scores, minScores, maxScores);
 
 
+a = setVariabled(scores1, scores2, scores3, scores4, scores5);
 
+ var mycfg = {
+        w: 200,
+        h: 200,
+        maxValue: 10,
+        levels: 5,
+        ExtraWidthX: 300
+      }
+
+RadarChart.draw("#chart", a, mycfg);
+
+var colorscale = d3.scale.category10();
+setLegend(scoresNeigh);
 
 return;
 
@@ -707,7 +763,8 @@ return;
             cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)), 
             cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
             ]);
-          });
+          });   
+          
           dataValues.push(dataValues[0]);
           g.selectAll(".area")
                  .data([dataValues])
@@ -812,14 +869,79 @@ return;
       var LegendOptions = ['Item1','Item2', 'Item3','Item4', 'Item5']; //these should be the neigbourhoods selected.
 
       //Top 5 Arrays (will be filled with the score function arrays per neighbourhood)
- 	var scores1 =[0.5,0.4,0.2,0.1,0.6,0.6,0.6,1.0];
- 	var scores2 =[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5];
- 	var scores3 =[0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4];
- 	var scores4 =[0.1,0.2,0.3,0.1,0.2,0.3,0.1,0.2];
- 	var scores5 =[0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3];
+ 	//var scores1 =[0.5,0.4,0.2,0.1,0.6,0.6,0.6,1.0];
+ 	//var scores2 =[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5];
+ 	//var scores3 =[0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4];
+ 	//var scores4 =[0.1,0.2,0.3,0.1,0.2,0.3,0.1,0.2];
+ 	//var scores5 =[0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3];
+
+  
+ 
       //Data
       // [distance, safety, house pricing, bars, musea, playgrounds, parks, percentage households children]
       var d = [
+            [
+            {axis:"Distance",value:0},
+            {axis:"Safety",value:0},
+            {axis:"Price",value:0},
+            {axis:"Bars",value:0},
+            {axis:"Musea",value:0},
+            {axis:"Playgrounds",value:0},
+            {axis:"Parks",value:0},
+            {axis:"Children",value:0},
+           
+            ],            
+            [
+            {axis:"Distance",value:0},
+            {axis:"Safety",value:0},
+            {axis:"Price",value:0},
+            {axis:"Bars",value:0},
+            {axis:"Musea",value:0},
+            {axis:"Playgrounds",value:0},
+            {axis:"Parks",value:0},
+            {axis:"Children",value:0},
+            
+          
+            ],
+            [
+            {axis:"Distance",value:0},
+            {axis:"Safety",value:0},
+            {axis:"Price",value:0},
+            {axis:"Bars",value:0},
+            {axis:"Musea",value:0},
+            {axis:"Playgrounds",value:0},
+            {axis:"Parks",value:0},
+            {axis:"Children",value:0},
+            
+            
+            ],           
+            [
+            {axis:"Distance",value:0},
+            {axis:"Safety",value:0},
+            {axis:"Price",value:0},
+            {axis:"Bars",value:0},
+            {axis:"Musea",value:0},
+            {axis:"Playgrounds",value:0},
+            {axis:"Parks",value:0},
+            {axis:"Children",value:0},
+            
+            ],
+            [
+            {axis:"Distance",value:0},
+            {axis:"Safety",value:0},
+            {axis:"Price",value:0},
+            {axis:"Bars",value:0},
+            {axis:"Musea",value:0},
+            {axis:"Playgrounds",value:0},
+            {axis:"Parks",value:0},
+            {axis:"Children",value:0},
+            
+            ],
+          ];
+ 
+ function setVariabled (scores1, scores2, scores3, scores4, scores5){
+ 
+    d = [
             [
             {axis:"Distance",value:(scores1[0]*10)},
             {axis:"Safety",value:(scores1[1]*10)},
@@ -878,6 +1000,8 @@ return;
             
             ],
           ];
+      return d;
+ }       
 
       //Options for the Radar chart, other than default
       var mycfg = {
@@ -900,38 +1024,37 @@ return;
         .selectAll('svg')
         .append('svg')
         .attr("width", w+300)
-        .attr("height", h+300)
+        .attr("height", h+300);
 
       //Create the title for the legend
       var text = svg.append("text")
-      .attr("class", "title")
-      .attr('transform', 'translate(180,0)') 
+        .attr("class", "title")
+        .attr('transform', 'translate(180,0)') 
         .attr("x", w - 350)
         .attr("y",20)
         .attr("font-size", "16px")
         .attr("fill", "#404040")
         .text("Compare up to five neighbourhoods:");
           
-      //Initiate Legend 
-      var legend = svg.append("g")
+       var legend = svg.append("g")
         .attr("class", "legend")
         .attr("height", 100)
         .attr("width", 200)
-        .attr('transform', 'translate(-100,270)') 
-        ;
-        //Create colour squares
-        legend.selectAll('rect')
-          .data(LegendOptions)
+        .attr('transform', 'translate(-100,270)');
+        
+         legend.selectAll("rect")
+          .data([1,2,3,4,5])
           .enter()
           .append("rect")
           .attr("x", w - 65)
           .attr("y", function(d, i){ return i * 20;})
           .attr("width", 10)
           .attr("height", 10)
-          .style("fill", function(d, i){ return colorscale(i);})
-          ;
+          .style("fill", function(d, i){ return colorscale(i);});
+ 
+          
         //Create text next to squares
-        legend.selectAll('text')
+        legend.selectAll("text")
           .data(LegendOptions)
           .enter()
           .append("text")
@@ -939,8 +1062,50 @@ return;
           .attr("y", function(d, i){ return i * 20 + 6;})
           .attr("font-size", "16px")
           .attr("fill", "#737373")
-          .text(function(d) { return d; })
-          ; 
+          .text(function(d) { return d; });
+ 
+// DOES NOT WORK: why??????? 
+function setLegend(scoresNeigh){ 
+  
+            
+        legend.selectAll('text')
+        .data([])
+        .exit()
+        .remove();
+ 
+      var text = svg.append("text")
+        .attr("class", "title")
+        .attr('transform', 'translate(180,0)') 
+        .attr("x", w - 350)
+        .attr("y",20)
+        .attr("font-size", "16px")
+        .attr("fill", "#404040")
+        .text("Compare up to five neighbourhoods:");
+        
+        //Create colour squares
+        legend.selectAll("rect")
+          .data(scoresNeigh)
+          .enter()
+          .append("rect")
+          .attr("x", w - 65)
+          .attr("y", function(d, i){ return i * 20;})
+          .attr("width", 10)
+          .attr("height", 10)
+          .style("fill", function(d, i){ return colorscale(i);});
+ 
+          
+        //Create text next to squares
+        legend.selectAll("text")
+          .data(scoresNeigh)
+          .enter()
+          .append("text")
+          .attr("x", w - 52)
+          .attr("y", function(d, i){ return i * 20 + 6;})
+          .attr("font-size", "16px")
+          .attr("fill", "#737373")
+          .text(function(d) { return d; });
+          
+      }
 
 
 </script>
