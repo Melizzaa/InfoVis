@@ -277,7 +277,7 @@ $("#professional, close").on('click', function () {
     // % households with children
     // normalised % households with children
 
-    function plotHoods(allHoods) {
+    /*function plotHoods(allHoods) {
       //console.log(allHoods);
       for (var i = 0; i < allHoods.length; i++) {
         
@@ -315,7 +315,7 @@ $("#professional, close").on('click', function () {
     }
 
 
-
+*/
 
      function plotHoodsScores(allHoods, scoresArray, min, max) {
       
@@ -340,18 +340,18 @@ $("#professional, close").on('click', function () {
         opacity: 1,
         color: 'white',
         dashArray: '2',
-        fillOpacity: 0.45
+        fillOpacity: 0.80
       };
     }
     
     function getColor2(d, min, max) {
       //d = d*100
-      return d > max ? '#26BF00' :
-      d >  min + 3*(max-min)/4 ? '#83C800' :
-      d >  min + 2*(max-min)/4   ? '#D2BB00' :
-      d >  min + (max-min)/4   ? '#DB6000' :
-      d >=  min  ? '#E50002' :
-      '#E50002';
+      return d > max ? '#006d2c' :
+      d >  min + 3*(max-min)/4 ? '#2ca25f' :
+      d >  min + 2*(max-min)/4   ? '#66c2a4' :
+      d >  min + (max-min)/4   ? '#b2e2e2' :
+      d >=  min  ? '#edf8fb' :
+      '#edf8fb';
     }
 
   
