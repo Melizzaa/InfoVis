@@ -117,7 +117,7 @@
               </div> <!-- col area -->
             <div class="col-md-6 text-center">
                <div class="area">
-                <div id="map"></div>
+                <div id="map"> </div><img src="mapLegend.png" style="position:left" />
              </div>
             </div>
             <div class="col-md-3">
@@ -255,12 +255,11 @@ $("#professional, close").on('click', function () {
 
     function getColor(d) {
       d = d*100
-      return d >= 100 ? '#26BF00' :
-      d > 80  ? '#83C800' :
-      d > 60   ? '#D2BB00' :
-      d > 40   ? '#DB6000' :
-      d > 20   ? '#E50002' :
-      '#E50002';
+      return d >=100  ? '#006d2c' :
+      d > 75   ? '#31a354' :
+      d > 50   ? '#74c476' :
+      d > 25   ? '#bae4b3' :
+      '#edf8e9';
     }
 
     function style(color) {
@@ -270,7 +269,7 @@ $("#professional, close").on('click', function () {
         opacity: 1,
         color: 'white',
         dashArray: '2',
-        fillOpacity: 0.45
+        fillOpacity: 0.80
       };
     }
 
