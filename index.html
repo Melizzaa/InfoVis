@@ -186,7 +186,7 @@ $("#professional, close").on('click', function () {
     $(document).ready(function() {
       $.ajax({
         type: "GET",
-        url: "all.csv",
+        url: "data\all.csv",
         dataType: "text",
         success: function(data) {
           allHoods = processData(data);
