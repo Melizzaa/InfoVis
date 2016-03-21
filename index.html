@@ -241,6 +241,7 @@ $("#professional, close").on('click', function () {
     function plotHoods(allHoods) {
       //console.log(allHoods);
       for (var i = 0; i < allHoods.length; i++) {
+        
         polygonHood(allHoods[i][0],allHoods[i][1],allHoods[i][2],allHoods[i][4],allHoods[i][7]);
       }
     }
@@ -273,6 +274,47 @@ $("#professional, close").on('click', function () {
       };
     }
 
+
+     function plotHoodsScores(allHoods, scoresArray) {
+      //console.log(allHoods);
+      console.log(scoresArray);
+      for (var i = 0; i < allHoods.length; i++) {
+        
+        polygonHoodScores(allHoods[i][0],allHoods[i][1],allHoods[i][2],scoresArray[i]);
+      }
+    }
+
+    function polygonHoodScores(code,name,coords,scoringValue) {
+      L.polygon(
+        eval(coords),
+        style2(scoringValue))
+        .addTo(map);
+        //.bindPopup("<b>" + name + "!</b><br />Nr of bars: " + nrBars);
+    }
+
+      function style2(color) {
+      return {
+        fillColor: getColor2(color),
+        weight: 1.5,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 0.45
+      };
+    }
+    
+    function getColor2(d) {
+      d = d*100
+      console.log("colore "+ d);
+      return d >= 800 ? '#26BF00' :
+      d > 100  ? '#83C800' :
+      d > (-100)   ? '#D2BB00' :
+      d > (-800)   ? '#DB6000' :
+      d > (-1600)   ? '#E50002' :
+      '#E50002';
+    }
+
+  
 
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
@@ -455,7 +497,8 @@ $("#professional, close").on('click', function () {
       d3.select('#sliderPrice').call(d3.slider().value(weights[7]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[7] = value;
           d3.select('#weightPrice').text(value);
-          scoringF(allHoods,weights);}));        
+          scoringF(allHoods,weights);})); 
+               
     }
     
 function scoringF(allHoods,weights){
@@ -467,7 +510,7 @@ var scores4 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scores5 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scoresNeigh = new Array();
 var scores = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
-console.log("scores length: " + scores.length);
+//console.log("scores length: " + scores.length);
 for (var i=0; i<allHoods.length; i++){
    scores[i] = (weights[1]*parseFloat(allHoods[i][4]) + weights[7]*parseFloat(allHoods[i][6]) + weights[2]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[3]*parseFloat(allHoods[i][14]) + weights[5]*parseFloat(allHoods[i][16]) + weights[6]*parseFloat(allHoods[i][19])).toFixed(2) ;
 }
@@ -524,7 +567,25 @@ for (var j = 0; j<5; j++){
 //console.log(allHoods[index[j]][0]);
 scoresNeigh.push(allHoods[index[j]][1]);
 }
+
+
+plotHoodsScores(allHoods, scores);
+
+/*if (label ==0) return;
+if (label ==1) return scores1;
+if (label ==2) return scores2;
+if (label ==3) return scores3;
+if (label ==4) return scores4;
+if (label ==5) return scores5;
+if (label ==6) return index;
+if (label ==10) return scores;
+*/
+
+
+
+
 return;
+
 }
 
 </script>
