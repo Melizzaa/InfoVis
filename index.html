@@ -604,7 +604,7 @@ for (var j=0; j<scores.length; j++){
 
 var maxScores = -16;
 for (var j=0; j<scores.length; j++){
-    if ((scores[j]>maxScores) && (scores[j] != best[0]) && (scores[j] != best[1]) && (scores[j]!= best[2]) && (scores[j] != best[3]) && (scores[j] != best[4]))
+    if ((scores[j]>maxScores) && (scores[j] < best[0]) && (scores[j] < best[1]) && (scores[j] < best[2]) && (scores[j] < best[3]) && (scores[j] < best[4]))
          maxScores = scores[j]; 
 }
 
@@ -1064,7 +1064,7 @@ return;
           .attr("fill", "#737373")
           .text(function(d) { return d; });
  
- 
+// DOES NOT WORK: why??????? 
 function setLegend(scoresNeigh){ 
   
             
