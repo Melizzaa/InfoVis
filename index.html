@@ -160,6 +160,8 @@ var overlay = $('.overlay'),
 
 }); 
 
+overlay.append(close);  
+
 $(document).ready(function() {
       $.ajax({
         type: "GET",
@@ -167,8 +169,6 @@ $(document).ready(function() {
         dataType: "text",
         success: function(data) {
           allHoods = processData(data);
-          plotHoods(allHoods);
-          //console.log(allHoodsArray);
         }
       });
     });
@@ -194,7 +194,7 @@ $(document).ready(function() {
 
     }
     
-overlay.append(close);        
+      
 
 $("#student, close").on('click', function () {
   createSliders(SetWeightsStudent);
@@ -229,7 +229,7 @@ $("#professional, close").on('click', function () {
         dataType: "text",
         success: function(data) {
           allHoods = processData(data);
-          plotHoods(allHoods);
+          //plotHoods(allHoods);
           //console.log(allHoodsArray);
         }
       });
@@ -345,11 +345,25 @@ $("#professional, close").on('click', function () {
     }
     
     function getColor2(d, min, max) {
+       interval = Math.abs(max-min)/4;
+      //d = d*100
+      if (d>max) return '#006d2c';
+      if (d> (min + 3*interval) && d<max) return '#2ca25f';
+      if (d> (min + 2*interval) && d<(min + 3*interval)) return '#66c2a4';
+      if (d> (min + interval) && d<(min + 2*interval)) return '#b2e2e2';
+      if (d>= min && d< (min+interval)) return '#edf8fb';
+      return '#edf8fb';
+      }
+      
+
+    
+    function getColor3(d, min, max) {
+       interval = Math.abs(max-min);
       //d = d*100
       return d > max ? '#006d2c' :
-      d >  min + 3*(max-min)/4 ? '#2ca25f' :
-      d >  min + 2*(max-min)/4   ? '#66c2a4' :
-      d >  min + (max-min)/4   ? '#b2e2e2' :
+      d >  min + 3*interval/4 ? '#2ca25f' :
+      d >  min + 2*interval/4   ? '#66c2a4' :
+      d >  min + interval/4   ? '#b2e2e2' :
       d >=  min  ? '#edf8fb' :
       '#edf8fb';
     }
@@ -550,10 +564,10 @@ var scoresNeigh = new Array();
 var scores = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
 //console.log("scores length: " + scores.length);
 for (var i=0; i<allHoods.length; i++){
-   scores[i] = (weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19])).toFixed(1) ;
+   scores[i] = weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
 }
 
-
+console.log("scores: " + scores);
 var best = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
 var index = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
 for (var q =0; q<best.length; q++){
@@ -595,6 +609,7 @@ for (var i=5; i<scores.length; i++){
 		    index[position] = i;
     }
 }  
+console.log("best: " + best);
 
 var minScores = 16;
 for (var j=0; j<scores.length; j++){
@@ -604,10 +619,10 @@ for (var j=0; j<scores.length; j++){
 
 var maxScores = -16;
 for (var j=0; j<scores.length; j++){
-    if ((scores[j]>maxScores) && (scores[j] < best[0]) && (scores[j] < best[1]) && (scores[j] < best[2]) && (scores[j] < best[3]) && (scores[j] < best[4]))
+    if ((scores[j]>maxScores) && (scores[j] < best[0]))
          maxScores = scores[j]; 
 }
-
+console.log("min: " + minScores+" max: " + maxScores);
 var ind = [4,6,8,11,14,16,19];  //correspondence with #column for normalized values in csv file
 for (var i=0;i<ind.length;i++){
      scores1[i+1] = allHoods[index[0]][ind[i]] 
@@ -620,7 +635,7 @@ for (var j = 0; j<5; j++){
 //console.log(allHoods[index[j]][0]);
 scoresNeigh.push(allHoods[index[j]][1]);
 }
-
+console.log("names: "+ scoresNeigh);
 
 plotHoodsScores(allHoods, scores, minScores, maxScores);
 
