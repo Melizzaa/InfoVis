@@ -20,6 +20,7 @@
    <script src="http://d3js.org/d3.v3.min.js"></script>
    <script src="RadarChart.js"></script>
    <script src="d3/d3.slider.js"></script>
+   
 
    <!-- Leaflet -->
    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
@@ -34,6 +35,7 @@
       <![endif]-->
 </head>
    <body>
+   	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <div class="overlay">
        <div class="jumbotron">
           <div class="text-center">
@@ -129,13 +131,179 @@
                 <input type="text" id="myVal" placeholder="Enter a location&hellip;">
                 <input name="Submit"  type="submit" value="Add to map" >
                 </form>-->
-                <form>
+                <form action="javascript:void(-1)">
                   <div class="form-group">
                     <label>Select an important location in Amsterdam:</label>
-                    <input id="pac-input" class="form-control input-lg controls" type="text" placeholder="Search for a location&hellip;">
+                    <input id="pac-input" class="form-control input-lg controls" type="text" placeholder="Search for an address&hellip;" value="">
+                    <input type="button" id ="but" value="Search" class="tfbutton">
+                    <label id="errorMessage"></label>
                   </div>
                 </form>
-                
+                <script>
+
+                	var query = "";
+                	
+                	window.onload = function(){
+						//Get submit button
+						var submitbutton = document.getElementById('pac-input');
+						//Add listener to submit button
+						if(submitbutton.addEventListener){
+							submitbutton.addEventListener("click", function() {
+								if (submitbutton.value == 'query'){//Customize this text string to whatever you want
+									submitbutton.value = '';
+								}
+							});
+						}
+					}
+					var buttonpressed = document.getElementById('but');
+					buttonpressed.onclick = function(e) {
+						document.getElementById("errorMessage").innerHTML = "";
+					 	//e.preventDefault();
+     					query = document.getElementById('pac-input').value;
+						console.log("query",query); 
+						getTravelTime(query); 
+					}
+					
+					
+					// draw without distance 
+					
+					// draw with distance
+					var travelTimes = [];
+					
+					function getTravelTime(query) {
+						if (query.length === 0) {
+							normTravelTimes = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
+							travelTimes = [];
+							}
+			
+						else {	
+							travelTimes = [];
+							query_lowercase = query.toLowerCase();
+							if (query_lowercase.indexOf('amsterdam') === -1) {
+								query_lowercase += ' amsterdam'
+							}
+							destinationA = query_lowercase;
+							console.log("destination", destinationA);
+    						function test(origins,destinationA) {
+    							var service = new google.maps.DistanceMatrixService();
+    							var d = $.Deferred();
+								service.getDistanceMatrix(
+  								{
+   			 						origins: [origins],
+    								destinations: [destinationA],
+    								travelMode: google.maps.TravelMode.TRANSIT, //options:BICYCLING,TRANSIT,WALKING
+  								}, function(response, status) {
+          							if (status !== google.maps.DistanceMatrixStatus.OK) {
+            							alert('Error was: ' + status);
+            							d.reject(status);
+          							} else {
+          								d.resolve(response);
+        									}
+    							});
+    							return d.promise();
+    						}
+    		
+    						var travelTime = 0;
+    						var centroids = [[52.372912, 4.898026], [52.373327, 4.89554], [52.37287, 4.88705], [52.36561, 4.89501], [52.372469, 4.905261], [52.384063, 4.889956], [52.374241, 4.880121], [52.361939, 4.889067], [52.363089, 4.912681], [52.370914, 4.920347], [52.404747, 4.823353], [52.392903, 4.817206], [52.392812, 4.880943], [52.389711, 4.872233], [52.382119, 4.873687], [52.381002, 4.866368], [52.376688, 4.87353], [52.370856, 4.872788], [52.36822, 4.865476], [52.365512, 4.868423], [52.363901, 4.874014], [52.359584, 4.860074], [52.361333, 4.874088], [52.386744, 4.858275], [52.38034, 4.854727], [52.376446, 4.851146], [52.376854, 4.843527], [52.370459, 4.86189], [52.371749, 4.849023], [52.366523, 4.853068], [52.361734, 4.85377], [52.386526, 4.800759], [52.381865, 4.829113], [52.372995, 4.819509], [52.378913, 4.802518], [52.380099, 4.7798], [52.365576, 4.778243], [52.359578, 4.810085], [52.354254, 4.795585], [52.358176, 4.784008], [52.3454, 4.792493], [52.358274, 4.825306], [52.366039, 4.84384], [52.34562, 4.842159], [52.341956, 4.819172], [52.356262, 4.893802], [52.352003, 4.897372], [52.350608, 4.902259], [52.347937, 4.847204], [52.349234, 4.85362], [52.354257, 4.864179], [52.356392, 4.878474], [52.344917, 4.858033], [52.346471, 4.878571], [52.353078, 4.884948], [52.342341, 4.896172], [52.347808, 4.905239], [52.340018, 4.905159], [52.34361, 4.877624], [52.331295, 4.856203], [52.330024, 4.885042], [52.35452, 4.911626], [52.35977, 4.916632], [52.362408, 4.929334], [52.353589, 4.918915], [52.362263, 4.935066], [52.364035, 4.951746], [52.375438, 4.944613], [52.361313, 4.974577], [52.366841, 4.991391], [52.349781, 5.005375], [52.346683, 4.924886], [52.352977, 4.953268], [52.340466, 4.94338], [52.334782, 4.913103], [52.367648, 5.01068], [52.392968, 4.910914], [52.388329, 4.922624], [52.390456, 4.943842], [52.392574, 4.929696], [52.391729, 4.935123], [52.41282, 4.891063], [52.418493, 4.883964], [52.415473, 4.903968], [52.394668, 4.955175], [52.402945, 4.941547], [52.405382, 4.915775], [52.399223, 4.897008], [52.385211, 4.935948], [52.401458, 4.986586], [52.301489, 4.949528], [52.317097, 4.950076], [52.322577, 4.977048], [52.306996, 4.993351], [52.297666, 4.975965], [52.296847, 4.989114], [52.310243, 5.011796]];
+    						var originArray = [];
+    						for (var k=0;k<centroids.length;k++) {
+    							var lat = centroids[k][0];
+    							var lon = centroids[k][1];
+    							var origin = new google.maps.LatLng(lat, lon);
+    							originArray.push(origin);
+    						}
+    		
+    						for (var i = 0;i<centroids.length;i++) {
+    							var origin = originArray[i];
+    							test(origin,destinationA)
+    								.done(function(response) {
+    									var origins = response.originAddresses;
+    									var destinations = response.destinationAddresses;
+    					
+										if (destinations[0] != "Amsterdam, Netherlands") {
+						
+    									for (var i = 0; i < origins.length; i++) {
+      										var results = response.rows[i].elements;
+      										console.log('length',results.length);
+      										for (var j = 0; j < results.length; j++) { //go through results
+      											console.log("j",j);
+      											var element = results[j];
+        										var distance = element.distance.text;
+        										var duration = element.duration.text;
+        										var durationMin = 0;
+												var var1 =  duration.indexOf('hours'); 
+												if (var1 == -1) {
+													var var2 = duration.indexOf('hour');
+													if (var2 == -1) { // only minutes{
+														var var3 = duration.indexOf('min');
+														var totalMins = duration.substring(0,(var3-1));
+													}
+													else {
+														var hours = duration.substring(0,(var2-1));
+														var var3 = duration.indexOf('min');
+														var mins = duration.substring((var2+5),(var3-1));
+														var totalMins = parseInt(hours)*60 + parseInt(mins);
+													}				
+												}
+												else {
+													var hours = duration.substring(0,(var1-1));
+													var var2 = duration.indexOf('min');
+													var mins = duration.substring((var1+6),(var2-1));
+													var totalMins = parseInt(hours)*60 + parseInt(mins);
+													//console.log(hours,mins);
+												}
+												//console.log("total",totalMins);
+        										var from = origins[i];
+        										var to = destinations[j];
+        										travelTime = totalMins
+        										console.log("time",travelTime);
+        										travelTimes.push(parseInt(travelTime));
+        										console.log("trave;",travelTimes);
+        									}
+        								}
+        							}// end if destination not Amsterdam
+    							})
+    						}//end for loop centroids
+    							
+    					}//end else
+    					var destinationFound = false;
+    						
+    					setTimeout('run()',25000);
+    				}
+    		
+    						
+    						function run() {
+    							console.log("TRAVEL",travelTimes);	
+    							normalise(travelTimes);
+    						}
+    			
+    						function normalise(travelTimes) {
+    							if (travelTimes.length === 0) {
+    								destinationFound = false;
+    							}
+    							else {
+    								destinationFound = true;
+    								var normTravelTimes = [];
+    								var maxTime = Math.max.apply(null,travelTimes);
+    								var minTime = Math.min.apply(null,travelTimes);
+    								//console.log("min",minTime,"max",maxTime);
+    								for (var n=0;n<travelTimes.length;n++) {
+    									normTime = 1-((travelTimes[n]-minTime)/(maxTime-minTime));
+    									//console.log("normTime",normTime);
+    									normTravelTimes.push(Math.round(normTime*100)/100);	
+    								}
+    							console.log("JIPPIE",travelTimes, travelTimes.length);
+    							console.log("norm",normTravelTimes,normTravelTimes.length);
+    							
+    							}
+    							console.log(destinationFound);
+    							if (destinationFound === false) {
+    								document.getElementById("errorMessage").innerHTML = "This address could not be found.";
+    							}
+    						}
+			
+					
+				</script>            
                 <div id="chart"></div>
              </div>
             </div>

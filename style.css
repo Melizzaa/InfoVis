@@ -240,3 +240,8 @@
       #target {
         /*width: 345px;*/
       }
+
+#errorMessage {
+	color: red;
+	font-style: normal;
+}
