@@ -92,8 +92,7 @@
                 <figure><img src="house_c.png" id="toChange" height="80" width="80" hspace="100"/></figure>
                 <!-- START SLIDERS -->
 
-                <div id="sliderDistance"></div>
-                <p>Distance</p>
+                
                 <!-- <div id="weightDistance"></div> -->
 
                 <div id="sliderSafety"></div>
@@ -133,7 +132,10 @@
                 </form>-->
                 <form action="javascript:void(-1)">
                   <div class="form-group">
-                    <label>Select an important location in Amsterdam:</label>
+                    <label>I want to live</label>
+                    <div id="sliderDistance"></div>
+              <div id="sliderDistance"></div>
+                <p>minutes away from:</p>
                     <input id="pac-input" class="form-control input-lg controls" type="text" placeholder="Search for an address&hellip;" value="">
                     <input type="button" id ="but" value="Search" class="tfbutton">
                     <label id="errorMessage"></label>
@@ -752,7 +754,7 @@ overlay.append(close);
      var query = "";
      function createSliders(weights) {
 
-      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).on("slide", function(evt, value) {
           weights[0] = value;
           d3.select('#weightDistance').text(value);
           console.log("sliders says:",weights);
