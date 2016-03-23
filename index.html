@@ -518,7 +518,10 @@ $("#professional, close").on('click', function () {
       "<thead><tr><th>Property</th><th>Value</th></tr></thead>" +
       "<tbody>" +
       "<tr><td>Safety grade</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams savest neighbourhood; 0 = Amsterdams least save neighbourhood\" data-placement=\"right\" data-container=\"body\">" + Math.round(data[4] * 10) + "/10</a></td></tr>"+
-      //"<tr><td>Housing price</td><td>" + Math.round(data[5]) + "</td></tr>" +
+
+      "<tr><td>Housing price</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams most affordable neighbourhood; 0 = Amsterdams most expensive neighbourhood\" data-placement=\"right\" data-container=\"body\">"  + Math.round(data[6]*10) + " /10</a></td></tr>" +
+
+
       "<tr><td>Number of bars and restaurants</td><td>" + Math.round(data[7]) + "</td></tr>" +
       "<tr><td>Number of musea</td><td>" + Math.round(data[10]) + "</td></tr>" +
       "<tr><td>Number of playgrounds</td><td>" + Math.round(data[13]) + "</td></tr>" +
