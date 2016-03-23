@@ -322,14 +322,7 @@ var SetWeightsFamily = [1, 1, -1, -1, 0, 1, 1, 1];
 var SetWeightsProfessional = [1, 0, -1, 1, 1, -1, 0, -1];
 var SetWeightsNone=[0,0,0,0,0,0,0,0];
 
-var overlay = $('.overlay'),
-    close = $('<button type="button" class="col-md-6 col-md-offset-3 btn btn-primary btn-lg closeOverlay">Let me explore it myself</buton>').on('click', function (){
-  createSliders(SetWeightsNone);
-  overlay.fadeOut();
 
-}); 
-
-overlay.append(close);  
 
 $(document).ready(function() {
       $.ajax({
@@ -384,6 +377,15 @@ $("#professional, close").on('click', function () {
 
 }); 
 
+var overlay = $('.overlay'),
+    close = $('<button type="button" class="col-md-6 col-md-offset-3 btn btn-primary btn-lg closeOverlay">Let me explore it myself</buton>').on('click', function (){
+  createSliders(SetWeightsNone);
+  scoringF(allHoods,SetWeightsNone);
+  overlay.fadeOut();
+
+}); 
+
+overlay.append(close);  
 
 </script>
 
@@ -877,11 +879,17 @@ for (var j=0; j<scores.length; j++){
 console.log("min: " + minScores+" max: " + maxScores);
 var ind = [4,6,8,11,14,16,19];  //correspondence with #column for normalized values in csv file
 for (var i=0;i<ind.length;i++){
-     scores1[i+1] = allHoods[index[0]][ind[i]] 
-     scores2[i+1] = allHoods[index[1]][ind[i]]
-     scores3[i+1] = allHoods[index[2]][ind[i]]
-     scores4[i+1] = allHoods[index[3]][ind[i]]
-     scores5[i+1] = allHoods[index[4]][ind[i]]
+     
+     scores1[i+1] = allHoods[index[0]][ind[i]]; 
+     if (scores1[i+1]==0) scores1[i+1] = 0.1;
+     scores2[i+1] = allHoods[index[1]][ind[i]];
+       if (scores2[i+1]==0) scores2[i+1] = 0.1;
+     scores3[i+1] = allHoods[index[2]][ind[i]];
+       if (scores3[i+1]==0) scores3[i+1] = 0.1;
+     scores4[i+1] = allHoods[index[3]][ind[i]];
+       if (scores4[i+1]==0) scores4[i+1] = 0.1;
+     scores5[i+1] = allHoods[index[4]][ind[i]];
+       if (scores5[i+1]==0) scores5[i+1] = 0.1;
 } 
 for (var j = 0; j<5; j++){
 //console.log(allHoods[index[j]][0]);
