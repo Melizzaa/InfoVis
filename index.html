@@ -415,7 +415,6 @@ $("#professional, close").on('click', function () {
 
 
 
-
     // neighbourhood
     // neighbourhood name
     // coordinates neighbourhood
@@ -444,7 +443,7 @@ $("#professional, close").on('click', function () {
       hoodReferences = [];
 
       for (var i = 0; i < allHoods.length; i++) {
-        var hood = polygonHoodScores(allHoods[i][0],allHoods[i][1],allHoods[i][2],scoresArray[i], min, max);
+        var hood = polygonHoodScores(allHoods[i],scoresArray[i], min, max);
         hoodReferences.push(hood);
       }
     }
@@ -455,12 +454,12 @@ $("#professional, close").on('click', function () {
       }
     }
 
-    function polygonHoodScores(code,name,coords,scoringValue, min, max) {
+    function polygonHoodScores(data,scoringValue, min, max) {
       return L.polygon(
-        eval(coords),
+        eval(data[2]),
         style2(scoringValue, min, max))
         .addTo(map)
-        .bindPopup("<b>" + name + "!</b><br />Nr of bars: " + 1);
+        .bindPopup(getPopoverText(data));
     }
 
       function style2(color, min, max) {
@@ -499,7 +498,19 @@ $("#professional, close").on('click', function () {
     }
 
     function getPopoverText(data) {
-      var text = "";
+      var text = "<h3>" + data[1] + "</h3>" +
+      "<table class='table table-hover table-condensed'>" + 
+      "<thead><tr><th>Property</th><th>Value</th></tr></thead>" +
+      "<tbody>" +
+      "<tr><td>Safety grade</td><td>" + Math.round(data[4]*10) + "/10</td></tr>"+
+      //"<tr><td>Housing price</td><td>" + Math.round(data[5]) + "</td></tr>" +
+      "<tr><td>Number of bars and restaurants</td><td>" + Math.round(data[7]) + "</td></tr>" +
+      "<tr><td>Number of musea</td><td>" + Math.round(data[10]) + "</td></tr>" +
+      "<tr><td>Number of playgrounds</td><td>" + Math.round(data[13]) + "</td></tr>" +
+      "<tr><td>Percentage households with children</td><td>" + data[18] + "%</td></tr>" +
+      "</tbody>" +
+      "</table>";
+      return text;
     }
 
   
