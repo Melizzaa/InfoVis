@@ -1228,6 +1228,8 @@ return;
 
       //Call function to draw the Radar chart
       //Will expect that data is in %'s
+      
+
       RadarChart.draw("#chart", d, mycfg);
 
       ////////////////////////////////////////////
@@ -1280,12 +1282,25 @@ return;
  
 // DOES NOT WORK: why??????? 
 function setLegend(scoresNeigh){ 
-  
             
         legend.selectAll('text')
         .data([])
         .exit()
         .remove();
+
+        var yOffset = 180;
+
+        svg = d3.select('#chart')
+          .selectAll('svg')
+          .append('svg')
+          .attr("width", w+300)
+          .attr("height", h+400);
+
+        legend = svg.append("g")
+          .attr("class", "legend")
+          .attr("height", 100)
+          .attr("width", 200)
+          .attr('transform', 'translate(-100,270)');
  
       var text = svg.append("text")
         .attr("class", "title")
@@ -1295,6 +1310,7 @@ function setLegend(scoresNeigh){
         .attr("font-size", "16px")
         .attr("fill", "#404040")
         .text("Compare up to five neighbourhoods:");
+
         
         //Create colour squares
         legend.selectAll("rect")
@@ -1302,19 +1318,19 @@ function setLegend(scoresNeigh){
           .enter()
           .append("rect")
           .attr("x", w - 65)
-          .attr("y", function(d, i){ return i * 20;})
+          .attr("y", function(d, i){ return i * 20 + yOffset})
           .attr("width", 10)
           .attr("height", 10)
           .style("fill", function(d, i){ return colorscale(i);});
  
           
         //Create text next to squares
-        legend.selectAll("text")
+        this.legend.selectAll("text")
           .data(scoresNeigh)
           .enter()
           .append("text")
           .attr("x", w - 52)
-          .attr("y", function(d, i){ return i * 20 + 6;})
+          .attr("y", function(d, i){ return i * 20 + 10 + yOffset})
           .attr("font-size", "16px")
           .attr("fill", "#737373")
           .text(function(d) { return d; });
