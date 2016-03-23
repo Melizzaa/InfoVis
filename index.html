@@ -441,16 +441,76 @@ $("#professional, close").on('click', function () {
   
     var hoodReferences = []; //used to delete the polygon objects before creating new ones.
 
-    function plotHoodsScores(allHoods, scoresArray, min, max) {
+    function plotHoodsScores(allHoods, scoresArray, index, best, min, max) {
       removePolygons(hoodReferences);
       hoodReferences = [];
-
-      for (var i = 0; i < allHoods.length; i++) {
-        var hood = polygonHoodScores(allHoods[i],scoresArray[i], min, max);
+      var localMin = min;
+      var localMax = max;
+      var allZero = true;
+      
+      for (var i = 0; i < scoresArray.length; i++){
+          if(scoresArray[i] != 0)
+          allZero = false;
+      }
+      
+      if (allZero){
+      for (var i = 0; i < allHoods.length; i++){
+        var hood = polygonHoodZeros(allHoods[i]);
         hoodReferences.push(hood);
+        }      
+      } else {
+           for (var i = 0; i < allHoods.length; i++) {
+        
+           if (i == index[0] || i == index[1] || i == index[2] || i == index[3] || i == index[4]) {
+               var hood = polygonHoodBestScores(allHoods[i]);
+              hoodReferences.push(hood);
+           } else {
+                 var hood = polygonHoodScores(allHoods[i],scoresArray[i], localMin, localMax);
+                 hoodReferences.push(hood);
+           
+               }   
+           } 
       }
     }
+    
+      function polygonHoodZeros(data) {
+      return L.polygon(
+        eval(data[2]),
+        styleZeros())
+        .addTo(map)
+        .bindPopup(getPopoverText(data));
+    }
+    
+    function styleZeros() {
+      return {
+        fillColor: '#66c2a4',
+        weight: 1.5,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 0.80
+      };
+    }
 
+  function polygonHoodBestScores(data) {
+      return L.polygon(
+        eval(data[2]),
+        styleBest())
+        .addTo(map)
+        .bindPopup(getPopoverText(data));
+    }
+    
+     function styleBest() {
+      return {
+        fillColor: '#006d2c',
+        weight: 1.5,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 0.80
+      };
+    }
+    
     function removePolygons(polygons) {
       for (var i = 0; i < polygons.length; i++) {
         map.removeLayer(polygons[i]);
@@ -479,7 +539,7 @@ $("#professional, close").on('click', function () {
     function getColor2(d, min, max) {
        interval = Math.abs(max-min)/4;
       //d = d*100
-      if (d>max) return '#006d2c';
+      //if (d>max) return '#006d2c';
       if (d>= (min + 3*interval) && d<max) return '#2ca25f';
       if (d>= (min + 2*interval) && d<(min + 3*interval)) return '#66c2a4';
       if (d>= (min + interval) && d<(min + 2*interval)) return '#b2e2e2';
@@ -488,17 +548,7 @@ $("#professional, close").on('click', function () {
       }
       
 
-    
-    function getColor3(d, min, max) {
-       interval = Math.abs(max-min);
-      //d = d*100
-      return d > max ? '#006d2c' :
-      d >  min + 3*interval/4 ? '#2ca25f' :
-      d >  min + 2*interval/4   ? '#66c2a4' :
-      d >  min + interval/4   ? '#b2e2e2' :
-      d >=  min  ? '#edf8fb' :
-      '#edf8fb';
-    }
+   
 
     function getColor(d) {
         return d > 1000 ? '#800026' :
@@ -752,7 +802,10 @@ $("#professional, close").on('click', function () {
                
     }
     
+    
 function scoringF(allHoods,weights){
+
+
 
 var scores1 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scores2 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
@@ -808,7 +861,7 @@ for (var i=5; i<scores.length; i++){
 		    index[position] = i;
     }
 }  
-console.log("best: " + best);
+
 
 var minScores = 16;
 for (var j=0; j<scores.length; j++){
@@ -834,9 +887,9 @@ for (var j = 0; j<5; j++){
 //console.log(allHoods[index[j]][0]);
 scoresNeigh.push(allHoods[index[j]][1]);
 }
-console.log("names: "+ scoresNeigh);
 
-plotHoodsScores(allHoods, scores, minScores, maxScores);
+console.log("index "+index);
+plotHoodsScores(allHoods, scores, index, best, minScores, maxScores);
 
 
 a = setVariabled(scores1, scores2, scores3, scores4, scores5);
