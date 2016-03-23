@@ -90,6 +90,10 @@
   font-size: 16px;
 }
 
+.sliderArea p {
+    margin-bottom: 22px;
+}
+
 .back-button-form {
   position: relative;
 }
