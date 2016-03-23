@@ -776,8 +776,9 @@ overlay.append(close);
           weights[2] = value;
           d3.select('#weightPrice').text(value);
           scoringF(allHoods,weights,[]);
-          console.log("test",travelNorm);
           console.log("q",query);
+          console.log("test",travelNorm);
+          
           })); 
       d3.select('#sliderBars').call(d3.slider().value(weights[3]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[3] = value;
@@ -807,8 +808,6 @@ overlay.append(close);
     
 function scoringF(allHoods,weights,normTravelTimes){
 
-
-
 var scores1 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scores2 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scores3 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
@@ -818,7 +817,23 @@ var scoresNeigh = new Array();
 var scores = Array.apply(null, Array(allHoods.length)).map(Number.prototype.valueOf,0);
 //console.log("scores length: " + scores.length);
 for (var i=0; i<allHoods.length; i++){
-   scores[i] = weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
+   console.log("scoring has started");
+	for (var i=0; i<allHoods.length; i++){
+		if (normTravelTimes.length === 0) { //no (new) location query is given
+			console.log("no query given");
+			if (travelNorm.length === 0) { //if no location has been submitted earlier
+  				scores[i] = weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
+			}
+			else { //there has been a query submitted earlier
+				console.log("earlier query");
+				scores[i] = weights[0]*travelNorm[i] + weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
+			}
+		}
+		else { //a location query has just been submitted
+			console.log("new query!");
+			scores[i] = weights[0]*normTravelTimes[i] + weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
+		}
+	}
 }
 
 console.log("scores: " + scores);
