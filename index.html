@@ -475,6 +475,27 @@ overlay.append(close);
       }
     }
     
+     function polygonHoodHighlight(data) {
+      return L.polygon(
+        eval(data[2]),
+        styleHigh())
+        .addTo(map)
+        .bindPopup(getPopoverText(data));
+    }
+    
+    function styleHigh() {
+      return {
+        fillColor: 'yellow',
+        weight: 1.5,
+        opacity: 1,
+        color: 'white',
+        dashArray: '2',
+        fillOpacity: 1
+      };
+    }
+    
+  
+    
       function polygonHoodZeros(data) {
       return L.polygon(
         eval(data[2]),
@@ -821,7 +842,7 @@ for (var i=0; i<allHoods.length; i++){
    scores[i] = weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
 }
 
-console.log("scores: " + scores);
+
 var best = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
 var index = Array.apply(null, Array(5)).map(Number.prototype.valueOf,0);
 for (var q =0; q<best.length; q++){
@@ -880,20 +901,20 @@ console.log("min: " + minScores+" max: " + maxScores);
 var ind = [4,6,8,11,14,16,19];  //correspondence with #column for normalized values in csv file
 for (var i=0;i<ind.length;i++){
      
-     scores1[i+1] = allHoods[index[0]][ind[i]]; 
-     if (scores1[i+1]==0) scores1[i+1] = 0.1;
-     scores2[i+1] = allHoods[index[1]][ind[i]];
+     scores1[i+1] = allHoods[index[4]][ind[i]]; 
+       if (scores1[i+1]==0) scores1[i+1] = 0.1;
+     scores2[i+1] = allHoods[index[3]][ind[i]];
        if (scores2[i+1]==0) scores2[i+1] = 0.1;
      scores3[i+1] = allHoods[index[2]][ind[i]];
        if (scores3[i+1]==0) scores3[i+1] = 0.1;
-     scores4[i+1] = allHoods[index[3]][ind[i]];
+     scores4[i+1] = allHoods[index[1]][ind[i]];
        if (scores4[i+1]==0) scores4[i+1] = 0.1;
-     scores5[i+1] = allHoods[index[4]][ind[i]];
+     scores5[i+1] = allHoods[index[0]][ind[i]];
        if (scores5[i+1]==0) scores5[i+1] = 0.1;
 } 
 for (var j = 0; j<5; j++){
 //console.log(allHoods[index[j]][0]);
-scoresNeigh.push(allHoods[index[j]][1]);
+scoresNeigh.unshift(allHoods[index[j]][1]);
 }
 
 console.log("index "+index);
@@ -910,7 +931,7 @@ a = setVariabled(scores1, scores2, scores3, scores4, scores5);
         ExtraWidthX: 300
       }
 
-RadarChart.draw("#chart", a, mycfg);
+RadarChart.draw("#chart", a, mycfg, index);
 
 var colorscale = d3.scale.category10();
 setLegend(scoresNeigh);
@@ -923,7 +944,11 @@ return;
 
 <script language="javascript"> //this is the radar chart
       var RadarChart = {
-        draw: function(id, d, options){
+        draw: function(id, d, options, index){
+       
+        var indexes = index.reverse();
+        
+        
         var cfg = {
          radius: 3, //size dot
          w: 600, 
@@ -1041,6 +1066,7 @@ return;
           });   
           
           dataValues.push(dataValues[0]);
+          var polygon;
           g.selectAll(".area")
                  .data([dataValues])
                  .enter()
@@ -1055,21 +1081,42 @@ return;
                    }
                    return str;
                   })
-                 .style("fill", function(j, i){return cfg.color(series)})
+                 .style("fill", function(j, i){ return cfg.color(series)})
                  .style("fill-opacity", cfg.opacityArea)
-                 .on('mouseover', function (d){
+                 .on('mouseover', function (d, i){
+                 
                           z = "polygon."+d3.select(this).attr("class");
+                          var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
+                          console.log("numero: " + number);
+                         
                           g.selectAll("polygon")
                            .transition(200)
                            .style("fill-opacity", 0.1); 
                           g.selectAll(z)
                            .transition(200)
                            .style("fill-opacity", .7);
+                        
+                         var data = allHoods[indexes[number]];
+                         removePolygons(data[2]);   
+                         polygon = polygonHoodHighlight(data);                        
+                           
                           })
                  .on('mouseout', function(){
                           g.selectAll("polygon")
                            .transition(200)
                            .style("fill-opacity", cfg.opacityArea);
+                           
+                          
+                          z = "polygon."+d3.select(this).attr("class");
+                          var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
+                          
+                          
+                          var data = allHoods[indexes[number]];
+                          map.removeLayer(polygon);
+                         
+                          
+                          
+                       
                  });
           series++;
         });
@@ -1121,6 +1168,8 @@ return;
                 g.selectAll("polygon")
                   .transition(200)
                   .style("fill-opacity", cfg.opacityArea);
+                
+              
                 })
           .append("svg:title")
           .text(function(j){return Math.max(j.value, 0)});
@@ -1231,8 +1280,8 @@ return;
             [
             {axis:"Distance",value:(scores2[0]*10)},
             {axis:"Safety",value:(scores2[1]*10)},
-            {axis:"Bars",value:(scores1[3]*10)},
-            {axis:"Best price",value:(scores1[2]*10)},
+            {axis:"Bars",value:(scores2[3]*10)},
+            {axis:"Best price",value:(scores2[2]*10)},
             {axis:"Musea",value:(scores2[4]*10)},
             {axis:"Playgrounds",value:(scores2[5]*10)},
             {axis:"Parks",value:(scores2[6]*10)},
@@ -1243,8 +1292,8 @@ return;
             [
             {axis:"Distance",value:(scores3[0]*10)},
             {axis:"Safety",value:(scores3[1]*10)},
-            {axis:"Bars",value:(scores1[3]*10)},
-            {axis:"Best price",value:(scores1[2]*10)},
+            {axis:"Bars",value:(scores3[3]*10)},
+            {axis:"Best price",value:(scores3[2]*10)},
             {axis:"Musea",value:(scores3[4]*10)},
             {axis:"Playgrounds",value:(scores3[5]*10)},
             {axis:"Parks",value:(scores3[6]*10)},
@@ -1255,8 +1304,8 @@ return;
             [
             {axis:"Distance",value:(scores4[0]*10)},
             {axis:"Safety",value:(scores4[1]*10)},
-            {axis:"Bars",value:(scores1[3]*10)},
-            {axis:"Best price",value:(scores1[2]*10)},
+            {axis:"Bars",value:(scores4[3]*10)},
+            {axis:"Best price",value:(scores4[2]*10)},
             {axis:"Musea",value:(scores4[4]*10)},
             {axis:"Playgrounds",value:(scores4[5]*10)},
             {axis:"Parks",value:(scores4[6]*10)},
@@ -1266,8 +1315,8 @@ return;
             [
             {axis:"Distance",value:(scores5[0]*10)},
             {axis:"Safety",value:(scores5[1]*10)},
-            {axis:"Bars",value:(scores1[3]*10)},
-            {axis:"Best price",value:(scores1[2]*10)},
+            {axis:"Bars",value:(scores5[3]*10)},
+            {axis:"Best price",value:(scores5[2]*10)},
             {axis:"Musea",value:(scores5[4]*10)},
             {axis:"Playgrounds",value:(scores5[5]*10)},
             {axis:"Parks",value:(scores5[6]*10)},
@@ -1290,8 +1339,8 @@ return;
       //Call function to draw the Radar chart
       //Will expect that data is in %'s
       
-
-      RadarChart.draw("#chart", d, mycfg);
+      var array = [0,0,0,0,0];
+      RadarChart.draw("#chart", d, mycfg, array);
 
       ////////////////////////////////////////////
       /////////// Initiate legend ////////////////
