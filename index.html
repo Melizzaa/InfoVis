@@ -760,7 +760,7 @@ var scores3 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scores4 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scores5 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scoresNeigh = new Array();
-var scores = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
+var scores = Array.apply(null, Array(allHoods.length)).map(Number.prototype.valueOf,0);
 //console.log("scores length: " + scores.length);
 for (var i=0; i<allHoods.length; i++){
    scores[i] = weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
