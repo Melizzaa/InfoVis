@@ -150,6 +150,8 @@
 					var weightsArray = [];
 					var travelNorm = [];
 					function getTravelTime(query,weights) {
+						var myLoader = loader({width: 200, height: 100, container: "#loader_container", id: "loader"});
+						myLoader();
 						weightsArray = weights;
 						if (query.length === 0) {
 							normTravelTimes = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
@@ -163,7 +165,7 @@
 								query_lowercase += ' amsterdam'
 							}
 							destinationA = query_lowercase;
-							console.log("destination", destinationA);
+							//console.log("destination", destinationA);
     						function test(origins,destinationA) {
     							var service = new google.maps.DistanceMatrixService();
     							var d = $.Deferred();
@@ -193,23 +195,26 @@
     							originArray.push(origin);
     						}
     		
-    						for (var i = 0;i<centroids.length;i++) {
-    							var origin = originArray[i];
+    						for (var n = 0;n<centroids.length;n++) {
+    							var origin = originArray[n];
     							test(origin,destinationA)
     								.done(function(response) {
     									var origins = response.originAddresses;
+    									//console.log("origins google",origins);
     									var destinations = response.destinationAddresses;
+    									//console.log("destinations google",destinations);
     					
 										if (destinations[0] != "Amsterdam, Netherlands") {
 						
     									for (var i = 0; i < origins.length; i++) {
       										var results = response.rows[i].elements;
-      										console.log('length',results.length);
+      										//console.log('length',results.length);
       										for (var j = 0; j < results.length; j++) { //go through results
-      											console.log("j",j);
+      											//console.log("j",j);
       											var element = results[j];
         										var distance = element.distance.text;
         										var duration = element.duration.text;
+        										//console.log("duration",duration);
         										var durationMin = 0;
 												var var1 =  duration.indexOf('hours'); 
 												if (var1 == -1) {
@@ -236,19 +241,19 @@
         										var from = origins[i];
         										var to = destinations[j];
         										travelTime = totalMins
-        										console.log("time",travelTime);
+        										//console.log("time",travelTime);
         										travelTimes.push(parseInt(travelTime));
-        										console.log("trave;",travelTimes);
+        										//console.log("t",travelTimes);
+        										
         									}
         								}
         							}// end if destination not Amsterdam
     							})
     						}//end for loop centroids
-    							
     					}//end else
     					var destinationFound = false;
     						
-    					setTimeout('run()',20000);
+    					setTimeout('run()',15000);
     				}
     		
     						
@@ -277,7 +282,12 @@
     							console.log("weightsArray?:",weightsArray);
     							scoringF(allHoods,weightsArray,normTravelTimes);
     							travelNorm = normTravelTimes;
-    							
+    							/*
+    							svg.selectAll("path")
+    								.data([])
+    								.exit()
+    								.remove();
+    							*/
     							}
     							console.log(destinationFound);
     							if (destinationFound === false) {
@@ -364,7 +374,7 @@ $("#professional, close").on('click', function () {
 var overlay = $('.overlay'),
     close = $('<button type="button" class="col-md-6 col-md-offset-3 btn btn-primary btn-lg closeOverlay">Let me explore it myself</buton>').on('click', function (){
   createSliders(SetWeightsNone);
-  scoringF(allHoods,SetWeightsNone);
+  scoringF(allHoods,SetWeightsNone,[]);
   overlay.fadeOut();
 
 }); 
@@ -1514,8 +1524,7 @@ function loader(config) {
 }
 
 
-var myLoader = loader({width: 200, height: 100, container: "#loader_container", id: "loader"});
-myLoader();
+
 
 </script>
 
