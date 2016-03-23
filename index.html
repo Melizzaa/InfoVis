@@ -84,7 +84,7 @@
             </div>
          </div>
          <div class="">
-            <div class="col-md-3 sliderArea text-center">
+            <div class="col-md-2 sliderArea text-center">
               <p class="text-justify"></p>        
                 <form id="back-button-form" style="position:relative;"> <!--back to homescreen button-->
                   <input class="btn btn-default" type="button" onClick="history.go(0)" value="Start screen" style="position: absolute; left:0;">
@@ -120,7 +120,7 @@
 
                
               </div> <!-- col area -->
-            <div class="col-md-6 text-center">
+            <div class="col-md-7 text-center">
                <div class="area">
                 <div id="map"></div>
              </div>
@@ -461,8 +461,8 @@ $("#professional, close").on('click', function () {
       return L.polygon(
         eval(coords),
         style2(scoringValue, min, max))
-        .addTo(map);
-        //.bindPopup("<b>" + name + "!</b><br />Nr of bars: " + nrBars);
+        .addTo(map)
+        .bindPopup("<b>" + name + "!</b><br />Nr of bars: " + 1);
     }
 
       function style2(color, min, max) {
@@ -498,6 +498,10 @@ $("#professional, close").on('click', function () {
       d >  min + interval/4   ? '#b2e2e2' :
       d >=  min  ? '#edf8fb' :
       '#edf8fb';
+    }
+
+    function getPopoverText(data) {
+      var text = "";
     }
 
   
