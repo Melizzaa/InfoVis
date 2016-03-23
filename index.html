@@ -391,19 +391,6 @@ $("#professional, close").on('click', function () {
     <script type="text/javascript">
     // MAP
 
-    $(document).ready(function() {
-      $.ajax({
-        type: "GET",
-        url: "data/all.csv",
-        dataType: "text",
-        success: function(data) {
-          allHoods = processData(data);
-          //plotHoods(allHoods);
-          //console.log(allHoodsArray);
-        }
-      });
-    });
-
     function processData(allText) {
       var allTextLines = allText.split(/\r\n|\n/);
       var headers = allTextLines[0].split('#');
@@ -426,6 +413,11 @@ $("#professional, close").on('click', function () {
     }
 
     
+    
+
+
+
+
     // neighbourhood
     // neighbourhood name
     // coordinates neighbourhood
@@ -446,56 +438,27 @@ $("#professional, close").on('click', function () {
     // % households with children
     // normalised % households with children
 
-    /*function plotHoods(allHoods) {
-      //console.log(allHoods);
+  
+    var hoodReferences = []; //used to delete the polygon objects before creating new ones.
+
+    function plotHoodsScores(allHoods, scoresArray, min, max) {
+      removePolygons(hoodReferences);
+      hoodReferences = [];
+
       for (var i = 0; i < allHoods.length; i++) {
-        
-        polygonHood(allHoods[i][0],allHoods[i][1],allHoods[i][2],allHoods[i][4],allHoods[i][7]);
+        var hood = polygonHoodScores(allHoods[i][0],allHoods[i][1],allHoods[i][2],scoresArray[i], min, max);
+        hoodReferences.push(hood);
       }
     }
 
-    function polygonHood(code,name,coords,safetyNorm,nrBars) {
-      L.polygon(
-        eval(coords),
-        style(safetyNorm))
-        .addTo(map)
-        .bindPopup("<b>" + name + "!</b><br />Nr of bars: " + nrBars);
-    }
-
-    function getColor(d) {
-      d = d*100
-      return d >= 100 ? '#26BF00' :
-      d > 80  ? '#83C800' :
-      d > 60   ? '#D2BB00' :
-      d > 40   ? '#DB6000' :
-      d > 20   ? '#E50002' :
-      '#E50002';
-    }
-
-    function style(color) {
-      return {
-        fillColor: getColor(color),
-        weight: 1.5,
-        opacity: 1,
-        color: 'white',
-        dashArray: '2',
-        fillOpacity: 0.45
-      };
-    }
-
-
-*/
-
-     function plotHoodsScores(allHoods, scoresArray, min, max) {
-      
-      for (var i = 0; i < allHoods.length; i++) {
-        
-        polygonHoodScores(allHoods[i][0],allHoods[i][1],allHoods[i][2],scoresArray[i], min, max);
+    function removePolygons(polygons) {
+      for (var i = 0; i < polygons.length; i++) {
+        map.removeLayer(polygons[i]);
       }
     }
 
     function polygonHoodScores(code,name,coords,scoringValue, min, max) {
-      L.polygon(
+      return L.polygon(
         eval(coords),
         style2(scoringValue, min, max))
         .addTo(map);
@@ -538,7 +501,6 @@ $("#professional, close").on('click', function () {
     }
 
   
-
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
     }
@@ -552,7 +514,6 @@ $("#professional, close").on('click', function () {
       'Imagery © <a href="http://mapbox.com">Mapbox</a>',
       id: 'mapbox.streets'
     }).addTo(map);
-
 
 
     //L.marker([52.355054, 4.954834]).addTo(map).bindPopup("<b>Hello!</b><br />I am at Science Park.").openPopup();
