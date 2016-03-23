@@ -20,6 +20,8 @@
    <script src="http://d3js.org/d3.v3.min.js"></script>
    <script src="RadarChart.js"></script>
    <script src="d3/d3.slider.js"></script>
+
+
    
 
    <!-- Leaflet -->
@@ -36,6 +38,7 @@
 </head>
    <body>
    	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    
     <div class="overlay">
        <div class="jumbotron">
           <div class="text-center">
@@ -414,8 +417,6 @@ $("#professional, close").on('click', function () {
 
 
 
-
-
     // neighbourhood
     // neighbourhood name
     // coordinates neighbourhood
@@ -510,12 +511,13 @@ $("#professional, close").on('click', function () {
                           '#FFEDA0';
     }
 
+
     function getPopoverText(data) {
       var text = "<h3>" + data[1] + "</h3>" +
       "<table class='table table-hover table-condensed'>" + 
       "<thead><tr><th>Property</th><th>Value</th></tr></thead>" +
       "<tbody>" +
-      "<tr><td>Safety grade</td><td>" + Math.round(data[4]*10) + "/10</td></tr>"+
+      "<tr><td>Safety grade</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams savest neighbourhood; 0 = Amsterdams least save neighbourhood\" data-placement=\"right\" data-container=\"body\">" + Math.round(data[4] * 10) + "/10</a></td></tr>"+
       //"<tr><td>Housing price</td><td>" + Math.round(data[5]) + "</td></tr>" +
       "<tr><td>Number of bars and restaurants</td><td>" + Math.round(data[7]) + "</td></tr>" +
       "<tr><td>Number of musea</td><td>" + Math.round(data[10]) + "</td></tr>" +
@@ -568,6 +570,16 @@ $("#professional, close").on('click', function () {
     };
 
     legend.addTo(map);
+
+    map.on('popupopen', function(openEvent){
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();              // initialize popover
+            $('#popup-close').on('click', function(){            // listen for click on close
+                $('[data-toggle="tooltip"]').tooltip('destroy'); // destroy popover
+                map.closePopup();                                // close popup
+            });
+        });
+    });
 
 
     //L.marker([52.355054, 4.954834]).addTo(map).bindPopup("<b>Hello!</b><br />I am at Science Park.").openPopup();
