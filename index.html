@@ -140,24 +140,13 @@
                   </div>
                 </form>
                 <script>
-/*
-                	var query = "";
-                
-					var buttonpressed = document.getElementById('but');
-					buttonpressed.onclick = function(e) {
-						document.getElementById("errorMessage").innerHTML = "";
-					 	//e.preventDefault();
-     					query = document.getElementById('pac-input').value;
-						console.log("query",query); 
-						getTravelTime(query); 
-					}
-					
-*/				
+
 					// draw without distance 
 					
 					// draw with distance
 					var travelTimes = [];
 					var weightsArray = [];
+					var travelNorm = [];
 					function getTravelTime(query,weights) {
 						weightsArray = weights;
 						if (query.length === 0) {
@@ -193,7 +182,7 @@
     						}
     		
     						var travelTime = 0;
-    						var centroids = [[52.372912, 4.898026], [52.373327, 4.89554], [52.37287, 4.88705], [52.36561, 4.89501], [52.372469, 4.905261], [52.384063, 4.889956], [52.374241, 4.880121], [52.361939, 4.889067], [52.363089, 4.912681], [52.370914, 4.920347], [52.404747, 4.823353], [52.392903, 4.817206], [52.392812, 4.880943], [52.389711, 4.872233], [52.382119, 4.873687], [52.381002, 4.866368], [52.376688, 4.87353], [52.370856, 4.872788], [52.36822, 4.865476], [52.365512, 4.868423], [52.363901, 4.874014], [52.359584, 4.860074], [52.361333, 4.874088], [52.386744, 4.858275], [52.38034, 4.854727], [52.376446, 4.851146], [52.376854, 4.843527], [52.370459, 4.86189], [52.371749, 4.849023], [52.366523, 4.853068], [52.361734, 4.85377], [52.386526, 4.800759], [52.381865, 4.829113], [52.372995, 4.819509], [52.378913, 4.802518], [52.380099, 4.7798], [52.365576, 4.778243], [52.359578, 4.810085], [52.354254, 4.795585], [52.358176, 4.784008], [52.3454, 4.792493], [52.358274, 4.825306], [52.366039, 4.84384], [52.34562, 4.842159], [52.341956, 4.819172], [52.356262, 4.893802], [52.352003, 4.897372], [52.350608, 4.902259], [52.347937, 4.847204], [52.349234, 4.85362], [52.354257, 4.864179], [52.356392, 4.878474], [52.344917, 4.858033], [52.346471, 4.878571], [52.353078, 4.884948], [52.342341, 4.896172], [52.347808, 4.905239], [52.340018, 4.905159], [52.34361, 4.877624], [52.331295, 4.856203], [52.330024, 4.885042], [52.35452, 4.911626], [52.35977, 4.916632], [52.362408, 4.929334], [52.353589, 4.918915], [52.362263, 4.935066], [52.364035, 4.951746], [52.375438, 4.944613], [52.361313, 4.974577], [52.366841, 4.991391], [52.349781, 5.005375], [52.346683, 4.924886], [52.352977, 4.953268], [52.340466, 4.94338], [52.334782, 4.913103], [52.367648, 5.01068], [52.392968, 4.910914], [52.388329, 4.922624], [52.390456, 4.943842], [52.392574, 4.929696], [52.391729, 4.935123], [52.41282, 4.891063], [52.418493, 4.883964], [52.415473, 4.903968], [52.394668, 4.955175], [52.402945, 4.941547], [52.405382, 4.915775], [52.399223, 4.897008], [52.385211, 4.935948], [52.401458, 4.986586], [52.301489, 4.949528], [52.317097, 4.950076], [52.322577, 4.977048], [52.306996, 4.993351], [52.297666, 4.975965], [52.296847, 4.989114], [52.310243, 5.011796]];
+    						var centroids = [[52.372912, 4.898026], [52.373327, 4.89554], [52.37287, 4.88705], [52.36561, 4.89501], [52.372469, 4.905261], [52.384063, 4.889956], [52.374241, 4.880121], [52.361939, 4.889067], [52.363089, 4.912681], [52.370914, 4.920347], [52.392812, 4.880943], [52.389711, 4.872233], [52.382119, 4.873687], [52.381002, 4.866368], [52.376688, 4.87353], [52.370856, 4.872788], [52.36822, 4.865476], [52.365512, 4.868423], [52.363901, 4.874014], [52.359584, 4.860074], [52.361333, 4.874088], [52.38034, 4.854727], [52.376446, 4.851146], [52.376854, 4.843527], [52.370459, 4.86189], [52.371749, 4.849023], [52.366523, 4.853068], [52.361734, 4.85377], [52.381865, 4.829113], [52.372995, 4.819509], [52.378913, 4.802518], [52.380099, 4.7798], [52.365576, 4.778243], [52.359578, 4.810085], [52.354254, 4.795585], [52.358176, 4.784008], [52.3454, 4.792493], [52.358274, 4.825306], [52.366039, 4.84384], [52.34562, 4.842159], [52.341956, 4.819172], [52.356262, 4.893802], [52.352003, 4.897372], [52.350608, 4.902259], [52.347937, 4.847204], [52.349234, 4.85362], [52.354257, 4.864179], [52.356392, 4.878474], [52.344917, 4.858033], [52.346471, 4.878571], [52.353078, 4.884948], [52.342341, 4.896172], [52.347808, 4.905239], [52.340018, 4.905159], [52.34361, 4.877624], [52.331295, 4.856203], [52.330024, 4.885042], [52.35452, 4.911626], [52.35977, 4.916632], [52.362408, 4.929334], [52.353589, 4.918915], [52.362263, 4.935066], [52.364035, 4.951746], [52.375438, 4.944613], [52.361313, 4.974577], [52.366841, 4.991391], [52.349781, 5.005375], [52.346683, 4.924886], [52.352977, 4.953268], [52.340466, 4.94338], [52.334782, 4.913103], [52.392968, 4.910914], [52.388329, 4.922624], [52.390456, 4.943842], [52.392574, 4.929696], [52.391729, 4.935123], [52.41282, 4.891063], [52.418493, 4.883964], [52.415473, 4.903968], [52.394668, 4.955175], [52.402945, 4.941547], [52.405382, 4.915775], [52.399223, 4.897008], [52.401458, 4.986586], [52.301489, 4.949528], [52.317097, 4.950076], [52.322577, 4.977048], [52.306996, 4.993351], [52.297666, 4.975965], [52.296847, 4.989114], [52.310243, 5.011796]];
     						var originArray = [];
     						for (var k=0;k<centroids.length;k++) {
     							var lat = centroids[k][0];
@@ -257,7 +246,7 @@
     					}//end else
     					var destinationFound = false;
     						
-    					setTimeout('run()',25000);
+    					setTimeout('run()',20000);
     				}
     		
     						
@@ -284,6 +273,8 @@
     							console.log("JIPPIE",travelTimes, travelTimes.length);
     							console.log("norm",normTravelTimes,normTravelTimes.length);
     							console.log("weightsArray?:",weightsArray);
+    							scoringF(allHoods,weightsArray,normTravelTimes);
+    							travelNorm = normTravelTimes;
     							
     							}
     							console.log(destinationFound);
@@ -291,7 +282,7 @@
     								document.getElementById("errorMessage").innerHTML = "This address could not be found.";
     							}
     						}
-			
+
 					
 				</script>            
                 <div id="chart"></div>
@@ -351,19 +342,19 @@ var chosenWeights;
 $("#student, close").on('click', function () {
   createSliders(SetWeightsStudent);
   chosenWeights = SetWeightsStudent;
-  scoringF(allHoods,SetWeightsStudent);
+  scoringF(allHoods,SetWeightsStudent,[]);
   overlay.fadeOut();
 }); 
 
 $("#family, close").on('click', function () {
   createSliders(SetWeightsFamily);
-  scoringF(allHoods,SetWeightsFamily);
+  scoringF(allHoods,SetWeightsFamily,[]);
   overlay.fadeOut();
 }); 
 
 $("#professional, close").on('click', function () {
   createSliders(SetWeightsProfessional);
-  scoringF(allHoods,SetWeightsProfessional);
+  scoringF(allHoods,SetWeightsProfessional,[]);
   overlay.fadeOut();
 
 }); 
@@ -755,7 +746,7 @@ overlay.append(close);
       }
       return lines;
     }
-     
+     var query = "";
      function createSliders(weights) {
 
       d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
@@ -777,38 +768,41 @@ overlay.append(close);
       d3.select('#sliderSafety').call(d3.slider().value(weights[1]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[1] = value;
           d3.select('#weightSafety').text(value);
-          scoringF(allHoods,weights);}));
+          scoringF(allHoods,weights,[]);}));
       d3.select('#sliderPrice').call(d3.slider().value(weights[2]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[2] = value;
           d3.select('#weightPrice').text(value);
-          scoringF(allHoods,weights);})); 
+          scoringF(allHoods,weights,[]);
+          console.log("test",travelNorm);
+          console.log("q",query);
+          })); 
       d3.select('#sliderBars').call(d3.slider().value(weights[3]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[3] = value;
           d3.select('#weightBars').text(value);
-          scoringF(allHoods,weights);}));
+          scoringF(allHoods,weights,[]);}));
       d3.select('#sliderMuseum').call(d3.slider().value(weights[4]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[4] = value;
           d3.select('#weightMuseum').text(value);
-          scoringF(allHoods,weights);}));
+          scoringF(allHoods,weights,[]);}));
       d3.select('#sliderPlaygrounds').call(d3.slider().value(weights[5]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[5] = value;
           d3.select('#weightPlaygrounds').text(value);
-          scoringF(allHoods,weights);}));
+          scoringF(allHoods,weights,[]);}));
       d3.select('#sliderPark').call(d3.slider().value(weights[6]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[6] = value;
           d3.select('#weightPark').text(value);
-          scoringF(allHoods,weights);}));
+          scoringF(allHoods,weights,[]);}));
       d3.select('#sliderChildren').call(d3.slider().value(weights[7]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[7] = value;
           d3.select('#weightChildren').text(value);
-          scoringF(allHoods,weights);}));
+          scoringF(allHoods,weights,[]);}));
           //.on("change", function(){weightValues[6] = this.value;  }));
      
                
     }
     
     
-function scoringF(allHoods,weights){
+function scoringF(allHoods,weights,normTravelTimes){
 
 
 
