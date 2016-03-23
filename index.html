@@ -775,7 +775,7 @@ overlay.append(close);
      var query = "";
      function createSliders(weights) {
 
-      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).on("slide", function(evt, value) {
+      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[0] = value;
           d3.select('#weightDistance').text(value);
           console.log("sliders says:",weights);
