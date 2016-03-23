@@ -140,21 +140,9 @@
                   </div>
                 </form>
                 <script>
-
+/*
                 	var query = "";
-                	
-                	window.onload = function(){
-						//Get submit button
-						var submitbutton = document.getElementById('pac-input');
-						//Add listener to submit button
-						if(submitbutton.addEventListener){
-							submitbutton.addEventListener("click", function() {
-								if (submitbutton.value == 'query'){//Customize this text string to whatever you want
-									submitbutton.value = '';
-								}
-							});
-						}
-					}
+                
 					var buttonpressed = document.getElementById('but');
 					buttonpressed.onclick = function(e) {
 						document.getElementById("errorMessage").innerHTML = "";
@@ -164,13 +152,14 @@
 						getTravelTime(query); 
 					}
 					
-					
+*/				
 					// draw without distance 
 					
 					// draw with distance
 					var travelTimes = [];
-					
-					function getTravelTime(query) {
+					var weightsArray = [];
+					function getTravelTime(query,weights) {
+						weightsArray = weights;
 						if (query.length === 0) {
 							normTravelTimes = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
 							travelTimes = [];
@@ -294,6 +283,7 @@
     								}
     							console.log("JIPPIE",travelTimes, travelTimes.length);
     							console.log("norm",normTravelTimes,normTravelTimes.length);
+    							console.log("weightsArray?:",weightsArray);
     							
     							}
     							console.log(destinationFound);
@@ -364,9 +354,10 @@ $(document).ready(function() {
     }
     
       
-
+var chosenWeights;
 $("#student, close").on('click', function () {
   createSliders(SetWeightsStudent);
+  chosenWeights = SetWeightsStudent;
   scoringF(allHoods,SetWeightsStudent);
   overlay.fadeOut();
 }); 
@@ -718,7 +709,19 @@ $("#professional, close").on('click', function () {
       d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[0] = value;
           d3.select('#weightDistance').text(value);
-          scoringF(allHoods,weights);}));
+          console.log("sliders says:",weights);
+			var query = "";
+                
+			var buttonpressed = document.getElementById('but');
+			buttonpressed.onclick = function(e) {
+				document.getElementById("errorMessage").innerHTML = "";
+				//e.preventDefault();
+				query = document.getElementById('pac-input').value;
+				console.log("query",query); 
+				getTravelTime(query,weights); 
+			}	
+          //scoringF(allHoods,weights);
+          }));
       d3.select('#sliderSafety').call(d3.slider().value(weights[1]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
           weights[1] = value;
           d3.select('#weightSafety').text(value);
