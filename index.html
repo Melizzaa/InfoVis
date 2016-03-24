@@ -136,11 +136,21 @@
                     <div id="sliderDistance"></div>
               <div id="sliderDistance"></div>
                     <input id="pac-input" class="form-control input-lg controls" type="text" placeholder="Search for an address&hellip;" value="">
-                    <input type="button" id ="but" value="Search" class="tfbutton">
+                    <input type="button" id ="but" value="Search" class="tfbutton" onclick="show()">
                     <label id="errorMessage"></label>
                   </div>
                 </form>
                 <script>
+                	function show() {
+                		console.log("show");
+    					document.getElementById("loader_container").style.visibility="visible";
+    					setTimeout("hide()", 15000);  // 5 seconds
+					}
+
+					function hide() {
+   						 document.getElementById("loader_container").style.visibility="hidden";
+					}
+
 
 					// draw without distance 
 					
@@ -149,8 +159,10 @@
 					var weightsArray = [];
 					var travelNorm = [];
 					function getTravelTime(query,weights) {
+					/*
 						var myLoader = loader({width: 200, height: 100, container: "#loader_container", id: "loader"});
 						myLoader();
+					*/
 						weightsArray = weights;
 						if (query.length === 0) {
 							normTravelTimes = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
@@ -297,7 +309,7 @@
 					
 				</script>            
                 <div id="chart"></div>
-                <div id="loader_container"></div>
+                <div id="loader_container" style="visibility:hidden"><img id = "myImage" src = "ajax-loader.gif"></div>
              </div>
             </div>
         </div>
@@ -852,6 +864,40 @@ var scores4 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scores5 = Array.apply(null, Array(8)).map(Number.prototype.valueOf,0);
 var scoresNeigh = new Array();
 var scores = Array.apply(null, Array(allHoods.length)).map(Number.prototype.valueOf,0);
+for (var i=0; i<allHoods.length;i++) {
+	var score = allHoods[i];
+	var parks = parseFloat(score[15]);
+	if (parks === 47.0) {
+		allHoods[i][15] = 12.0;
+		score = allHoods[i]
+		parks = parseFloat(score[15]);
+	}
+	//var normParks = 0;
+	if (parks === 0 || parks === 0.0) {
+		var normParks = 0.0;
+	}
+	else if (parks === 1 || parks === 1.0) {
+		var normParks = 0.5;
+	}
+	else if (parks > 1) {
+		var normParks = 0.5 +(0.5/12)*parks;
+	}
+	//console.log("nr",parks,"old", score[16], "new", normParks);
+	allHoods[i][16] = normParks;
+	
+	var musea = parseFloat(score[10]);
+	if (musea === 0.0) {
+		var normMusea = 0.0;
+	}
+	else if (musea === 1.0) {
+		var normMusea = 0.2;
+	}
+	else if (musea > 1) {
+		var normMusea = 0.2 + (0.8/14)*musea;
+	}
+	//console.log("NR",musea,"Old",score[11],"new",normMusea);
+	allHoods[i][11] = normMusea;
+}	
 //console.log("scores length: " + scores.length);
 for (var i=0; i<allHoods.length; i++){
    console.log("scoring has started");
