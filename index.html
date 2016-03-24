@@ -594,6 +594,7 @@ overlay.append(close);
       "<tr><td>Number of playgrounds</td><td>" + Math.round(data[13]) + "</td></tr>" +
       "<tr><td>Number of parks</td><td>" + Math.round(data[15]) + "</td></tr>" +
       "<tr><td>Percentage households with children</td><td>" + data[18] + "%</td></tr>" +
+      "<tr><td>Time to travel to your location</td><td>" + 
       "</tbody>" +
       "</table>";
       return text;
@@ -1515,7 +1516,7 @@ function loader(config) {
 
     function transitionFunction(path) {
         path.transition()
-            .duration(7500)
+            .duration(10)
             .attrTween("stroke-dasharray", tweenDash)
             .each("end", function() { d3.select(this).call(transition); });
     }
