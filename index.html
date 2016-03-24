@@ -909,12 +909,45 @@ for (var i=0; i<allHoods.length; i++){
 			}
 			else { //there has been a query submitted earlier
 				console.log("earlier query");
-				scores[i] = weights[0]*travelNorm[i] + weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
+				var weightTravel = weights[0];
+				var borderLow = weightTravel/2;
+				var borderHigh = weightTravel +borderLow;
+				if (parseFloat(travelTimes[i]) < borderLow) {
+					var newWeightTravel = 2;
+				}
+				else if (parseFloat(travelTimes[i]) >= borderLow && parseFloat(travelTimes[i]) < weightTravel) {
+					var newWeightTravel = 1;
+				}
+				else if (parseFloat(travelTimes[i]) >= weightTravel && parseFloat(travelTimes[i]) < borderHigh) {
+					var newWeightTravel = -1;
+				}
+				else if (parseFloat(travelTimes[i]) <= borderHigh) {
+					var newWeightTravel = -2;
+				}
+				//console.log("travel time",travelTimes[i],"new weight",newWeightTravel);
+				
+				scores[i] = newWeightTravel*travelNorm[i] + weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
 			}
 		}
 		else { //a location query has just been submitted
+				var weightTravel = weights[0];
+				var borderLow = weightTravel-5;
+				var borderHigh = weightTravel + 5 + weightTravel/2;
+				if (parseFloat(travelTimes[i]) <= borderLow) {
+					var newWeightTravel = 2;
+				}
+				else if (parseFloat(travelTimes[i]) > borderLow && parseFloat(travelTimes[i]) < weightTravel+5) {
+					var newWeightTravel = 1;
+				}
+				else if (parseFloat(travelTimes[i]) >= weightTravel+5 && parseFloat(travelTimes[i]) < borderHigh) {
+					var newWeightTravel = -1;
+				}
+				else if (parseFloat(travelTimes[i]) >= borderHigh) {
+					var newWeightTravel = -2;
+				}
+				//console.log("travel time",travelTimes[i],"new weight",newWeightTravel);
 			console.log("new query!");
-			scores[i] = weights[0]*normTravelTimes[i] + weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
+			scores[i] = newWeightTravel*normTravelTimes[i] + weights[1]*parseFloat(allHoods[i][4]) + weights[2]*parseFloat(allHoods[i][6]) + weights[3]*parseFloat(allHoods[i][8]) + weights[4]*parseFloat(allHoods[i][11]) + weights[5]*parseFloat(allHoods[i][14]) + weights[6]*parseFloat(allHoods[i][16]) + weights[7]*parseFloat(allHoods[i][19]) ;
 		}
 	}
 }
