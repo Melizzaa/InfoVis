@@ -32,7 +32,7 @@ return function module() {
       animate = true,
       orientation = "horizontal",
       axis = false,
-      margin = 50,
+      margin = 20,
       value,
       active = 1,
       snap = false,
