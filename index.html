@@ -132,10 +132,9 @@
                 </form>-->
                 <form action="javascript:void(-1)">
                   <div class="form-group">
-                    <label>I want to live</label>
+                    <label>How many minutes away do you want to live from your location:</label>
                     <div id="sliderDistance"></div>
               <div id="sliderDistance"></div>
-                <p>minutes away from:</p>
                     <input id="pac-input" class="form-control input-lg controls" type="text" placeholder="Search for an address&hellip;" value="">
                     <input type="button" id ="but" value="Search" class="tfbutton">
                     <label id="errorMessage"></label>
@@ -783,10 +782,14 @@ overlay.append(close);
       }
       return lines;
     }
+
+    var timeScale = d3.scale.linear()
+                     .domain([0,40])
+
      var query = "";
      function createSliders(weights) {
 
-      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).scale(timeScale).min(5).max(45).step(10).on("slide", function(evt, value) {
           weights[0] = value;
           d3.select('#weightDistance').text(value);
           console.log("sliders says:",weights);
