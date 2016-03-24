@@ -809,6 +809,20 @@ overlay.append(close);
                 
 			var buttonpressed = document.getElementById('but');
 			buttonpressed.onclick = function(e) {
+        (function(){
+    var loader = document.getElementById("loader");
+
+    var show = function(){
+      loader.style.display = "block";
+      setTimeout(hide, 15000);  // 5 seconds
+    }
+
+    var hide = function(){
+      loader.style.display = "none";
+    }
+
+    show();
+  })();
 				document.getElementById("errorMessage").innerHTML = "";
 				//e.preventDefault();
 				query = document.getElementById('pac-input').value;
