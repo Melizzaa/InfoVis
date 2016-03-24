@@ -119,6 +119,13 @@
     top: 200px;
     left: 1px;
 }
+
+#loader_container {
+  position: absolute; 
+  top: 14px; 
+  right: -64px;
+}
+
 //SLIDER
 #sliderArea {
   font-size: 16px;
