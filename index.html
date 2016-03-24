@@ -112,7 +112,7 @@
 
 
                 <div id="sliderPark"></div>
-                <p>Park</p>
+                <p>Park and green area</p>
 
                 <div id="sliderChildren"></div>
                 <p>Amount of Children</p>
@@ -132,10 +132,9 @@
                 </form>-->
                 <form action="javascript:void(-1)">
                   <div class="form-group">
-                    <label>I want to live</label>
+                    <label>How many minutes away do you want to live from your location:</label>
                     <div id="sliderDistance"></div>
               <div id="sliderDistance"></div>
-                <p>minutes away from:</p>
                     <input id="pac-input" class="form-control input-lg controls" type="text" placeholder="Search for an address&hellip;" value="">
                     <input type="button" id ="but" value="Search" class="tfbutton" onclick="show()">
                     <label id="errorMessage"></label>
@@ -606,6 +605,7 @@ overlay.append(close);
       "<tr><td>Number of playgrounds</td><td>" + Math.round(data[13]) + "</td></tr>" +
       "<tr><td>Number of parks</td><td>" + Math.round(data[15]) + "</td></tr>" +
       "<tr><td>Percentage households with children</td><td>" + data[18] + "%</td></tr>" +
+      "<tr><td>Time to travel to your location</td><td>" + 
       "</tbody>" +
       "</table>";
       return text;
@@ -631,10 +631,10 @@ overlay.append(close);
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [1, 3, 5, 7,9];
+            grades = [1, 3, 7,9];
             labels = [];
 
-        div.innerHTML += "<div id='legendText'>Recommended neighbourhoods</div><svg id='legendArrow' width='250px' height='14px'><defs><marker id='arrow' markerWidth='10' markerHeight='10' refX='0' refY='3' orient='auto' markerUnits='strokeWidth'><path d='M0,0 L0,6 L9,3 z' fill='#000'></path></marker></defs><line x1='5' y1='6' x2='220' y2='6' stroke='#000' stroke-width='2' marker-end='url(#arrow)''></line></svg>";
+        div.innerHTML += "<div id='legendText'>Recommended neighbourhoods</div><svg id='legendArrow' width='200px' height='14px'><defs><marker id='arrow' markerWidth='10' markerHeight='10' refX='0' refY='3' orient='auto' markerUnits='strokeWidth'><path d='M0,0 L0,6 L9,3 z' fill='#000'></path></marker></defs><line x1='5' y1='6' x2='180' y2='6' stroke='#000' stroke-width='2' marker-end='url(#arrow)''></line></svg>";
 
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < grades.length; i++) {
@@ -794,10 +794,14 @@ overlay.append(close);
       }
       return lines;
     }
+
+    var timeScale = d3.scale.linear()
+                     .domain([0,40])
+
      var query = "";
      function createSliders(weights) {
 
-      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).min(-2).max(2).step(1).on("slide", function(evt, value) {
+      d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).scale(timeScale).min(5).max(45).step(10).on("slide", function(evt, value) {
           weights[0] = value;
           d3.select('#weightDistance').text(value);
           console.log("sliders says:",weights);
@@ -975,15 +979,15 @@ var ind = [4,6,8,11,14,16,19];  //correspondence with #column for normalized val
 for (var i=0;i<ind.length;i++){
      
      scores1[i+1] = allHoods[index[4]][ind[i]]; 
-       if (scores1[i+1]==0) scores1[i+1] = 0.1;
+       if (scores1[i+1]<0.1) scores1[i+1] = 0.1;
      scores2[i+1] = allHoods[index[3]][ind[i]];
-       if (scores2[i+1]==0) scores2[i+1] = 0.1;
+       if (scores2[i+1]<0.1) scores2[i+1] = 0.1;
      scores3[i+1] = allHoods[index[2]][ind[i]];
-       if (scores3[i+1]==0) scores3[i+1] = 0.1;
+       if (scores3[i+1]<0.1) scores3[i+1] = 0.1;
      scores4[i+1] = allHoods[index[1]][ind[i]];
-       if (scores4[i+1]==0) scores4[i+1] = 0.1;
+       if (scores4[i+1]<0.1) scores4[i+1] = 0.1;
      scores5[i+1] = allHoods[index[0]][ind[i]];
-       if (scores5[i+1]==0) scores5[i+1] = 0.1;
+       if (scores5[i+1]<0.1) scores5[i+1] = 0.1;
 } 
 for (var j = 0; j<5; j++){
 //console.log(allHoods[index[j]][0]);
@@ -1160,7 +1164,7 @@ return;
                  
                           z = "polygon."+d3.select(this).attr("class");
                           var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
-                          console.log("numero: " + number);
+                          
                          
                           g.selectAll("polygon")
                            .transition(200)
@@ -1174,22 +1178,31 @@ return;
                          polygon = polygonHoodHighlight(data);                        
                            
                           })
+                  .on("click", function (d){
+                  //polygon . .bindPopup(getPopoverText(data))
+                     
+                     z = "polygon."+d3.select(this).attr("class");
+                     var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
+                     var data = allHoods[indexes[number]];
+                     var center = polygon.getBounds().getCenter();
+                     console.log(center);
+                     console.log(parseFloat(center.lat), parseFloat(center.lng));
+                     
+                     var popLocation= new L.LatLng(parseFloat(center.lat), parseFloat(center.lng));
+                     var popup = L.popup()
+                                  .setLatLng(popLocation)
+                                  .setContent(getPopoverText(data))
+                                  .openOn(map);               
+                  })
                  .on('mouseout', function(){
                           g.selectAll("polygon")
                            .transition(200)
                            .style("fill-opacity", cfg.opacityArea);
                            
-                          
                           z = "polygon."+d3.select(this).attr("class");
-                          var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
-                          
-                          
+                          var number = parseInt(z.replace("polygon.radar-chart-serie", "")); 
                           var data = allHoods[indexes[number]];
-                          map.removeLayer(polygon);
-                         
-                          
-                          
-                       
+                          map.removeLayer(polygon);  
                  });
           series++;
         });
@@ -1278,59 +1291,59 @@ return;
       // [distance, safety, house pricing, bars, musea, playgrounds, parks, percentage households children]
       var d = [
             [
-            {axis:"Distance",value:0},
+            {axis:"Taveltime",value:0},
             {axis:"Safety",value:0},
             {axis:"Bars",value:0},
             {axis:"Best price",value:0},
             {axis:"Musea",value:0},
             {axis:"Playgrounds",value:0},
-            {axis:"Parks",value:0},
+            {axis:"Park and green area",value:0},
             {axis:"Children",value:0},
            
             ],            
             [
-            {axis:"Distance",value:0},
+            {axis:"Taveltime",value:0},
             {axis:"Safety",value:0},
             {axis:"Bars",value:0},
             {axis:"Best price",value:0},
             {axis:"Musea",value:0},
             {axis:"Playgrounds",value:0},
-            {axis:"Parks",value:0},
+            {axis:"Park and green area",value:0},
             {axis:"Children",value:0},
             
           
             ],
             [
-            {axis:"Distance",value:0},
+            {axis:"Taveltime",value:0},
             {axis:"Safety",value:0},
             {axis:"Bars",value:0},
             {axis:"Best price",value:0},
             {axis:"Musea",value:0},
             {axis:"Playgrounds",value:0},
-            {axis:"Parks",value:0},
+            {axis:"Park and green area",value:0},
             {axis:"Children",value:0},
             
             
             ],           
             [
-            {axis:"Distance",value:0},
+            {axis:"Taveltime",value:0},
             {axis:"Safety",value:0},
             {axis:"Bars",value:0},
             {axis:"Best price",value:0},
             {axis:"Musea",value:0},
             {axis:"Playgrounds",value:0},
-            {axis:"Parks",value:0},
+            {axis:"Park and green area",value:0},
             {axis:"Children",value:0},
             
             ],
             [
-            {axis:"Distance",value:0},
+            {axis:"Taveltime",value:0},
             {axis:"Safety",value:0},
             {axis:"Bars",value:0},
             {axis:"Best price",value:0},
             {axis:"Musea",value:0},
             {axis:"Playgrounds",value:0},
-            {axis:"Parks",value:0},
+            {axis:"Park and green area",value:0},
             {axis:"Children",value:0},
             
             ],
@@ -1340,59 +1353,59 @@ return;
  
     d = [
             [
-            {axis:"Distance",value:(scores1[0]*10)},
+            {axis:"Taveltime",value:(scores1[0]*10)},
             {axis:"Safety",value:(scores1[1]*10)},
             {axis:"Bars",value:(scores1[3]*10)},
             {axis:"Best price",value:(scores1[2]*10)},
             {axis:"Musea",value:(scores1[4]*10)}, //
             {axis:"Playgrounds",value:(scores1[5]*10)}, //
-            {axis:"Parks",value:(scores1[6]*10)}, //
+            {axis:"Park and green area",value:(scores1[6]*10)}, //
             {axis:"Children",value:(scores1[7]*10)},
            
             ],            
             [
-            {axis:"Distance",value:(scores2[0]*10)},
+            {axis:"Taveltime",value:(scores2[0]*10)},
             {axis:"Safety",value:(scores2[1]*10)},
             {axis:"Bars",value:(scores2[3]*10)},
             {axis:"Best price",value:(scores2[2]*10)},
             {axis:"Musea",value:(scores2[4]*10)},
             {axis:"Playgrounds",value:(scores2[5]*10)},
-            {axis:"Parks",value:(scores2[6]*10)},
+            {axis:"Park and green area",value:(scores2[6]*10)},
             {axis:"Children",value:(scores2[7]*10)},
             
           
             ],
             [
-            {axis:"Distance",value:(scores3[0]*10)},
+            {axis:"Taveltime",value:(scores3[0]*10)},
             {axis:"Safety",value:(scores3[1]*10)},
             {axis:"Bars",value:(scores3[3]*10)},
             {axis:"Best price",value:(scores3[2]*10)},
             {axis:"Musea",value:(scores3[4]*10)},
             {axis:"Playgrounds",value:(scores3[5]*10)},
-            {axis:"Parks",value:(scores3[6]*10)},
+            {axis:"Park and green area",value:(scores3[6]*10)},
             {axis:"Children",value:(scores3[7]*10)},
             
             
             ],           
             [
-            {axis:"Distance",value:(scores4[0]*10)},
+            {axis:"Taveltime",value:(scores4[0]*10)},
             {axis:"Safety",value:(scores4[1]*10)},
             {axis:"Bars",value:(scores4[3]*10)},
             {axis:"Best price",value:(scores4[2]*10)},
             {axis:"Musea",value:(scores4[4]*10)},
             {axis:"Playgrounds",value:(scores4[5]*10)},
-            {axis:"Parks",value:(scores4[6]*10)},
+            {axis:"Park and green area",value:(scores4[6]*10)},
             {axis:"Children",value:(scores4[7]*10)},
             
             ],
             [
-            {axis:"Distance",value:(scores5[0]*10)},
+            {axis:"Taveltime",value:(scores5[0]*10)},
             {axis:"Safety",value:(scores5[1]*10)},
             {axis:"Bars",value:(scores5[3]*10)},
             {axis:"Best price",value:(scores5[2]*10)},
             {axis:"Musea",value:(scores5[4]*10)},
             {axis:"Playgrounds",value:(scores5[5]*10)},
-            {axis:"Parks",value:(scores5[6]*10)},
+            {axis:"Park and green area",value:(scores5[6]*10)},
             {axis:"Children",value:(scores5[7]*10)},
             
             ],
@@ -1561,7 +1574,7 @@ function loader(config) {
 
     function transitionFunction(path) {
         path.transition()
-            .duration(7500)
+            .duration(10)
             .attrTween("stroke-dasharray", tweenDash)
             .each("end", function() { d3.select(this).call(transition); });
     }
