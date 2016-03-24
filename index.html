@@ -1276,7 +1276,7 @@ return;
       var colorscale = d3.scale.category10();
 
       //Legend titles
-      var LegendOptions = ['Item1','Item2', 'Item3','Item4', 'Item5']; //these should be the neigbourhoods selected.
+      var LegendOptions = ['Item1','Item2', 'Item3','Item4', 'Item5', 'Item6']; //these should be the neigbourhoods selected.
 
       //Top 5 Arrays (will be filled with the score function arrays per neighbourhood)
  	//var scores1 =[0.5,0.4,0.2,0.1,0.6,0.6,0.6,1.0];
@@ -1347,9 +1347,19 @@ return;
             {axis:"Children",value:0},
             
             ],
+            [
+            {axis:"Taveltime",value:0},
+            {axis:"Safety",value:0},
+            {axis:"Bars",value:0},
+            {axis:"Best price",value:0},
+            {axis:"Musea",value:0},
+            {axis:"Playgrounds",value:0},
+            {axis:"Park and green area",value:0},
+            {axis:"Children",value:0},
+            ],
           ];
  
- function setVariabled (scores1, scores2, scores3, scores4, scores5){
+ function setVariabled (scores1, scores2, scores3, scores4, scores5){ //add a scores6!!!!!! Or what its called from scoring function
  
     d = [
             [
@@ -1407,8 +1417,17 @@ return;
             {axis:"Playgrounds",value:(scores5[5]*10)},
             {axis:"Park and green area",value:(scores5[6]*10)},
             {axis:"Children",value:(scores5[7]*10)},
-            
             ],
+           // [ THIS NEEDS TO BE UNCOMMENTED WHEN SCORING FUNCTION WORKS
+           // {axis:"Taveltime",value:(scores6[0]*10)},
+           // {axis:"Safety",value:(scores6[1]*10)},
+           // {axis:"Bars",value:(scores6[3]*10)},
+           // {axis:"Best price",value:(scores6[2]*10)},
+           // {axis:"Musea",value:(scores6[4]*10)},
+           // {axis:"Playgrounds",value:(scores6[5]*10)},
+           // {axis:"Park and green area",value:(scores6[6]*10)},
+           // {axis:"Children",value:(scores6[7]*10)},
+           // ],
           ];
       return d;
  }       
@@ -1425,7 +1444,7 @@ return;
       //Call function to draw the Radar chart
       //Will expect that data is in %'s
       
-      var array = [0,0,0,0,0];
+      var array = [0,0,0,0,0]; //NEEDS TO BE 6 AFTER SCORING FUNCTIONS
       RadarChart.draw("#chart", d, mycfg, array);
 
       ////////////////////////////////////////////
@@ -1455,7 +1474,7 @@ return;
         .attr('transform', 'translate(-100,270)');
         
          legend.selectAll("rect")
-          .data([1,2,3,4,5])
+          .data([1,2,3,4,5]) //NEEDS TO BE SIX AFTER SCORING FUNCTION
           .enter()
           .append("rect")
           .attr("x", w - 65)
