@@ -929,15 +929,15 @@ var ind = [4,6,8,11,14,16,19];  //correspondence with #column for normalized val
 for (var i=0;i<ind.length;i++){
      
      scores1[i+1] = allHoods[index[4]][ind[i]]; 
-       if (scores1[i+1]==0) scores1[i+1] = 0.1;
+       if (scores1[i+1]<0.1) scores1[i+1] = 0.1;
      scores2[i+1] = allHoods[index[3]][ind[i]];
-       if (scores2[i+1]==0) scores2[i+1] = 0.1;
+       if (scores2[i+1]<0.1) scores2[i+1] = 0.1;
      scores3[i+1] = allHoods[index[2]][ind[i]];
-       if (scores3[i+1]==0) scores3[i+1] = 0.1;
+       if (scores3[i+1]<0.1) scores3[i+1] = 0.1;
      scores4[i+1] = allHoods[index[1]][ind[i]];
-       if (scores4[i+1]==0) scores4[i+1] = 0.1;
+       if (scores4[i+1]<0.1) scores4[i+1] = 0.1;
      scores5[i+1] = allHoods[index[0]][ind[i]];
-       if (scores5[i+1]==0) scores5[i+1] = 0.1;
+       if (scores5[i+1]<0.1) scores5[i+1] = 0.1;
 } 
 for (var j = 0; j<5; j++){
 //console.log(allHoods[index[j]][0]);
@@ -1114,7 +1114,7 @@ return;
                  
                           z = "polygon."+d3.select(this).attr("class");
                           var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
-                          console.log("numero: " + number);
+                          
                          
                           g.selectAll("polygon")
                            .transition(200)
@@ -1128,22 +1128,31 @@ return;
                          polygon = polygonHoodHighlight(data);                        
                            
                           })
+                  .on("click", function (d){
+                  //polygon . .bindPopup(getPopoverText(data))
+                     
+                     z = "polygon."+d3.select(this).attr("class");
+                     var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
+                     var data = allHoods[indexes[number]];
+                     var center = polygon.getBounds().getCenter();
+                     console.log(center);
+                     console.log(parseFloat(center.lat), parseFloat(center.lng));
+                     
+                     var popLocation= new L.LatLng(parseFloat(center.lat), parseFloat(center.lng));
+                     var popup = L.popup()
+                                  .setLatLng(popLocation)
+                                  .setContent(getPopoverText(data))
+                                  .openOn(map);               
+                  })
                  .on('mouseout', function(){
                           g.selectAll("polygon")
                            .transition(200)
                            .style("fill-opacity", cfg.opacityArea);
                            
-                          
                           z = "polygon."+d3.select(this).attr("class");
-                          var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
-                          
-                          
+                          var number = parseInt(z.replace("polygon.radar-chart-serie", "")); 
                           var data = allHoods[indexes[number]];
-                          map.removeLayer(polygon);
-                         
-                          
-                          
-                       
+                          map.removeLayer(polygon);  
                  });
           series++;
         });
