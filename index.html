@@ -160,7 +160,7 @@
             						var latLonResult = results[0].geometry.location
             						latLonCoord = [latLonResult.lat(),latLonResult.lng()]
             						console.log('latlon',latLonCoord);
-            						setTimeout('drawMarker()',5000);
+            						setTimeout('drawMarker()',2000);
       						} else {
         						alert("Geocode was not successful for the following reason: " + status);
      						 }
@@ -674,7 +674,7 @@ overlay.append(close);
       "<table class='table table-hover table-condensed'>" + 
       "<thead><tr><th>Property</th><th>Value</th></tr></thead>" +
       "<tbody>" +
-      "<tr><td>Travel time in minutes by bike to your address</td><td>" + travelTimes[i] + "</td></tr>" +
+      "<tr><td>Travel time in minutes by public transport to your address</td><td>" + travelTimes[i] + "</td></tr>" +
       "<tr><td>Safety grade</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams savest neighbourhood; 0 = Amsterdams least save neighbourhood\" data-placement=\"right\" data-container=\"body\">" + Math.round(data[4] * 10) + "/10</a></td></tr>"+
 
       "<tr><td>Housing price</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams most affordable neighbourhood; 0 = Amsterdams most expensive neighbourhood\" data-placement=\"right\" data-container=\"body\">"  + Math.round(data[6]*10) + " /10</a></td></tr>" +
