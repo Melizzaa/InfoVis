@@ -301,11 +301,11 @@
 // [distance, safety, house pricing, bars, musea, playgrounds, parks, percentage households children]
 
 var SetWeightsStudent = [0, -1, 1, 1, -1, -1, 1, 0];
-var SetWeightsFamily = [1, 1, -1, -1, 0, 1, 1, 1];
-var SetWeightsProfessional = [1, 0, -1, 1, 1, -1, 0, -1];
+var SetWeightsFamily = [0, 1, -1, -1, 0, 1, 1, 1];
+var SetWeightsProfessional = [0, 0, -1, 1, 1, -1, 0, -1];
 var SetWeightsNone=[0,0,0,0,0,0,0,0];
 
-
+var listOfObjects = [];  
 
 $(document).ready(function() {
       $.ajax({
@@ -314,6 +314,7 @@ $(document).ready(function() {
         dataType: "text",
         success: function(data) {
           allHoods = processData(data);
+          setList(allHoods);
         }
       });
     });
@@ -338,7 +339,33 @@ $(document).ready(function() {
       return lines;
 
     }
+
+ 
+  
+  
     
+  function setList (allHoods){
+    var listCoordinates = [];
+    for (var i = 0; i<allHoods.length; i++){
+    listCoordinates.push(allHoods[i][2]);
+    }
+    
+    for (var j=0; j<listCoordinates.length; j++){
+     var neighObject = {
+         "type": "Feature",
+         "geometry": {
+         "type": "Polygon",
+         "coordinates": [listCoordinates[i]]
+         }
+    } 
+    listOfObjects.push(singleObj);
+    }
+    return;
+  }
+  
+  function getList(){
+  return listOfObjects;
+  }    
       
 var chosenWeights;
 $("#student, close").on('click', function () {
@@ -376,28 +403,6 @@ overlay.append(close);
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>  
     <script type="text/javascript">
     // MAP
-
-    function processData(allText) {
-      var allTextLines = allText.split(/\r\n|\n/);
-      var headers = allTextLines[0].split('#');
-      var lines = [];
-
-      for (var i=1; i<allTextLines.length; i++) {
-        var data = allTextLines[i].split('#');
-        if (data.length == headers.length) {
-
-          var tarr = [];
-          for (var j=0; j<headers.length; j++) {
-            tarr.push(data[j]);
-          }
-          lines.push(tarr);
-        }
-      }
-
-      return lines;
-
-    }
-
     
     
 
@@ -426,7 +431,8 @@ overlay.append(close);
 
   
     var hoodReferences = []; //used to delete the polygon objects before creating new ones.
-
+   
+    
     function plotHoodsScores(allHoods, scoresArray, index, best, min, max) {
       removePolygons(hoodReferences);
       hoodReferences = [];
@@ -441,30 +447,41 @@ overlay.append(close);
       
       if (allZero){
       for (var i = 0; i < allHoods.length; i++){
-        var hood = polygonHoodZeros(allHoods[i]);
+        var hood = polygonHoodZeros(allHoods[i], i);
         hoodReferences.push(hood);
+     
         }      
       } else {
            for (var i = 0; i < allHoods.length; i++) {
         
            if (i == index[0] || i == index[1] || i == index[2] || i == index[3] || i == index[4]) {
-               var hood = polygonHoodBestScores(allHoods[i]);
+               var hood = polygonHoodBestScores(allHoods[i], i);
               hoodReferences.push(hood);
+           
            } else {
-                 var hood = polygonHoodScores(allHoods[i],scoresArray[i], localMin, localMax);
+                 var hood = polygonHoodScores(allHoods[i],scoresArray[i], localMin, localMax, i);
                  hoodReferences.push(hood);
+                
            
                }   
            } 
       }
     }
     
-     function polygonHoodHighlight(data) {
+     function polygonHoodHighlight(data, index) {
+     var i = index;
+     if (travelTimes.length != 0){
       return L.polygon(
         eval(data[2]),
         styleHigh())
         .addTo(map)
-        .bindPopup(getPopoverText(data));
+        .bindPopup(getPopoverText(data, i));
+        }else {return L.polygon(
+        eval(data[2]),
+        styleHigh())
+        .addTo(map)
+        .bindPopup(getPopoverText(data, -1));
+        }
     }
     
     function styleHigh() {
@@ -480,12 +497,21 @@ overlay.append(close);
     
   
     
-      function polygonHoodZeros(data) {
-      return L.polygon(
+      function polygonHoodZeros(data, index) {
+      if (travelTimes.length != 0){
+      var i = index;
+         return L.polygon(
         eval(data[2]),
         styleZeros())
         .addTo(map)
-        .bindPopup(getPopoverText(data));
+        .bindPopup(getPopoverText(data, i));
+      }
+      else {return L.polygon(
+        eval(data[2]),
+        styleZeros())
+        .addTo(map)
+        .bindPopup(getPopoverText(data, -1));
+        }
     }
     
     function styleZeros() {
@@ -499,12 +525,20 @@ overlay.append(close);
       };
     }
 
-  function polygonHoodBestScores(data) {
+  function polygonHoodBestScores(data, index) {
+  var i = index;
+   if (travelTimes.length != 0){
       return L.polygon(
         eval(data[2]),
         styleBest())
         .addTo(map)
-        .bindPopup(getPopoverText(data));
+        .bindPopup(getPopoverText(data,i));
+        } else {return L.polygon(
+        eval(data[2]),
+        styleBest())
+        .addTo(map)
+        .bindPopup(getPopoverText(data,-1));
+        }
     }
     
      function styleBest() {
@@ -524,12 +558,20 @@ overlay.append(close);
       }
     }
 
-    function polygonHoodScores(data,scoringValue, min, max) {
+    function polygonHoodScores(data,scoringValue, min, max, index) {
+    var i = index;
+    if (travelTimes.length!=0){
       return L.polygon(
         eval(data[2]),
         style2(scoringValue, min, max))
         .addTo(map)
-        .bindPopup(getPopoverText(data));
+        .bindPopup(getPopoverText(data, i));
+        }   else  {return L.polygon(
+        eval(data[2]),
+        style2(scoringValue, min, max))
+        .addTo(map)
+        .bindPopup(getPopoverText(data, -1));
+        }
     }
 
       function style2(color, min, max) {
@@ -567,18 +609,53 @@ overlay.append(close);
                d > 10   ? '#FED976' :
                           '#FFEDA0';
     }
+/*
+   var geojson;
+    
+    function highlightFeature(e) {
+    var layer = e.target;
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+    }
 
+    function resetHighlight(e) {
+       geojson.resetStyle(e.target);
+    }
 
-    function getPopoverText(data) {
-      var text = "<h3>" + data[1] + "</h3>" +
+    function onEachFeature(feature, layer) {
+     layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        
+     });
+    }
+
+var list = getList();
+    
+
+geojson = L.geoJson(list, {
+    onEachFeature: onEachFeature
+}).addTo(map);
+*/
+
+    function getPopoverText(data, index) {
+    console.log(hoodReferences);
+    var text = "";
+    var i = index;
+    if (i == -1) {
+      text = "<h3>" + data[1] + "</h3>" +
       "<table class='table table-hover table-condensed'>" + 
       "<thead><tr><th>Property</th><th>Value</th></tr></thead>" +
       "<tbody>" +
       "<tr><td>Safety grade</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams savest neighbourhood; 0 = Amsterdams least save neighbourhood\" data-placement=\"right\" data-container=\"body\">" + Math.round(data[4] * 10) + "/10</a></td></tr>"+
-
-      "<tr><td>Housing price</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams most affordable neighbourhood; 0 = Amsterdams most expensive neighbourhood\" data-placement=\"right\" data-container=\"body\">"  + Math.round(data[6]*10) + " /10</a></td></tr>" +
-
-
+      "<tr><td>Housing price</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams most affordable neighbourhood; 0 = Amsterdams most expensive neighbourhood\" data-placement=\"right\" data-container=\"body\">"  + Math.round(data[6]*10) + " /10</a></td></tr>" +  
       "<tr><td>Number of bars and restaurants</td><td>" + Math.round(data[7]) + "</td></tr>" +
       "<tr><td>Number of musea</td><td>" + Math.round(data[10]) + "</td></tr>" +
       "<tr><td>Number of playgrounds</td><td>" + Math.round(data[13]) + "</td></tr>" +
@@ -586,6 +663,22 @@ overlay.append(close);
       "<tr><td>Percentage households with children</td><td>" + data[18] + "%</td></tr>" +
       "</tbody>" +
       "</table>";
+      } else {
+      text = "<h3>" + data[1] + "</h3>" +
+      "<table class='table table-hover table-condensed'>" + 
+      "<thead><tr><th>Property</th><th>Value</th></tr></thead>" +
+      "<tbody>" +
+       "<tr><td>Distance from your address</td><td>" + travelTimes[i] + "</td></tr>" +
+      "<tr><td>Safety grade</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams savest neighbourhood; 0 = Amsterdams least save neighbourhood\" data-placement=\"right\" data-container=\"body\">" + Math.round(data[4] * 10) + "/10</a></td></tr>"+
+      "<tr><td>Housing price</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams most affordable neighbourhood; 0 = Amsterdams most expensive neighbourhood\" data-placement=\"right\" data-container=\"body\">"  + Math.round(data[6]*10) + " /10</a></td></tr>" +
+      "<tr><td>Number of bars and restaurants</td><td>" + Math.round(data[7]) + "</td></tr>" +
+      "<tr><td>Number of musea</td><td>" + Math.round(data[10]) + "</td></tr>" +
+      "<tr><td>Number of playgrounds</td><td>" + Math.round(data[13]) + "</td></tr>" +
+      "<tr><td>Number of parks</td><td>" + Math.round(data[15]) + "</td></tr>" +
+      "<tr><td>Percentage households with children</td><td>" + data[18] + "%</td></tr>" +
+      "</tbody>" +
+      "</table>"; 
+      }      
       return text;
     }
 
@@ -934,7 +1027,7 @@ for (var j = 0; j<5; j++){
 scoresNeigh.unshift(allHoods[index[j]][1]);
 }
 
-console.log("index "+index);
+
 plotHoodsScores(allHoods, scores, index, best, minScores, maxScores);
 
 
@@ -1114,25 +1207,35 @@ return;
                            .style("fill-opacity", .7);
                         
                          var data = allHoods[indexes[number]];
+                         var ind = indexes[number]; 
                          removePolygons(data[2]);   
-                         polygon = polygonHoodHighlight(data);                        
+                         polygon = polygonHoodHighlight(data, ind);                        
                            
                           })
                   .on("click", function (d){
-                  //polygon . .bindPopup(getPopoverText(data))
                      
                      z = "polygon."+d3.select(this).attr("class");
                      var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
                      var data = allHoods[indexes[number]];
+                     var ind = indexes[number];
+                     console.log("Index " + ind);
                      var center = polygon.getBounds().getCenter();
                      console.log(center);
                      console.log(parseFloat(center.lat), parseFloat(center.lng));
                      
                      var popLocation= new L.LatLng(parseFloat(center.lat), parseFloat(center.lng));
+                     
+                    if (travelTimes.length==0) {
+                       ind = -1;
+                       }
+                    
                      var popup = L.popup()
                                   .setLatLng(popLocation)
-                                  .setContent(getPopoverText(data))
-                                  .openOn(map);               
+                                  .setContent(getPopoverText(data, ind))
+                                  .openOn(map);                     
+                     
+                     
+                                   
                   })
                  .on('mouseout', function(){
                           g.selectAll("polygon")
@@ -1297,9 +1400,9 @@ return;
             {axis:"Safety",value:(scores1[1]*10)},
             {axis:"Bars",value:(scores1[3]*10)},
             {axis:"Best price",value:(scores1[2]*10)},
-            {axis:"Musea",value:(scores1[4]*10)}, //
-            {axis:"Playgrounds",value:(scores1[5]*10)}, //
-            {axis:"Parks",value:(scores1[6]*10)}, //
+            {axis:"Musea",value:(scores1[4]*10)}, 
+            {axis:"Playgrounds",value:(scores1[5]*10)}, 
+            {axis:"Parks",value:(scores1[6]*10)}, 
             {axis:"Children",value:(scores1[7]*10)},
            
             ],            
