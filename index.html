@@ -911,17 +911,20 @@ for (var i=0; i<allHoods.length; i++){
 				console.log("earlier query");
 				var weightTravel = weights[0];
 				var borderLow = weightTravel/2;
-				var borderHigh = weightTravel +borderLow;
-				if (parseFloat(travelTimes[i]) < borderLow) {
+				var borderHigh =weightTravel + 5 + weightTravel/2;
+				if (weightTravel === 0) {
+					newWeightTravel = 0;
+				}
+				else if (parseFloat(travelTimes[i]) < borderLow) {
 					var newWeightTravel = 2;
 				}
-				else if (parseFloat(travelTimes[i]) >= borderLow && parseFloat(travelTimes[i]) < weightTravel) {
+				else if (parseFloat(travelTimes[i]) >= borderLow && parseFloat(travelTimes[i]) < weightTravel+5) {
 					var newWeightTravel = 1;
 				}
-				else if (parseFloat(travelTimes[i]) >= weightTravel && parseFloat(travelTimes[i]) < borderHigh) {
+				else if (parseFloat(travelTimes[i]) >= weightTravel+5 && parseFloat(travelTimes[i]) < borderHigh) {
 					var newWeightTravel = -1;
 				}
-				else if (parseFloat(travelTimes[i]) <= borderHigh) {
+				else if (parseFloat(travelTimes[i]) >= borderHigh) {
 					var newWeightTravel = -2;
 				}
 				//console.log("travel time",travelTimes[i],"new weight",newWeightTravel);
@@ -931,12 +934,15 @@ for (var i=0; i<allHoods.length; i++){
 		}
 		else { //a location query has just been submitted
 				var weightTravel = weights[0];
-				var borderLow = weightTravel-5;
+				var borderLow = weightTravel/2;
 				var borderHigh = weightTravel + 5 + weightTravel/2;
-				if (parseFloat(travelTimes[i]) <= borderLow) {
+				if (weightTravel === 0) {
+					newWeightTravel = 0;
+				}
+				else if (parseFloat(travelTimes[i]) < borderLow) {
 					var newWeightTravel = 2;
 				}
-				else if (parseFloat(travelTimes[i]) > borderLow && parseFloat(travelTimes[i]) < weightTravel+5) {
+				else if (parseFloat(travelTimes[i]) >= borderLow && parseFloat(travelTimes[i]) < weightTravel+5) {
 					var newWeightTravel = 1;
 				}
 				else if (parseFloat(travelTimes[i]) >= weightTravel+5 && parseFloat(travelTimes[i]) < borderHigh) {
@@ -1009,8 +1015,31 @@ for (var j=0; j<scores.length; j++){
 }
 console.log("min: " + minScores+" max: " + maxScores);
 var ind = [4,6,8,11,14,16,19];  //correspondence with #column for normalized values in csv file
+if (normTravelTimes.length === 0) {
+	if (travelNorm.length === 0) {
+		scores1[0] = 0;
+		scores2[0] = 0;
+		scores3[0] = 0;
+		scores4[0] = 0;
+		scores5[0] = 0;
+	}
+	else {
+		scores1[0] = travelNorm[index[4]];
+		scores2[0] = travelNorm[index[3]];
+		scores3[0] = travelNorm[index[2]];
+		scores4[0] = travelNorm[index[1]];
+		scores5[0] = travelNorm[index[0]];
+	}
+}
+else {
+	scores1[0] = normTravelTimes[index[4]];
+	scores2[0] = normTravelTimes[index[3]];
+	scores3[0] = normTravelTimes[index[2]];
+	scores4[0] = normTravelTimes[index[1]];
+	scores5[0] = normTravelTimes[index[0]];
+}
+
 for (var i=0;i<ind.length;i++){
-     
      scores1[i+1] = allHoods[index[4]][ind[i]]; 
        if (scores1[i+1]<0.1) scores1[i+1] = 0.1;
      scores2[i+1] = allHoods[index[3]][ind[i]];
