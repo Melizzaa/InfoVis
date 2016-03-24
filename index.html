@@ -505,7 +505,7 @@ overlay.append(close);
     
      function polygonHoodHighlight(data,index) {
      var i = index;
-     if(travelTime.length!= 0){
+     if(travelTimes.length!= 0){
       return L.polygon(
         eval(data[2]),
         styleHigh())
@@ -535,7 +535,7 @@ overlay.append(close);
     
       function polygonHoodZeros(data, index) {
       var i = index;
-      if(travelTime.length !=0 ){
+      if(travelTimes.length !=0 ){
       return L.polygon(
         eval(data[2]),
         styleZeros())
