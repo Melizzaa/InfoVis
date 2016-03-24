@@ -152,17 +152,34 @@
 					}
 
 
-					// draw without distance 
+					function codeAddress (address) {
+						geocoder.geocode( { 'address': address}, function(results, status) {
+							if (status == google.maps.GeocoderStatus.OK) {
+            						var latLonResult = results[0].geometry.location
+            						latLonCoord = [latLonResult.lat(),latLonResult.lng()]
+            						console.log('latlon',latLonCoord);
+            						setTimeout('drawMarker()',5000);
+      						} else {
+        						alert("Geocode was not successful for the following reason: " + status);
+     						 }
+    					});
+  					}
+					var query = "";
+					function drawMarker() {
+						console.log("draw");
+						console.log("the query is",query);
+						L.marker(latLonCoord).addTo(map).bindPopup("Your location: '"+query+"'.").openPopup();
+
+					}
 					
 					// draw with distance
 					var travelTimes = [];
 					var weightsArray = [];
 					var travelNorm = [];
+					var latLonCoord;
+					var destinationAddress;
 					function getTravelTime(query,weights) {
-					/*
-						var myLoader = loader({width: 200, height: 100, container: "#loader_container", id: "loader"});
-						myLoader();
-					*/
+						geocoder = new google.maps.Geocoder();
 						weightsArray = weights;
 						if (query.length === 0) {
 							normTravelTimes = Array.apply(null, Array(97)).map(Number.prototype.valueOf,0);
@@ -184,6 +201,7 @@
   								{
    			 						origins: [origins],
     								destinations: [destinationA],
+    								
     								travelMode: google.maps.TravelMode.TRANSIT, //options:BICYCLING,TRANSIT,WALKING
   								}, function(response, status) {
           							if (status !== google.maps.DistanceMatrixStatus.OK) {
@@ -213,8 +231,8 @@
     									var origins = response.originAddresses;
     									//console.log("origins google",origins);
     									var destinations = response.destinationAddresses;
+    									destinationAddress = destinations[0];
     									//console.log("destinations google",destinations);
-    					
 										if (destinations[0] != "Amsterdam, Netherlands") {
 						
     									for (var i = 0; i < origins.length; i++) {
@@ -270,6 +288,8 @@
     						
     						function run() {
     							console.log("TRAVEL",travelTimes);	
+    							console.log("dest",destinationAddress);
+    							codeAddress(destinationAddress);
     							normalise(travelTimes);
     						}
     			
@@ -293,6 +313,7 @@
     							console.log("weightsArray?:",weightsArray);
     							scoringF(allHoods,weightsArray,normTravelTimes);
     							travelNorm = normTravelTimes;
+    							console.log('latlon',latLonCoord);
     							/*
     							svg.selectAll("path")
     								.data([])
@@ -798,14 +819,14 @@ overlay.append(close);
     var timeScale = d3.scale.linear()
                      .domain([0,40])
 
-     var query = "";
+     //var query = "";
      function createSliders(weights) {
 
       d3.select('#sliderDistance').call(d3.slider().value(weights[0]).axis(true).scale(timeScale).min(5).max(45).step(10).on("slide", function(evt, value) {
           weights[0] = value;
           d3.select('#weightDistance').text(value);
           console.log("sliders says:",weights);
-			var query = "";
+			query = "";
                 
 			var buttonpressed = document.getElementById('but');
 			buttonpressed.onclick = function(e) {
