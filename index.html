@@ -505,7 +505,7 @@ overlay.append(close);
     
      function polygonHoodHighlight(data,index) {
      var i = index;
-     if(travelTime.length!= 0){
+     if(travelTimes.length!= 0){
       return L.polygon(
         eval(data[2]),
         styleHigh())
@@ -535,7 +535,7 @@ overlay.append(close);
     
       function polygonHoodZeros(data, index) {
       var i = index;
-      if(travelTime.length !=0 ){
+      if(travelTimes.length !=0 ){
       return L.polygon(
         eval(data[2]),
         styleZeros())
@@ -1341,7 +1341,7 @@ return;
                      console.log(parseFloat(center.lat), parseFloat(center.lng));
                      
                      var popLocation= new L.LatLng(parseFloat(center.lat), parseFloat(center.lng));
-                     if (travelTime.length ==0){
+                     if (travelTimes.length ==0){
                      ind = -1;}
                      var popup = L.popup()
                                   .setLatLng(popLocation)
