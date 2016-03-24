@@ -138,6 +138,8 @@
                     <input id="pac-input" class="form-control controls" type="text" placeholder="Search for an address&hellip;" value="">
                   </div>
                   <input type="button" id ="but" value="Search" class="tfbutton btn btn-primary btn-block" onclick="show()">
+                  <div id="loader" style="display:none"><img src = "ajax-loader.gif"></div>
+                    <div id = "myDiv" style="display:none"><img id = "myImage" src = "ajax-loader.gif"></div><br>
                   <label id="errorMessage"></label>
                 </form>
                 <script>
@@ -809,6 +811,20 @@ overlay.append(close);
                 
 			var buttonpressed = document.getElementById('but');
 			buttonpressed.onclick = function(e) {
+        (function(){
+    var loader = document.getElementById("loader");
+
+    var show = function(){
+      loader.style.display = "block";
+      setTimeout(hide, 15000);  // 5 seconds
+    }
+
+    var hide = function(){
+      loader.style.display = "none";
+    }
+
+    show();
+  })();
 				document.getElementById("errorMessage").innerHTML = "";
 				//e.preventDefault();
 				query = document.getElementById('pac-input').value;
