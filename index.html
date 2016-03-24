@@ -345,8 +345,8 @@
 // [distance, safety, house pricing, bars, musea, playgrounds, parks, percentage households children]
 
 var SetWeightsStudent = [0, -1, 1, 1, -1, -1, 1, 0];
-var SetWeightsFamily = [1, 1, -1, -1, 0, 1, 1, 1];
-var SetWeightsProfessional = [1, 0, -1, 1, 1, -1, 0, -1];
+var SetWeightsFamily = [0, 1, -1, -1, 0, 1, 1, 1];
+var SetWeightsProfessional = [0, 0, -1, 1, 1, -1, 0, -1];
 var SetWeightsNone=[0,0,0,0,0,0,0,0];
 
 
@@ -485,17 +485,17 @@ overlay.append(close);
       
       if (allZero){
       for (var i = 0; i < allHoods.length; i++){
-        var hood = polygonHoodZeros(allHoods[i]);
+        var hood = polygonHoodZeros(allHoods[i],i);
         hoodReferences.push(hood);
         }      
       } else {
            for (var i = 0; i < allHoods.length; i++) {
         
            if (i == index[0] || i == index[1] || i == index[2] || i == index[3] || i == index[4]) {
-               var hood = polygonHoodBestScores(allHoods[i]);
+               var hood = polygonHoodBestScores(allHoods[i],i);
               hoodReferences.push(hood);
            } else {
-                 var hood = polygonHoodScores(allHoods[i],scoresArray[i], localMin, localMax);
+                 var hood = polygonHoodScores(allHoods[i],scoresArray[i], localMin, localMax,i);
                  hoodReferences.push(hood);
            
                }   
@@ -503,12 +503,21 @@ overlay.append(close);
       }
     }
     
-     function polygonHoodHighlight(data) {
+     function polygonHoodHighlight(data,index) {
+     var i = index;
+     if(travelTime.length!= 0){
       return L.polygon(
         eval(data[2]),
         styleHigh())
         .addTo(map)
-        .bindPopup(getPopoverText(data));
+        .bindPopup(getPopoverText(data,i));
+    } else {
+    return L.polygon(
+        eval(data[2]),
+        styleHigh())
+        .addTo(map)
+        .bindPopup(getPopoverText(data,-1));
+    }
     }
     
     function styleHigh() {
@@ -524,13 +533,21 @@ overlay.append(close);
     
   
     
-      function polygonHoodZeros(data) {
+      function polygonHoodZeros(data, index) {
+      var i = index;
+      if(travelTime.length !=0 ){
       return L.polygon(
         eval(data[2]),
         styleZeros())
         .addTo(map)
-        .bindPopup(getPopoverText(data));
-    }
+        .bindPopup(getPopoverText(data, i));
+        
+    }   else  {return L.polygon(
+        eval(data[2]),
+        styleZeros())
+        .addTo(map)
+        .bindPopup(getPopoverText(data, -1)); }
+        }
     
     function styleZeros() {
       return {
@@ -543,13 +560,21 @@ overlay.append(close);
       };
     }
 
-  function polygonHoodBestScores(data) {
+  function polygonHoodBestScores(data, index) {
+  var i = index;
+  if(travelTimes.length !=0){
       return L.polygon(
         eval(data[2]),
         styleBest())
         .addTo(map)
-        .bindPopup(getPopoverText(data));
-    }
+        .bindPopup(getPopoverText(data,i));
+    } else {return L.polygon(
+        eval(data[2]),
+        styleBest())
+        .addTo(map)
+        .bindPopup(getPopoverText(data, -1)); }
+        
+        }
     
      function styleBest() {
       return {
@@ -568,13 +593,21 @@ overlay.append(close);
       }
     }
 
-    function polygonHoodScores(data,scoringValue, min, max) {
+    function polygonHoodScores(data,scoringValue, min, max, index) {
+    var i =index;
+    if(travelTimes.length !=0){
       return L.polygon(
         eval(data[2]),
         style2(scoringValue, min, max))
         .addTo(map)
-        .bindPopup(getPopoverText(data));
-    }
+        .bindPopup(getPopoverText(data, i));
+    }   else     {
+    return L.polygon(
+        eval(data[2]),
+        style2(scoringValue, min, max))
+        .addTo(map)
+        .bindPopup(getPopoverText(data, -1));}
+        }
 
       function style2(color, min, max) {
       return {
@@ -613,8 +646,11 @@ overlay.append(close);
     }
 
 
-    function getPopoverText(data) {
-      var text = "<h3>" + data[1] + "</h3>" +
+    function getPopoverText(data, index) {
+    var text = "";
+    var i = index;
+    if (i==-1){
+      text = "<h3>" + data[1] + "</h3>" +
       "<table class='table table-hover table-condensed'>" + 
       "<thead><tr><th>Property</th><th>Value</th></tr></thead>" +
       "<tbody>" +
@@ -628,11 +664,33 @@ overlay.append(close);
       "<tr><td>Number of playgrounds</td><td>" + Math.round(data[13]) + "</td></tr>" +
       "<tr><td>Number of parks</td><td>" + Math.round(data[15]) + "</td></tr>" +
       "<tr><td>Percentage households with children</td><td>" + data[18] + "%</td></tr>" +
-      "<tr><td>Time to travel to your location</td><td>" + 
+     
       "</tbody>" +
       "</table>" +
       "<button type=\"button\" class=\"btn btn-sm btn-primary btn-block\" data-toggle=\"popover\" title=\"\" data-placement=\"bottom\" data-content=\"This feature will be added soon\">Add to my neighbourhoods</button>";
       return text;
+    }  else   {
+      text = "<h3>" + data[1] + "</h3>" +
+      "<table class='table table-hover table-condensed'>" + 
+      "<thead><tr><th>Property</th><th>Value</th></tr></thead>" +
+      "<tbody>" +
+      "<tr><td>Travel time in minutes by bike to your address</td><td>" + travelTimes[i] + "</td></tr>" +
+      "<tr><td>Safety grade</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams savest neighbourhood; 0 = Amsterdams least save neighbourhood\" data-placement=\"right\" data-container=\"body\">" + Math.round(data[4] * 10) + "/10</a></td></tr>"+
+
+      "<tr><td>Housing price</td><td><a href=\"#\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"10 = Amsterdams most affordable neighbourhood; 0 = Amsterdams most expensive neighbourhood\" data-placement=\"right\" data-container=\"body\">"  + Math.round(data[6]*10) + " /10</a></td></tr>" +
+
+
+      "<tr><td>Number of bars and restaurants</td><td>" + Math.round(data[7]) + "</td></tr>" +
+      "<tr><td>Number of musea</td><td>" + Math.round(data[10]) + "</td></tr>" +
+      "<tr><td>Number of playgrounds</td><td>" + Math.round(data[13]) + "</td></tr>" +
+      "<tr><td>Number of parks</td><td>" + Math.round(data[15]) + "</td></tr>" +
+      "<tr><td>Percentage households with children</td><td>" + data[18] + "%</td></tr>" +
+  
+      "</tbody>" +
+      "</table>" +
+      "<button type=\"button\" class=\"btn btn-sm btn-primary btn-block\" data-toggle=\"popover\" title=\"\" data-placement=\"bottom\" data-content=\"This feature will be added soon\">Add to my neighbourhoods</button>";
+      return text;
+    }
     }
 
   
@@ -1266,8 +1324,9 @@ return;
                            .style("fill-opacity", .7);
                         
                          var data = allHoods[indexes[number]];
+                         var ind = indexes[number];
                          removePolygons(data[2]);   
-                         polygon = polygonHoodHighlight(data);                        
+                         polygon = polygonHoodHighlight(data, ind);                        
                            
                           })
                   .on("click", function (d){
@@ -1276,14 +1335,17 @@ return;
                      z = "polygon."+d3.select(this).attr("class");
                      var number = parseInt(z.replace("polygon.radar-chart-serie", ""));
                      var data = allHoods[indexes[number]];
+                     var ind = indexes[number];
                      var center = polygon.getBounds().getCenter();
                      console.log(center);
                      console.log(parseFloat(center.lat), parseFloat(center.lng));
                      
                      var popLocation= new L.LatLng(parseFloat(center.lat), parseFloat(center.lng));
+                     if (travelTime.length ==0){
+                     ind = -1;}
                      var popup = L.popup()
                                   .setLatLng(popLocation)
-                                  .setContent(getPopoverText(data))
+                                  .setContent(getPopoverText(data, ind))
                                   .openOn(map);               
                   })
                  .on('mouseout', function(){
