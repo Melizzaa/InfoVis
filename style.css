@@ -19,6 +19,17 @@
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
 }
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
 .column figure:hover img {
   opacity: .5;
 }
@@ -65,14 +76,14 @@
 
 .area {
 	/*background: lightblue;*/
-	height: 700px;
+	height: 780px;
   padding: 10px;
 }
 
 
 /*  --------  MAP  ----------  */
 #map {
-  height: 660px;
+  height: 780px;
 }
 
 .legend {
@@ -108,6 +119,10 @@
 
 /* RADAR */
 
+#locationHeader {
+  margin-top: 0;
+}
+
 #chartdiv {
 	width		: 100%;
 	height		: 500px;
@@ -116,16 +131,20 @@
 
 #chart {
     position: absolute;
-    top: 200px;
+    top: 230px;
     left: 1px;
 }
-//SLIDER
+/*SLIDER*/
+#toChange {
+  margin-bottom: 20px;
+}
+
 #sliderArea {
   font-size: 16px;
 }
 
 .sliderArea p {
-    margin-bottom: 22px;
+    margin-bottom: 40px;
 }
 
 .back-button-form {
